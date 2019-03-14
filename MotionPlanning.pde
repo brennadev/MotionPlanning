@@ -98,14 +98,16 @@ void connectSamplePoints() {
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
                 edges[index] = new Edge(i, j);
+                index++;
             }
-            index++;
+            
         }
     }
     
     edgeCount = index;
 }
 
+// ray-object intersection test to check for edges that intersect the obstacle; adapted from my 5607 ray tracer
 boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
     float a = 1;
     float b = 2 * PVector.dot(direction, PVector.sub(origin, obstaclePosition));
@@ -116,8 +118,23 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
     if (discriminant < 0) {
         return false;
     } else {
+        float firstT = (-1 * b + sqrt(discriminant)) / (2 * a);
+        float secondT = (-1 * b - sqrt(discriminant)) / (2 * a);
         
+        if (firstT > 0.001) {
+            if (secondT > 0.001) {
+                t = min(min(firstT, secondT), t);
+            } else {
+                t = min(t, firstT);
+            }
+            return true;
+            
+        } else if (secondT > 0.001) {
+            t = min(t, secondT);
+            return true;
+            
+        } else {
+            return false;
+        }
     }
-    
-    return false;
 }
