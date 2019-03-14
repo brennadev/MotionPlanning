@@ -33,7 +33,10 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 /////////////// Motion Planning ///////////////
 
 final int samplePointsCount = 20;
+//final int samplePointsCount = 5;
 final int edgeCount = 190;    // based on 20 points
+//final int edgeCount = 10;
+
 // points from random sampling to create potential paths
 PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
@@ -63,9 +66,9 @@ void draw() {
     
     stroke(0, 200, 255);
     for(int i = 0; i < edgeCount; i++) {
-        line(sampledPoints[edges[i].point1].x * scale * - 1 + originToCenterTranslation, 
+        line(sampledPoints[edges[i].point1].x * scale + originToCenterTranslation, 
              sampledPoints[edges[i].point1].y * scale * -1 + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].x * scale * -1 + originToCenterTranslation, 
+             sampledPoints[edges[i].point2].x * scale + originToCenterTranslation, 
              sampledPoints[edges[i].point2].y * scale * -1 + originToCenterTranslation);
     }
 }
@@ -90,6 +93,9 @@ void connectSamplePoints() {
     int index = 0;
     for(int i = 0; i < samplePointsCount; i++) {
         for(int j = i + 1; j < samplePointsCount; j++) {
+            println(i);
+            println(j);
+            println();
             edges[index] = new Edge(i, j);
             index++;
         }
