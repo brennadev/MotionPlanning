@@ -93,9 +93,6 @@ void connectSamplePoints() {
     int index = 0;
     for(int i = 0; i < samplePointsCount; i++) {
         for(int j = i + 1; j < samplePointsCount; j++) {
-            println(i);
-            println(j);
-            println();
             edges[index] = new Edge(i, j);
             index++;
         }
