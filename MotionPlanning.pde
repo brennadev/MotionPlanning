@@ -61,9 +61,12 @@ void generateSamplePoints() {
         
         do {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
-        } while (newPoint.dist(obstaclePosition) > obstacleRadius);
+        } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
         sampledPoints[i] = newPoint;
+        
+        println(i + ":");
+        println(sampledPoints[i]);
     }
 }
 
