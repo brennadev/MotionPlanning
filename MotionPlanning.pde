@@ -4,8 +4,14 @@
 
 // x and y dimensions of room (same dimensions along each axis)
 final float roomSize = 20;
+
+
+/////////////// Viewing adjustments ///////////////
+
 // how many times bigger to make everything when rendering so it can be easily seen
 final float scale = 30;
+
+final float originToCenterTranslation = 300;
 
 /////////////// Obstacle ///////////////
 final float obstacleRadius = 2;
@@ -44,12 +50,12 @@ void setup() {
 void draw() {
     background(0);
     fill(255);
-    circle(obstaclePosition.x * scale, obstaclePosition.y * scale, obstacleRadius * scale);
+    circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale + originToCenterTranslation, obstacleRadius * scale);
     
     fill(255, 0, 0);
     
     for(int i = 0; i < samplePointsCount; i++) {
-        circle(sampledPoints[i].x * scale, sampledPoints[i].y * scale, 15);
+        circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale + originToCenterTranslation, 15);
     }
 }
 
@@ -64,9 +70,6 @@ void generateSamplePoints() {
         } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
         sampledPoints[i] = newPoint;
-        
-        println(i + ":");
-        println(sampledPoints[i]);
     }
 }
 
