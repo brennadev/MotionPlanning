@@ -107,7 +107,17 @@ void connectSamplePoints() {
 }
 
 boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
+    float a = 1;
+    float b = 2 * PVector.dot(direction, PVector.sub(origin, obstaclePosition));
+    float c = pow(PVector.sub(origin, obstaclePosition).mag(), 2) - pow(obstacleRadius, 2);
     
+    float discriminant = pow(b, 2) - 4 * a * c;
+    
+    if (discriminant < 0) {
+        return false;
+    } else {
+        
+    }
     
     return false;
 }
