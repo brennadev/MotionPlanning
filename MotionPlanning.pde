@@ -34,7 +34,8 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 final int samplePointsCount = 20;
 //final int samplePointsCount = 5;
-final int edgeCount = 190;    // based on 20 points
+//final int edgeCount = 190;    // based on 20 points
+int edgeCount = 190;
 //final int edgeCount = 10;
 
 // points from random sampling to create potential paths
@@ -93,8 +94,20 @@ void connectSamplePoints() {
     int index = 0;
     for(int i = 0; i < samplePointsCount; i++) {
         for(int j = i + 1; j < samplePointsCount; j++) {
-            edges[index] = new Edge(i, j);
+            float t = 9e9;
+            // only want to include the edge if it's not colliding with the obstacle
+            if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
+                edges[index] = new Edge(i, j);
+            }
             index++;
         }
     }
+    
+    edgeCount = index;
+}
+
+boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
+    
+    
+    return false;
 }
