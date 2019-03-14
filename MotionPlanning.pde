@@ -33,8 +33,10 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 /////////////// Motion Planning ///////////////
 
 final int samplePointsCount = 20;
+final int edgeCount = 190;    // based on 20 points
 // points from random sampling to create potential paths
 PVector[] sampledPoints = new PVector[samplePointsCount];
+Edge[] edges = new Edge[edgeCount];
 
 
 void setup() {
@@ -42,7 +44,7 @@ void setup() {
     noStroke();
     
     generateSamplePoints();
-    
+    connectSamplePoints();
     
 }
 
@@ -50,12 +52,21 @@ void setup() {
 void draw() {
     background(0);
     fill(255);
+    noStroke();
     circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * scale);
     
     fill(255, 0, 0);
     
     for(int i = 0; i < samplePointsCount; i++) {
         circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale * -1 + originToCenterTranslation, 15);
+    }
+    
+    stroke(0, 200, 255);
+    for(int i = 0; i < edgeCount; i++) {
+        line(sampledPoints[edges[i].point1].x * scale * - 1 + originToCenterTranslation, 
+             sampledPoints[edges[i].point1].y * scale * -1 + originToCenterTranslation, 
+             sampledPoints[edges[i].point2].x * scale * -1 + originToCenterTranslation, 
+             sampledPoints[edges[i].point2].y * scale * -1 + originToCenterTranslation);
     }
 }
 
@@ -76,5 +87,11 @@ void generateSamplePoints() {
 
 // find where the lines between the sample points should go
 void connectSamplePoints() {
-    
+    int index = 0;
+    for(int i = 0; i < samplePointsCount; i++) {
+        for(int j = i + 1; j < samplePointsCount; j++) {
+            edges[index] = new Edge(i, j);
+            index++;
+        }
+    }
 }
