@@ -23,6 +23,12 @@ final Position2D characterFinalPosition = new Position2D(9, 9);
 // where character currently is located on map
 Position2D characterCurrentPosition = new Position2D(characterInitialPosition);
 
+/////////////// Motion Planning ///////////////
+
+final int samplePointsCount = 20;
+// points from random sampling to create potential paths
+Position2D[] sampledPoints = new Position2D[samplePointsCount];
+
 
 void setup() {
     size(600, 600, P2D);
@@ -34,5 +40,16 @@ void draw() {
     
     circle(obstaclePosition.x * scale, obstaclePosition.y * scale, obstacleRadius * scale);
     
+    
+}
+
+void generateSamplePoints() {
+    for(int i = 0; i < samplePointsCount; i++) {
+        
+    }
+}
+
+// find where the lines between the sample points should go
+void connectSamplePoints() {
     
 }
