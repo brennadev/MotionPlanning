@@ -50,12 +50,12 @@ void setup() {
 void draw() {
     background(0);
     fill(255);
-    circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale + originToCenterTranslation, obstacleRadius * scale);
+    circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * scale);
     
     fill(255, 0, 0);
     
     for(int i = 0; i < samplePointsCount; i++) {
-        circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale + originToCenterTranslation, 15);
+        circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale * -1 + originToCenterTranslation, 15);
     }
 }
 
