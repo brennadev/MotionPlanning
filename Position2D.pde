@@ -5,6 +5,12 @@ class Position2D {
         this.y = y;
     }
     
+    // copy constructor
+    Position2D(Position2D position) {
+        x = position.x;
+        y = position.y;
+    }
+    
     float x;
     float y;
 }
