@@ -9,45 +9,64 @@ final float scale = 30;
 
 /////////////// Obstacle ///////////////
 final float obstacleRadius = 2;
-final Position2D obstaclePosition = new Position2D(0, 0);
+final PVector obstaclePosition = new PVector(0, 0);
 
 
 /////////////// Character ///////////////
 
 // character starts here
-final Position2D characterInitialPosition = new Position2D(-9, -9);
+final PVector characterInitialPosition = new PVector(-9, -9);
 
 // character's goal
-final Position2D characterFinalPosition = new Position2D(9, 9);
+final PVector characterFinalPosition = new PVector(9, 9);
 
 // where character currently is located on map
-Position2D characterCurrentPosition = new Position2D(characterInitialPosition);
+PVector characterCurrentPosition = new PVector(characterInitialPosition.x, characterInitialPosition.y);
+
 
 /////////////// Motion Planning ///////////////
 
 final int samplePointsCount = 20;
 // points from random sampling to create potential paths
-Position2D[] sampledPoints = new Position2D[samplePointsCount];
+PVector[] sampledPoints = new PVector[samplePointsCount];
 
 
 void setup() {
     size(600, 600, P2D);
+    noStroke();
+    
+    generateSamplePoints();
+    
+    
 }
 
 
 void draw() {
     background(0);
-    
+    fill(255);
     circle(obstaclePosition.x * scale, obstaclePosition.y * scale, obstacleRadius * scale);
     
+    fill(255, 0, 0);
     
-}
-
-void generateSamplePoints() {
     for(int i = 0; i < samplePointsCount; i++) {
-        
+        circle(sampledPoints[i].x * scale, sampledPoints[i].y * scale, 15);
     }
 }
+
+
+// get the sample points for the path
+void generateSamplePoints() {
+    for(int i = 0; i < samplePointsCount; i++) {
+        PVector newPoint;
+        
+        do {
+            newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
+        } while (newPoint.dist(obstaclePosition) > obstacleRadius);
+        
+        sampledPoints[i] = newPoint;
+    }
+}
+
 
 // find where the lines between the sample points should go
 void connectSamplePoints() {
