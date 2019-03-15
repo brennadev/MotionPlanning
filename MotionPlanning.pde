@@ -43,6 +43,11 @@ PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
 
 
+// TODO: probably need a limit on how many edges to travel (what goes as the size of edgesToTravel since I just stuck a value in for now)
+int edgesToTravelCount = 0;    // TODO: of course this value needs to be changed (and it'll get set at a later point anyway, so the value here may not matter)
+Edge[] edgesToTravel = new Edge[10];
+
+
 void setup() {
     size(600, 600, P2D);
     noStroke();
@@ -54,6 +59,9 @@ void setup() {
 
 
 void draw() {
+    // TODO: code for moving character along path here
+    
+    
     background(0);
     fill(255);
     noStroke();
