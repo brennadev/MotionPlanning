@@ -104,10 +104,10 @@ void connectSamplePoints() {
         for(int j = i + 1; j < samplePointsCount; j++) {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
-            if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
+            //if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
                 edges[index] = new Edge(i, j);
                 index++;
-            }
+            //}
             
         }
     }
@@ -145,4 +145,9 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
             return false;
         }
     }
+}
+
+
+void findShortestPath() {
+    
 }
