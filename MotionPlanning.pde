@@ -36,7 +36,7 @@ final int samplePointsCount = 20;
 //final int samplePointsCount = 5;
 //final int edgeCount = 190;    // based on 20 points
 int edgeCount = 190;
-//final int edgeCount = 10;
+//int edgeCount = 10;
 
 // points from random sampling to create potential paths
 PVector[] sampledPoints = new PVector[samplePointsCount];
@@ -104,10 +104,10 @@ void connectSamplePoints() {
         for(int j = i + 1; j < samplePointsCount; j++) {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
-            //if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
+            if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
                 edges[index] = new Edge(i, j);
                 index++;
-            //}
+            }
             
         }
     }
@@ -117,8 +117,11 @@ void connectSamplePoints() {
 
 // ray-object intersection test to check for edges that intersect the obstacle; adapted from my 5607 ray tracer
 boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
+    
+    PVector directionNormalized = direction.normalize(null);
+    
     float a = 1;
-    float b = 2 * PVector.dot(direction, PVector.sub(origin, obstaclePosition));
+    float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstaclePosition));
     float c = pow(PVector.sub(origin, obstaclePosition).mag(), 2) - pow(obstacleRadius, 2);
     
     float discriminant = pow(b, 2) - 4 * a * c;

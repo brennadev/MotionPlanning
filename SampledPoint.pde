@@ -9,14 +9,14 @@ enum Color {
 class SampledPoint {
     PVector position;
     Edge[] edges;
-    Color color;
+    //Color color;
     int distance;
     SampledPoint predecessor;
     
-    SampledPoint(PVector position, Edge[] edges, Color color, int distance) {
+    /*SampledPoint(PVector position, Edge[] edges, Color color, int distance) {
         this.position = position;
         this.edges = edges;
         this.color = color;
         this.distance = distance;
-    }
+    }*/
 }
