@@ -41,7 +41,7 @@ int edgeCount = 190;
 //int edgeCount = 10;
 
 // points from random sampling to create potential paths
-PVector[] sampledPoints = new PVector[samplePointsCount];
+SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
 
 
@@ -94,7 +94,7 @@ void generateSamplePoints() {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
         } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
-        sampledPoints[i] = newPoint;
+        sampledPoints[i] = new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE);
     }
 }
 
