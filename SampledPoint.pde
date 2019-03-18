@@ -7,19 +7,20 @@ enum NodeColor {
 }
 
 class SampledPoint {
-    
-    
-    
     PVector position;
-    Edge[] edges;
+    SampledPoint[] adjacentNodes;
+    int edgeCount;
     NodeColor nodeColor;
     int distance;
     SampledPoint predecessor;
     
-    SampledPoint(PVector position, Edge[] edges, NodeColor nodeColor, int distance) {
+    SampledPoint(PVector position, NodeColor nodeColor, int distance) {
         this.position = position;
-        this.edges = edges;
+        edgeCount = 0;
+        adjacentNodes = new SampledPoint[samplePointsCount - 1];
         this.nodeColor = nodeColor;
         this.distance = distance;
     }
+    
+
 }

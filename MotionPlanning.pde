@@ -1,5 +1,7 @@
 // Copyright 2019 Brenna Olson. You may download this code for informational purposes only.
 
+import java.util.LinkedList;
+
 /////////////// Room ///////////////
 
 // x and y dimensions of room (same dimensions along each axis)
@@ -152,5 +154,25 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 
 void findShortestPath() {
+    LinkedList<SampledPoint> q = new LinkedList<>();
+    
+    // TODO: need to convert sampledPoints to use SampledPoint before uncommenting
+    //q.addLast(sampledPoints[0]);
+    
+    while (!q.isEmpty()) {
+        
+        Edge[] test = new Edge[2];
+       // test[0] = new Edge(new PVector(), new PVector());
+        
+        //SampledPoint test1 = new SampledPoint((new PVector()), [new Edge(2, 4)], 1, NodeColor.white, 0);
+        
+        SampledPoint u = q.removeFirst();
+        
+        for(int i = 0; i < u.edgeCount; i++) {
+            if (u.adjacentNodes[i].nodeColor == NodeColor.white) {
+                
+            }
+        }
+    }
     
 }
