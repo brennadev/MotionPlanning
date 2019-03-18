@@ -154,25 +154,23 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 
 void findShortestPath() {
-    LinkedList<SampledPoint> q = new LinkedList<>();
+    LinkedList<SampledPoint> q = new LinkedList();
     
     // TODO: need to convert sampledPoints to use SampledPoint before uncommenting
     //q.addLast(sampledPoints[0]);
     
     while (!q.isEmpty()) {
-        
-        Edge[] test = new Edge[2];
-       // test[0] = new Edge(new PVector(), new PVector());
-        
-        //SampledPoint test1 = new SampledPoint((new PVector()), [new Edge(2, 4)], 1, NodeColor.white, 0);
-        
         SampledPoint u = q.removeFirst();
         
         for(int i = 0; i < u.edgeCount; i++) {
             if (u.adjacentNodes[i].nodeColor == NodeColor.white) {
-                
+                u.adjacentNodes[i].distance = u.distance + 1;
+                u.adjacentNodes[i].predecessor = u;
+                q.addLast(u.adjacentNodes[i]);
             }
         }
+        
+        u.nodeColor = NodeColor.black;
     }
     
 }
