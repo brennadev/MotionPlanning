@@ -196,8 +196,30 @@ void findShortestPath() {
     // TODO: need to convert sampledPoints to use SampledPoint before uncommenting
     q.addLast(sampledPoints[0]);
     
+    
+    // need to make a copy of sampledPoints (defined earlier in program) so that draw works correctly as it uses that array
+    SampledPoint[] qNew = new SampledPoint[samplePointsCount + 2];
+    
+    for(int i = 0; i < samplePointsCount + 2; i++) {
+        qNew[i] = sampledPoints[i];
+    }
+    
+    int qCurrentCount = samplePointsCount + 2;
+    
     while (!q.isEmpty()) {
         SampledPoint u = q.removeFirst();
+        
+        // extract min - I think it looks through all the vertices; finds smallest d; seems like it probably removes it from the queue 
+        // since it goes until the queue is empty (what the while condition checks)
+        // need to make a copy of sampledPoints - this goes outside the loop in this function
+        // how to get minimum distance - will just need to iterate over the array or whatever way the stuff is stored on each loop 
+        // iteration (otherwise would need to run a sort algorithm first)
+        
+        for(int i = 0; i < qCurrentCount; i++) {
+            
+        }
+        
+        qCurrentCount--;
         
         for(int i = 0; i < u.adjacentNodeCount; i++) {
             if (u.adjacentNodes[i].nodeColor == NodeColor.white) {
