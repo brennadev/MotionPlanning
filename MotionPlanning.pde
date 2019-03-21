@@ -38,11 +38,11 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 final int samplePointsCount = 5;
 //final int edgeCount = 190;    // based on 20 points
 //int edgeCount = 190;
-int edgeCount = 10;
+int edgeCount = 21;
 
 // points from random sampling to create potential paths
-//SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount];
-PVector[] sampledPoints = new PVector[samplePointsCount];
+SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount + 2];    // need to account for start and end points in here too
+//PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
 
 
@@ -73,28 +73,28 @@ void draw() {
     fill(255, 0, 0);
     
     for(int i = 0; i < samplePointsCount; i++) {
-        //circle(sampledPoints[i].position.x * scale + originToCenterTranslation, sampledPoints[i].position.y * scale * -1 + originToCenterTranslation, 15);
-        circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale * -1 + originToCenterTranslation, 15);
-        println("x: " + sampledPoints[i].x);
-        println("y: " + sampledPoints[i].y);
+        circle(sampledPoints[i + 2].position.x * scale + originToCenterTranslation, sampledPoints[i + 2].position.y * scale * -1 + originToCenterTranslation, 15);
+        //circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale * -1 + originToCenterTranslation, 15);
+        //println("x: " + sampledPoints[i].x);
+        //println("y: " + sampledPoints[i].y);
     }
     
     stroke(0, 200, 255);
     for(int i = 0; i < edgeCount; i++) {
-        /*line(sampledPoints[edges[i].point1].position.x * scale + originToCenterTranslation, 
+        line(sampledPoints[edges[i].point1].position.x * scale + originToCenterTranslation, 
              sampledPoints[edges[i].point1].position.y * scale * -1 + originToCenterTranslation, 
              sampledPoints[edges[i].point2].position.x * scale + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].position.y * scale * -1 + originToCenterTranslation);*/
-        line(sampledPoints[edges[i].point1].x * scale + originToCenterTranslation, 
+             sampledPoints[edges[i].point2].position.y * scale * -1 + originToCenterTranslation);
+        /*line(sampledPoints[edges[i].point1].x * scale + originToCenterTranslation, 
              sampledPoints[edges[i].point1].y * scale * -1 + originToCenterTranslation, 
              sampledPoints[edges[i].point2].x * scale + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].y * scale * -1 + originToCenterTranslation);
+             sampledPoints[edges[i].point2].y * scale * -1 + originToCenterTranslation);*/
              
              
-        println("edge point 1 x: " + sampledPoints[edges[i].point1].x);
+        /*println("edge point 1 x: " + sampledPoints[edges[i].point1].x);
         println("edge point 1 y: " + sampledPoints[edges[i].point1].y);
         println("edge point 2 x: " + sampledPoints[edges[i].point2].x);
-        println("edge point 2 y: " + sampledPoints[edges[i].point2].y);
+        println("edge point 2 y: " + sampledPoints[edges[i].point2].y);*/
     }
 }
 
@@ -108,8 +108,8 @@ void generateSamplePoints() {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
         } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
-        //sampledPoints[i] = new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE);
-        sampledPoints[i] = newPoint;
+        sampledPoints[i + 2] = new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE);
+        //sampledPoints[i] = newPoint;
     }
 }
 
@@ -121,12 +121,12 @@ void connectSamplePoints() {
         for(int j = i + 1; j < samplePointsCount; j++) {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
-            //if (!edgeHitsObstacle(sampledPoints[i].position, PVector.sub(sampledPoints[j].position, sampledPoints[i].position), t)) {
-            if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
-                edges[index] = new Edge(i, j);
+            if (!edgeHitsObstacle(sampledPoints[i + 2].position, PVector.sub(sampledPoints[j + 2].position, sampledPoints[i + 2].position), t)) {
+            //if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
+                edges[index] = new Edge(i + 2, j + 2);
                 
-                //sampledPoints[i].addAdjacentNode(sampledPoints[j]);
-                //sampledPoints[j].addAdjacentNode(sampledPoints[i]);
+                sampledPoints[i + 2].addAdjacentNode(sampledPoints[j + 2]);
+                sampledPoints[j + 2].addAdjacentNode(sampledPoints[i + 2]);
                 
                 index++;
             }
@@ -177,7 +177,7 @@ void findShortestPath() {
     LinkedList<SampledPoint> q = new LinkedList();
     
     // TODO: need to convert sampledPoints to use SampledPoint before uncommenting
-    //q.addLast(sampledPoints[0]);
+    q.addLast(sampledPoints[0]);
     
     while (!q.isEmpty()) {
         SampledPoint u = q.removeFirst();
