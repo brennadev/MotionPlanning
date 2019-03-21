@@ -212,3 +212,10 @@ void findShortestPath() {
     }
     
 }
+
+
+void relax(SampledPoint from, SampledPoint to) {
+    float distance = abs(PVector.dist(from, to));
+    
+    
+}
