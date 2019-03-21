@@ -55,6 +55,9 @@ void setup() {
     size(600, 600, P2D);
     noStroke();
     
+    sampledPoints[0] = new SampledPoint(characterInitialPosition, NodeColor.gray, 0);                   // start node
+    sampledPoints[1] = new SampledPoint(characterFinalPosition, NodeColor.white, Integer.MAX_VALUE);    // end node
+    
     generateSamplePoints();
     connectSamplePoints();
     
@@ -117,19 +120,21 @@ void generateSamplePoints() {
 }
 
 
+
+
 // find where the lines between the sample points should go
 void connectSamplePoints() {
     int index = 0;
-    for(int i = 0; i < samplePointsCount; i++) {
-        for(int j = i + 1; j < samplePointsCount; j++) {
+    for(int i = 0; i < samplePointsCount + 2; i++) {
+        for(int j = i + 1; j < samplePointsCount + 2; j++) {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
-            if (!edgeHitsObstacle(sampledPoints[i + 2].position, PVector.sub(sampledPoints[j + 2].position, sampledPoints[i + 2].position), t)) {
+            if (!edgeHitsObstacle(sampledPoints[i].position, PVector.sub(sampledPoints[j].position, sampledPoints[i].position), t)) {
             //if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
-                edges[index] = new Edge(i + 2, j + 2);
+                edges[index] = new Edge(i, j);
                 
-                sampledPoints[i + 2].addAdjacentNode(sampledPoints[j + 2]);
-                sampledPoints[j + 2].addAdjacentNode(sampledPoints[i + 2]);
+                sampledPoints[i].addAdjacentNode(sampledPoints[j]);
+                sampledPoints[j].addAdjacentNode(sampledPoints[i]);
                 
                 index++;
             }

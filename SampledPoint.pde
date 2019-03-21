@@ -17,7 +17,7 @@ class SampledPoint {
     SampledPoint(PVector position, NodeColor nodeColor, int distance) {
         this.position = position;
         adjacentNodeCount = 0;
-        adjacentNodes = new SampledPoint[samplePointsCount - 1];
+        adjacentNodes = new SampledPoint[samplePointsCount + 1];
         this.nodeColor = nodeColor;
         this.distance = distance;
     }
