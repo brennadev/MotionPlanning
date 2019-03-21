@@ -215,7 +215,10 @@ void findShortestPath() {
 
 
 void relax(SampledPoint from, SampledPoint to) {
-    float distance = abs(PVector.dist(from, to));
+    float distance = abs(PVector.dist(from.position, to.position));
     
-    
+    if (to.distance > from.distance + distance) {
+        to.distance = from.distance + distance;
+        to.predecessor = from;
+    }
 }
