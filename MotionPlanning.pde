@@ -44,6 +44,8 @@ int edgeCount = 21;
 SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount + 2];    // need to account for start and end points in here too
 //PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
+Edge[] shortestPath = new Edge[edgeCount];
+int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
 
 // TODO: probably need a limit on how many edges to travel (what goes as the size of edgesToTravel since I just stuck a value in for now)
@@ -60,6 +62,13 @@ void setup() {
     
     generateSamplePoints();
     connectSamplePoints();
+    findShortestPath();
+    
+    for(int i = 0; i < samplePointsCount + 2; i++) {
+        println(sampledPoints[i].nodeColor);
+    }
+    
+    println(shortestPathEdgeCount);
     
 }
 
@@ -197,6 +206,7 @@ void findShortestPath() {
                 q.addLast(u.adjacentNodes[i]);
             }
         }
+        shortestPathEdgeCount++;
         
         u.nodeColor = NodeColor.black;
     }
