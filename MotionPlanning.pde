@@ -200,6 +200,7 @@ void findShortestPath() {
     // need to make a copy of sampledPoints (defined earlier in program) so that draw works correctly as it uses that array
     SampledPoint[] qNew = new SampledPoint[samplePointsCount + 2];
     
+    // the sorted list needs to go here
     for(int i = 0; i < samplePointsCount + 2; i++) {
         qNew[i] = sampledPoints[i];
     }
@@ -215,18 +216,30 @@ void findShortestPath() {
         // how to get minimum distance - will just need to iterate over the array or whatever way the stuff is stored on each loop 
         // iteration (otherwise would need to run a sort algorithm first)
         
+        float shortestDistance = Float.MAX_VALUE;
+        
+        
         for(int i = 0; i < qCurrentCount; i++) {
             
         }
         
+        // sorted list goes above
+        // now need to know which nodes have been removed - so the list might need to be sorted first (and of course, Java should have something to do that)
+        // sort the list so the shortest distance nodes are last in the list so they're easy to remove
+        
         qCurrentCount--;
         
+        // add to shortest path if necessary
+        
         for(int i = 0; i < u.adjacentNodeCount; i++) {
-            if (u.adjacentNodes[i].nodeColor == NodeColor.white) {
+            
+            relax(u, u.adjacentNodes[i]);
+            
+            /*if (u.adjacentNodes[i].nodeColor == NodeColor.white) {
                 u.adjacentNodes[i].distance = u.distance + 1;
                 u.adjacentNodes[i].predecessor = u;
                 q.addLast(u.adjacentNodes[i]);
-            }
+            }*/
         }
         shortestPathEdgeCount++;
         
