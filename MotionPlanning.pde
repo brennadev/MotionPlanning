@@ -193,7 +193,6 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 void findShortestPath() {
     LinkedList<SampledPoint> q = new LinkedList();
     
-    // TODO: need to convert sampledPoints to use SampledPoint before uncommenting
     q.addLast(sampledPoints[0]);
     
     
@@ -230,6 +229,7 @@ void findShortestPath() {
         qCurrentCount--;
         
         // add to shortest path if necessary
+        shortestPathEdgeCount++;    // needs to go in the if
         
         for(int i = 0; i < u.adjacentNodeCount; i++) {
             
@@ -241,7 +241,9 @@ void findShortestPath() {
                 q.addLast(u.adjacentNodes[i]);
             }*/
         }
-        shortestPathEdgeCount++;
+        
+       
+        
         
         u.nodeColor = NodeColor.black;
     }
