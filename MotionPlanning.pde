@@ -49,7 +49,7 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 //PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
 //Edge[] shortestPath = new Edge[edgeCount];
-ArrayList<Edge> shortestPath = new ArrayList();
+ArrayList<SampledPoint> shortestPath = new ArrayList();
 int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
 
@@ -244,6 +244,10 @@ void findShortestPath() {
         
         // add to shortest path if necessary
         shortestPathEdgeCount++;    // needs to go in the if
+        
+        if (!shortestPath.contains(u)) {
+            shortestPath.add(u);
+        }
         
         for(int i = 0; i < u.adjacentNodeCount; i++) {
             
