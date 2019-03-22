@@ -198,24 +198,24 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 void findShortestPath() {
     LinkedList<SampledPoint> q = new LinkedList();
     
-    q.addLast(sampledPoints.get(0));
+    //q.addLast(sampledPoints.get(0));
     
     
     // need to make a copy of sampledPoints (defined earlier in program) so that draw works correctly as it uses that array
-    SampledPoint[] qNew = new SampledPoint[samplePointsCount + 2];
+   //SampledPoint[] qNew = new SampledPoint[samplePointsCount + 2];
     
     // the sorted list needs to go here
     
     ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
     //Collections.sort(qNewAgain, Comparator.comparing(SampledPoint::)    // distance? I'm trying to think what needs to be compared on, but the distance isn't set at this point
     
-    for(int i = 0; i < samplePointsCount + 2; i++) {
+    /*for(int i = 0; i < samplePointsCount + 2; i++) {
         qNew[i] = sampledPoints.get(i);
-    }
+    }*/
     
-    int qCurrentCount = samplePointsCount + 2;
+    //int qCurrentCount = samplePointsCount + 2;
     
-    while (!q.isEmpty()) {
+    while (!qNewAgain.isEmpty()) {
         //SampledPoint u = q.removeFirst();
         
         // extract min - I think it looks through all the vertices; finds smallest d; seems like it probably removes it from the queue 
