@@ -94,9 +94,6 @@ void draw() {
     
     for(int i = 0; i < samplePointsCount; i++) {
         circle(sampledPoints.get(i + 2).position.x * scale + originToCenterTranslation, sampledPoints.get(i + 2).position.y * scale * -1 + originToCenterTranslation, 15);
-        //circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale * -1 + originToCenterTranslation, 15);
-        //println("x: " + sampledPoints[i].x);
-        //println("y: " + sampledPoints[i].y);
     }
     
     stroke(0, 200, 255);
@@ -105,16 +102,12 @@ void draw() {
              sampledPoints.get(edges[i].point1).position.y * scale * -1 + originToCenterTranslation, 
              sampledPoints.get(edges[i].point2).position.x * scale + originToCenterTranslation, 
              sampledPoints.get(edges[i].point2).position.y * scale * -1 + originToCenterTranslation);
-        /*line(sampledPoints[edges[i].point1].x * scale + originToCenterTranslation, 
-             sampledPoints[edges[i].point1].y * scale * -1 + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].x * scale + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].y * scale * -1 + originToCenterTranslation);*/
-             
-             
-        /*println("edge point 1 x: " + sampledPoints[edges[i].point1].x);
-        println("edge point 1 y: " + sampledPoints[edges[i].point1].y);
-        println("edge point 2 x: " + sampledPoints[edges[i].point2].x);
-        println("edge point 2 y: " + sampledPoints[edges[i].point2].y);*/
+    }
+    
+    
+    for(int i = 0; i < shortestPath.size(); i++) {
+        fill(i * 40);
+        circle(shortestPath.get(i).position.x * scale + originToCenterTranslation, shortestPath.get(i).position.y * scale * -1 + originToCenterTranslation, 9);
     }
 }
 
@@ -129,11 +122,8 @@ void generateSamplePoints() {
         } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
         sampledPoints.add(new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE));
-        //sampledPoints[i] = newPoint;
     }
 }
-
-
 
 
 // find where the lines between the sample points should go
@@ -151,8 +141,7 @@ void connectSamplePoints() {
                 sampledPoints.get(j).addAdjacentNode(sampledPoints.get(i));
                 
                 index++;
-            }
-            
+            } 
         }
     }
     
@@ -207,29 +196,20 @@ void findShortestPath() {
     // the sorted list needs to go here
     
     ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
-    //Collections.sort(qNewAgain, Comparator.comparing(SampledPoint::)    // distance? I'm trying to think what needs to be compared on, but the distance isn't set at this point
-    
-    /*for(int i = 0; i < samplePointsCount + 2; i++) {
-        qNew[i] = sampledPoints.get(i);
-    }*/
-    
-    //int qCurrentCount = samplePointsCount + 2;
+
     
     while (!qNewAgain.isEmpty()) {
-        //SampledPoint u = q.removeFirst();
-        
-        // extract min - I think it looks through all the vertices; finds smallest d; seems like it probably removes it from the queue 
-        // since it goes until the queue is empty (what the while condition checks)
-        // need to make a copy of sampledPoints - this goes outside the loop in this function
-        // how to get minimum distance - will just need to iterate over the array or whatever way the stuff is stored on each loop 
-        // iteration (otherwise would need to run a sort algorithm first)
+
         
         float shortestDistance = Float.MAX_VALUE;
         SampledPoint u = null;
         
         for(int i = 0; i < qNewAgain.size(); i++) {
+            // TODO: needs to be aware of the removed edges
             if (qNewAgain.get(i).distance < shortestDistance) {
                 u = qNewAgain.get(i);
+                qNewAgain.remove(i);
+                break;
             }
         }
         
@@ -259,9 +239,6 @@ void findShortestPath() {
                 q.addLast(u.adjacentNodes[i]);
             }*/
         }
-        
-       
-        
         
         u.nodeColor = NodeColor.black;
     }
