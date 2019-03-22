@@ -2,6 +2,7 @@
 
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /////////////// Room ///////////////
 
@@ -47,7 +48,8 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 //PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
-Edge[] shortestPath = new Edge[edgeCount];
+//Edge[] shortestPath = new Edge[edgeCount];
+ArrayList<Edge> shortestPath = new ArrayList();
 int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
 
@@ -203,6 +205,10 @@ void findShortestPath() {
     SampledPoint[] qNew = new SampledPoint[samplePointsCount + 2];
     
     // the sorted list needs to go here
+    
+    ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
+    //Collections.sort(qNewAgain, Comparator.comparing(SampledPoint::)    // distance? I'm trying to think what needs to be compared on, but the distance isn't set at this point
+    
     for(int i = 0; i < samplePointsCount + 2; i++) {
         qNew[i] = sampledPoints.get(i);
     }
@@ -210,7 +216,7 @@ void findShortestPath() {
     int qCurrentCount = samplePointsCount + 2;
     
     while (!q.isEmpty()) {
-        SampledPoint u = q.removeFirst();
+        //SampledPoint u = q.removeFirst();
         
         // extract min - I think it looks through all the vertices; finds smallest d; seems like it probably removes it from the queue 
         // since it goes until the queue is empty (what the while condition checks)
@@ -219,17 +225,22 @@ void findShortestPath() {
         // iteration (otherwise would need to run a sort algorithm first)
         
         float shortestDistance = Float.MAX_VALUE;
+        SampledPoint u = null;
         
-        
-        for(int i = 0; i < qCurrentCount; i++) {
-            
+        for(int i = 0; i < qNewAgain.size(); i++) {
+            if (qNewAgain.get(i).distance < shortestDistance) {
+                u = qNewAgain.get(i);
+            }
         }
+        
+        
+
         
         // sorted list goes above
         // now need to know which nodes have been removed - so the list might need to be sorted first (and of course, Java should have something to do that)
         // sort the list so the shortest distance nodes are last in the list so they're easy to remove
         
-        qCurrentCount--;
+
         
         // add to shortest path if necessary
         shortestPathEdgeCount++;    // needs to go in the if
