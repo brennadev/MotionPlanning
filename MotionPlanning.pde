@@ -1,6 +1,7 @@
 // Copyright 2019 Brenna Olson. You may download this code for informational purposes only.
 
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 /////////////// Room ///////////////
 
@@ -41,7 +42,9 @@ final int samplePointsCount = 5;
 int edgeCount = 21;
 
 // points from random sampling to create potential paths
-SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount + 2];    // need to account for start and end points in here too
+//SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount + 2];    // need to account for start and end points in here too
+ArrayList<SampledPoint> sampledPoints = new ArrayList();
+
 //PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
 Edge[] shortestPath = new Edge[edgeCount];
@@ -57,15 +60,15 @@ void setup() {
     size(600, 600, P2D);
     noStroke();
     
-    sampledPoints[0] = new SampledPoint(characterInitialPosition, NodeColor.gray, 0);                   // start node
-    sampledPoints[1] = new SampledPoint(characterFinalPosition, NodeColor.white, Integer.MAX_VALUE);    // end node
+    sampledPoints.add(new SampledPoint(characterInitialPosition, NodeColor.gray, 0));                   // start node
+    sampledPoints.add(new SampledPoint(characterFinalPosition, NodeColor.white, Integer.MAX_VALUE));    // end node
     
     generateSamplePoints();
     connectSamplePoints();
     findShortestPath();
     
     for(int i = 0; i < samplePointsCount + 2; i++) {
-        println(sampledPoints[i].nodeColor);
+        //println(sampledPoints[i].nodeColor);
     }
     
     println(shortestPathEdgeCount);
@@ -88,7 +91,7 @@ void draw() {
     fill(255, 0, 0);
     
     for(int i = 0; i < samplePointsCount; i++) {
-        circle(sampledPoints[i + 2].position.x * scale + originToCenterTranslation, sampledPoints[i + 2].position.y * scale * -1 + originToCenterTranslation, 15);
+        circle(sampledPoints.get(i + 2).position.x * scale + originToCenterTranslation, sampledPoints.get(i + 2).position.y * scale * -1 + originToCenterTranslation, 15);
         //circle(sampledPoints[i].x * scale + originToCenterTranslation, sampledPoints[i].y * scale * -1 + originToCenterTranslation, 15);
         //println("x: " + sampledPoints[i].x);
         //println("y: " + sampledPoints[i].y);
@@ -96,10 +99,10 @@ void draw() {
     
     stroke(0, 200, 255);
     for(int i = 0; i < edgeCount; i++) {
-        line(sampledPoints[edges[i].point1].position.x * scale + originToCenterTranslation, 
-             sampledPoints[edges[i].point1].position.y * scale * -1 + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].position.x * scale + originToCenterTranslation, 
-             sampledPoints[edges[i].point2].position.y * scale * -1 + originToCenterTranslation);
+        line(sampledPoints.get(edges[i].point1).position.x * scale + originToCenterTranslation, 
+             sampledPoints.get(edges[i].point1).position.y * scale * -1 + originToCenterTranslation, 
+             sampledPoints.get(edges[i].point2).position.x * scale + originToCenterTranslation, 
+             sampledPoints.get(edges[i].point2).position.y * scale * -1 + originToCenterTranslation);
         /*line(sampledPoints[edges[i].point1].x * scale + originToCenterTranslation, 
              sampledPoints[edges[i].point1].y * scale * -1 + originToCenterTranslation, 
              sampledPoints[edges[i].point2].x * scale + originToCenterTranslation, 
@@ -123,7 +126,7 @@ void generateSamplePoints() {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
         } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
-        sampledPoints[i + 2] = new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE);
+        sampledPoints.add(new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE));
         //sampledPoints[i] = newPoint;
     }
 }
@@ -138,12 +141,12 @@ void connectSamplePoints() {
         for(int j = i + 1; j < samplePointsCount + 2; j++) {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
-            if (!edgeHitsObstacle(sampledPoints[i].position, PVector.sub(sampledPoints[j].position, sampledPoints[i].position), t)) {
+            if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
             //if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
                 edges[index] = new Edge(i, j);
                 
-                sampledPoints[i].addAdjacentNode(sampledPoints[j]);
-                sampledPoints[j].addAdjacentNode(sampledPoints[i]);
+                sampledPoints.get(i).addAdjacentNode(sampledPoints.get(j));
+                sampledPoints.get(j).addAdjacentNode(sampledPoints.get(i));
                 
                 index++;
             }
@@ -193,7 +196,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 void findShortestPath() {
     LinkedList<SampledPoint> q = new LinkedList();
     
-    q.addLast(sampledPoints[0]);
+    q.addLast(sampledPoints.get(0));
     
     
     // need to make a copy of sampledPoints (defined earlier in program) so that draw works correctly as it uses that array
@@ -201,7 +204,7 @@ void findShortestPath() {
     
     // the sorted list needs to go here
     for(int i = 0; i < samplePointsCount + 2; i++) {
-        qNew[i] = sampledPoints[i];
+        qNew[i] = sampledPoints.get(i);
     }
     
     int qCurrentCount = samplePointsCount + 2;
