@@ -232,12 +232,6 @@ void findShortestPath() {
         for(int i = 0; i < u.adjacentNodeCount; i++) {
             
             relax(u, u.adjacentNodes[i]);
-            
-            /*if (u.adjacentNodes[i].nodeColor == NodeColor.white) {
-                u.adjacentNodes[i].distance = u.distance + 1;
-                u.adjacentNodes[i].predecessor = u;
-                q.addLast(u.adjacentNodes[i]);
-            }*/
         }
         
         u.nodeColor = NodeColor.black;
@@ -247,6 +241,7 @@ void findShortestPath() {
 
 
 void relax(SampledPoint from, SampledPoint to) {
+    
     float distance = abs(PVector.dist(from.position, to.position));
     
     if (to.distance > from.distance + distance) {
