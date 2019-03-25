@@ -175,7 +175,6 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 
 void findShortestPath() {
-    
     ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
     
     while (!qNewAgain.isEmpty()) { 
@@ -197,6 +196,10 @@ void findShortestPath() {
         
         if (!shortestPath.contains(u)) {
             shortestPath.add(u);
+        }
+        
+        if (u.position == characterFinalPosition) {
+            return;
         }
         
         for(int i = 0; i < u.adjacentNodeCount; i++) {
