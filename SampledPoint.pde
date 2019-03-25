@@ -10,15 +10,13 @@ class SampledPoint {
     PVector position;
     SampledPoint[] adjacentNodes;
     int adjacentNodeCount;
-    NodeColor nodeColor;
     float distance;
     SampledPoint predecessor;
     
-    SampledPoint(PVector position, NodeColor nodeColor, float distance) {
+    SampledPoint(PVector position,  float distance) {
         this.position = position;
         adjacentNodeCount = 0;
         adjacentNodes = new SampledPoint[samplePointsCount + 1];
-        this.nodeColor = nodeColor;
         this.distance = distance;
         predecessor = null;
     }

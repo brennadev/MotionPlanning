@@ -61,8 +61,8 @@ void setup() {
     size(600, 600, P2D);
     noStroke();
     
-    sampledPoints.add(new SampledPoint(characterInitialPosition, NodeColor.gray, 0));                   // start node
-    sampledPoints.add(new SampledPoint(characterFinalPosition, NodeColor.white, Integer.MAX_VALUE));    // end node
+    sampledPoints.add(new SampledPoint(characterInitialPosition, 0));                   // start node
+    sampledPoints.add(new SampledPoint(characterFinalPosition, Integer.MAX_VALUE));    // end node
     
     generateSamplePoints();
     connectSamplePoints();
@@ -123,7 +123,7 @@ void generateSamplePoints() {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
         } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
         
-        sampledPoints.add(new SampledPoint(newPoint, NodeColor.white, Integer.MAX_VALUE));
+        sampledPoints.add(new SampledPoint(newPoint, Integer.MAX_VALUE));
     }
 }
 
