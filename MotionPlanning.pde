@@ -78,9 +78,6 @@ void setup() {
 
 
 void draw() {
-    // TODO: code for moving character along path here
-    
-    
     background(0);
     fill(255);
     noStroke();
@@ -103,11 +100,17 @@ void draw() {
              sampledPoints.get(edges[i].point2).position.y * scale * -1 + originToCenterTranslation);
     }
     
-    
+    noStroke();
     for(int i = 0; i < shortestPath.size(); i++) {
         fill(i * 40);
         circle(shortestPath.get(i).position.x * scale + originToCenterTranslation, shortestPath.get(i).position.y * scale * -1 + originToCenterTranslation, 9);
     }
+    
+    fill(0, 255, 0);
+    
+    // TODO: character position update (update characterCurrentPosition)
+    
+    circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, 20); 
 }
 
 
@@ -133,7 +136,6 @@ void connectSamplePoints() {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
-            //if (!edgeHitsObstacle(sampledPoints[i], PVector.sub(sampledPoints[j], sampledPoints[i]), t)) {
                 edges[index] = new Edge(i, j);
                 
                 sampledPoints.get(i).addAdjacentNode(sampledPoints.get(j));
