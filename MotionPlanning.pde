@@ -65,10 +65,6 @@ void setup() {
     connectSamplePoints();
     findShortestPath();
     
-    for(int i = 0; i < samplePointsCount + 2; i++) {
-        //println(sampledPoints[i].nodeColor);
-    }
-    
     println(shortestPathEdgeCount);
 }
 
@@ -141,6 +137,7 @@ void connectSamplePoints() {
     }
 }
 
+
 // ray-object intersection test to check for edges that intersect the obstacle; adapted from my 5607 ray tracer
 boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
     
@@ -180,7 +177,6 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 void findShortestPath() {
     
     ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
-
     
     while (!qNewAgain.isEmpty()) { 
         float shortestDistance = Float.MAX_VALUE;
@@ -207,7 +203,6 @@ void findShortestPath() {
             relax(u, u.adjacentNodes[i]);
         }
     }
-    
 }
 
 
