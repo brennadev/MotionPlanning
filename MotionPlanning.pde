@@ -72,7 +72,6 @@ void setup() {
     }
     
     println(shortestPathEdgeCount);
-    
 }
 
 
@@ -92,11 +91,21 @@ void draw() {
     }
     
     stroke(0, 200, 255);
-    for(int i = 0; i < edgeCount; i++) {
+    /*for(int i = 0; i < edgeCount; i++) {
         line(sampledPoints.get(edges[i].point1).position.x * scale + originToCenterTranslation, 
              sampledPoints.get(edges[i].point1).position.y * scale * -1 + originToCenterTranslation, 
              sampledPoints.get(edges[i].point2).position.x * scale + originToCenterTranslation, 
              sampledPoints.get(edges[i].point2).position.y * scale * -1 + originToCenterTranslation);
+    }*/
+    
+    
+    for(int i = 0; i < samplePointsCount; i++) {
+        for(int j = 0; j < sampledPoints.get(i).adjacentNodeCount; j++) {
+            line(sampledPoints.get(i).position.x * scale + originToCenterTranslation,
+                sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation,
+                sampledPoints.get(i).adjacentNodes[j].position.x * scale + originToCenterTranslation,
+                sampledPoints.get(i).adjacentNodes[j].position.y * scale * -1 + originToCenterTranslation);
+        }
     }
     
     noStroke();
@@ -109,7 +118,7 @@ void draw() {
     
     // TODO: character position update (update characterCurrentPosition)
     
-    circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, 20); 
+    //circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, 20); 
 }
 
 
