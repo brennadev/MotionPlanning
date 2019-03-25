@@ -38,15 +38,13 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 //final int samplePointsCount = 20;
 final int samplePointsCount = 5;
-//int edgeCount = 190;
-int edgeCount = 21;
+
 
 // points from random sampling to create potential paths
 //SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount + 2];    // need to account for start and end points in here too
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 //PVector[] sampledPoints = new PVector[samplePointsCount];
-Edge[] edges = new Edge[edgeCount];
 ArrayList<SampledPoint> shortestPath = new ArrayList();
 int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
@@ -91,13 +89,6 @@ void draw() {
     }
     
     stroke(0, 200, 255);
-    /*for(int i = 0; i < edgeCount; i++) {
-        line(sampledPoints.get(edges[i].point1).position.x * scale + originToCenterTranslation, 
-             sampledPoints.get(edges[i].point1).position.y * scale * -1 + originToCenterTranslation, 
-             sampledPoints.get(edges[i].point2).position.x * scale + originToCenterTranslation, 
-             sampledPoints.get(edges[i].point2).position.y * scale * -1 + originToCenterTranslation);
-    }*/
-    
     
     for(int i = 0; i < samplePointsCount; i++) {
         for(int j = 0; j < sampledPoints.get(i).adjacentNodeCount; j++) {
@@ -138,23 +129,16 @@ void generateSamplePoints() {
 
 // find where the lines between the sample points should go
 void connectSamplePoints() {
-    int index = 0;
     for(int i = 0; i < samplePointsCount + 2; i++) {
         for(int j = i + 1; j < samplePointsCount + 2; j++) {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
-                edges[index] = new Edge(i, j);
-                
                 sampledPoints.get(i).addAdjacentNode(sampledPoints.get(j));
                 sampledPoints.get(j).addAdjacentNode(sampledPoints.get(i));
-                
-                index++;
             } 
         }
     }
-    
-    edgeCount = index;
 }
 
 // ray-object intersection test to check for edges that intersect the obstacle; adapted from my 5607 ray tracer
