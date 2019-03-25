@@ -38,7 +38,6 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 //final int samplePointsCount = 20;
 final int samplePointsCount = 5;
-//final int edgeCount = 190;    // based on 20 points
 //int edgeCount = 190;
 int edgeCount = 21;
 

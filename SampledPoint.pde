@@ -1,11 +1,5 @@
 // Copyright 2019 Brenna Olson. All rights reserved. You may download this code for informational purposes only.
 
-enum NodeColor {
-    white,
-    gray, 
-    black
-}
-
 class SampledPoint {
     PVector position;
     SampledPoint[] adjacentNodes;
@@ -25,7 +19,4 @@ class SampledPoint {
         adjacentNodes[adjacentNodeCount] = node;
         adjacentNodeCount++;
     }
-    
-    
-
 }
