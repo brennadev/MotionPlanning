@@ -58,7 +58,7 @@ void setup() {
     
     generateSamplePoints();
     connectSamplePoints();
-    findShortestPath();
+    findShortestPathNew();
     
     // adjacent node values look correct
     
@@ -90,6 +90,17 @@ void draw() {
                 sampledPoints.get(i).adjacentNodes.get(j).position.x * scale + originToCenterTranslation,
                 sampledPoints.get(i).adjacentNodes.get(j).position.y * scale * -1 + originToCenterTranslation);
         }
+    }
+    
+    SampledPoint current = sampledPoints.get(1);
+    
+    stroke(0, 255, 0);
+    while (current.predecessor != null) {
+        line(current.position.x * scale + originToCenterTranslation,
+            current.position.y * scale * -1 + originToCenterTranslation,
+            current.predecessor.position.x * scale + originToCenterTranslation,
+            current.predecessor.position.y * scale * -1 + originToCenterTranslation);
+        current = current.predecessor;
     }
     
     noStroke();
