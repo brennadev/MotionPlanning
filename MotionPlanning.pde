@@ -55,10 +55,6 @@ void setup() {
     generateSamplePoints();
     connectSamplePoints();
     findShortestPathNew();
-    
-    // adjacent node values look correct
-    
-    println(shortestPathEdgeCount);
 }
 
 
@@ -100,10 +96,10 @@ void draw() {
     }
     
     noStroke();
-    for(int i = 0; i < shortestPath.size(); i++) {
+    /*for(int i = 0; i < shortestPath.size(); i++) {
         fill(i * 40);
         circle(shortestPath.get(i).position.x * scale + originToCenterTranslation, shortestPath.get(i).position.y * scale * -1 + originToCenterTranslation, 9);
-    }
+    }*/
     
     fill(0, 255, 0);
 }
@@ -203,7 +199,7 @@ void findShortestPathNew() {
 }
 
 
-// Returns the SampledPoint with the smallest distance value in the queue; will return null if the queue is empty
+// Returns the SampledPoint with the smallest distance value in the queue; will return null if the queue is empty (helper for shortest path function)
 SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
     float smallestDistance = Float.MAX_VALUE;
     SampledPoint pointWithSmallestDistance = null;
