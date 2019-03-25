@@ -206,6 +206,7 @@ void findShortestPath() {
     }
 }
 
+
 void findShortestPathNew() {
     ArrayList<SampledPoint> q = new ArrayList();
     q.add(sampledPoints.get(0));    // add starting node
@@ -217,9 +218,12 @@ void findShortestPathNew() {
         q.remove(u);
         
         for(int i = 0; i < u.adjacentNodes.size(); i++) {
-            float distanceToAdjacentNode = PVector.dist(u.position, u.adjacentNodes.get(i).position);
+            float distanceToAdjacentNodeFromStart = PVector.dist(u.position, u.adjacentNodes.get(i).position) + u.distance;
             
-            
+            if (distanceToAdjacentNodeFromStart < u.adjacentNodes.get(i).distance) {
+                u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
+                q.add(u.adjacentNodes.get(i));
+            }
         }
     }
 }
