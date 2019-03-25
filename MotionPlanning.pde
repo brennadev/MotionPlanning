@@ -172,18 +172,18 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 
 void findShortestPath() {
-    ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
+    ArrayList<SampledPoint> q = new ArrayList(sampledPoints);
     
     
-    while (!qNewAgain.isEmpty()) { 
+    while (!q.isEmpty()) { 
         float shortestDistance = Float.MAX_VALUE;
         SampledPoint u = null;
         
-        for(int i = 0; i < qNewAgain.size(); i++) {
+        for(int i = 0; i < q.size(); i++) {
             // TODO: needs to be aware of the removed edges
-            if (qNewAgain.get(i).distance < shortestDistance && (u == null || u.adjacentNodes.contains(qNewAgain.get(i)))) {
-                u = qNewAgain.get(i);
-                qNewAgain.remove(i);
+            if (q.get(i).distance < shortestDistance && (u == null || u.adjacentNodes.contains(q.get(i)))) {
+                u = q.get(i);
+                q.remove(i);
                 break;
             }
         }

@@ -16,9 +16,4 @@ class SampledPoint {
         this.distance = distance;
         predecessor = null;
     }
-    
-    /*void addAdjacentNode(SampledPoint node) {
-        adjacentNodes[adjacentNodeCount] = node;
-        adjacentNodeCount++;
-    }*/
 }
