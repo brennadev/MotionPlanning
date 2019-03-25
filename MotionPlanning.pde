@@ -35,16 +35,12 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 
 /////////////// Motion Planning ///////////////
-
-//final int samplePointsCount = 20;
-final int samplePointsCount = 5;
+final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 
 
 // points from random sampling to create potential paths
-//SampledPoint[] sampledPoints = new SampledPoint[samplePointsCount + 2];    // need to account for start and end points in here too
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
-//PVector[] sampledPoints = new PVector[samplePointsCount];
 ArrayList<SampledPoint> shortestPath = new ArrayList();
 int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
@@ -110,10 +106,6 @@ void draw() {
     }
     
     fill(0, 255, 0);
-    
-    // TODO: character position update (update characterCurrentPosition)
-    
-    //circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, 20); 
 }
 
 
@@ -182,42 +174,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 }
 
 
-void findShortestPath() {
-    ArrayList<SampledPoint> q = new ArrayList(sampledPoints);
-    
-    
-    while (!q.isEmpty()) { 
-        float shortestDistance = Float.MAX_VALUE;
-        SampledPoint u = null;
-        
-        for(int i = 0; i < q.size(); i++) {
-            // TODO: needs to be aware of the removed edges
-            if (q.get(i).distance < shortestDistance && (u == null || u.adjacentNodes.contains(q.get(i)))) {
-                u = q.get(i);
-                q.remove(i);
-                break;
-            }
-        }
-        
-        
-        // add to shortest path if necessary
-        shortestPathEdgeCount++;    // needs to go in the if
-        
-        if (!shortestPath.contains(u)) {
-            shortestPath.add(u);
-        }
-        
-        if (u.position == characterFinalPosition) {
-            return;
-        }
-        
-        for(int i = 0; i < u.adjacentNodes.size(); i++) {
-            relax(u, u.adjacentNodes.get(i));
-        }
-    }
-}
-
-
+// Uniform cost search
 void findShortestPathNew() {
     ArrayList<SampledPoint> q = new ArrayList();
     q.add(sampledPoints.get(0));    // add starting node
@@ -259,15 +216,4 @@ SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
     }
     
     return pointWithSmallestDistance;
-}
-
-
-void relax(SampledPoint from, SampledPoint to) {
-    
-    float distance = abs(PVector.dist(from.position, to.position));
-    
-    if (to.distance > from.distance + distance) {
-        to.distance = from.distance + distance;
-        to.predecessor = from;
-    }
 }
