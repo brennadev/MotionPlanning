@@ -49,11 +49,6 @@ ArrayList<SampledPoint> shortestPath = new ArrayList();
 int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
 
-// TODO: probably need a limit on how many edges to travel (what goes as the size of edgesToTravel since I just stuck a value in for now)
-int edgesToTravelCount = 0;    // TODO: of course this value needs to be changed (and it'll get set at a later point anyway, so the value here may not matter)
-Edge[] edgesToTravel = new Edge[10];
-
-
 void setup() {
     size(600, 600, P2D);
     noStroke();
@@ -64,10 +59,6 @@ void setup() {
     generateSamplePoints();
     connectSamplePoints();
     findShortestPath();
-    
-    for(int i = 0; i < sampledPoints.size(); i++) {
-        //println(sampledPoints.get(i).adjacentNodeCount);
-    }
     
     // adjacent node values look correct
     
