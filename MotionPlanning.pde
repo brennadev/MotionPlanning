@@ -66,7 +66,7 @@ void setup() {
     findShortestPath();
     
     for(int i = 0; i < sampledPoints.size(); i++) {
-        println(sampledPoints.get(i).adjacentNodeCount);
+        //println(sampledPoints.get(i).adjacentNodeCount);
     }
     
     // adjacent node values look correct
@@ -93,11 +93,11 @@ void draw() {
     stroke(0, 200, 255);
     
     for(int i = 0; i < samplePointsCount; i++) {
-        for(int j = 0; j < sampledPoints.get(i).adjacentNodeCount; j++) {
+        for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
             line(sampledPoints.get(i).position.x * scale + originToCenterTranslation,
                 sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation,
-                sampledPoints.get(i).adjacentNodes[j].position.x * scale + originToCenterTranslation,
-                sampledPoints.get(i).adjacentNodes[j].position.y * scale * -1 + originToCenterTranslation);
+                sampledPoints.get(i).adjacentNodes.get(j).position.x * scale + originToCenterTranslation,
+                sampledPoints.get(i).adjacentNodes.get(j).position.y * scale * -1 + originToCenterTranslation);
         }
     }
     
@@ -136,8 +136,8 @@ void connectSamplePoints() {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
-                sampledPoints.get(i).addAdjacentNode(sampledPoints.get(j));
-                sampledPoints.get(j).addAdjacentNode(sampledPoints.get(i));
+                sampledPoints.get(i).adjacentNodes.add(sampledPoints.get(j));
+                sampledPoints.get(j).adjacentNodes.add(sampledPoints.get(i));
             } 
         }
     }
@@ -190,7 +190,7 @@ void findShortestPath() {
         
         for(int i = 0; i < qNewAgain.size(); i++) {
             // TODO: needs to be aware of the removed edges
-            if (qNewAgain.get(i).distance < shortestDistance && ) {
+            if (qNewAgain.get(i).distance < shortestDistance && (u == null || u.adjacentNodes.contains(qNewAgain.get(i)))) {
                 u = qNewAgain.get(i);
                 qNewAgain.remove(i);
                 break;
@@ -209,8 +209,8 @@ void findShortestPath() {
             return;
         }
         
-        for(int i = 0; i < u.adjacentNodeCount; i++) {
-            relax(u, u.adjacentNodes[i]);
+        for(int i = 0; i < u.adjacentNodes.size(); i++) {
+            relax(u, u.adjacentNodes.get(i));
         }
     }
 }
