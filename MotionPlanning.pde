@@ -223,6 +223,12 @@ void findShortestPathNew() {
             if (distanceToAdjacentNodeFromStart < u.adjacentNodes.get(i).distance) {
                 u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
                 q.add(u.adjacentNodes.get(i));
+                u.adjacentNodes.get(i).predecessor = u;
+                
+                // may need to update if the end node has been in the queue
+                if (u.adjacentNodes.get(i) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
+                    endNodeHasBeenInQueue = true;
+                }
             }
         }
     }
