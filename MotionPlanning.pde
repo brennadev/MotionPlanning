@@ -206,6 +206,40 @@ void findShortestPath() {
     }
 }
 
+void findShortestPathNew() {
+    ArrayList<SampledPoint> q = new ArrayList();
+    q.add(sampledPoints.get(0));    // add starting node
+    boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
+    
+    // while the end node isn't fully processed
+    while(q.contains(sampledPoints.get(1)) || !endNodeHasBeenInQueue) {
+        SampledPoint u = getSmallestDistance(q);
+        q.remove(u);
+        
+        for(int i = 0; i < u.adjacentNodes.size(); i++) {
+            float distanceToAdjacentNode = PVector.dist(u.position, u.adjacentNodes.get(i).position);
+            
+            
+        }
+    }
+}
+
+
+// Returns the SampledPoint with the smallest distance value in the queue; will return null if the queue is empty
+SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
+    float smallestDistance = Float.MAX_VALUE;
+    SampledPoint pointWithSmallestDistance = null;
+    
+    for(int i = 0; i < q.size(); i++) {
+        if (q.get(i).distance < smallestDistance) {
+            pointWithSmallestDistance = q.get(i);
+            smallestDistance = q.get(i).distance;
+        }
+    }
+    
+    return pointWithSmallestDistance;
+}
+
 
 void relax(SampledPoint from, SampledPoint to) {
     
