@@ -2,7 +2,8 @@
 
 class SampledPoint {
     PVector position;
-    SampledPoint[] adjacentNodes;
+    //SampledPoint[] adjacentNodes;
+    ArrayList<SampledPoint> adjacentNodes;
     int adjacentNodeCount;
     float distance;
     SampledPoint predecessor;
@@ -10,13 +11,14 @@ class SampledPoint {
     SampledPoint(PVector position,  float distance) {
         this.position = position;
         adjacentNodeCount = 0;
-        adjacentNodes = new SampledPoint[samplePointsCount + 1];
+        //adjacentNodes = new SampledPoint[samplePointsCount + 1];
+        adjacentNodes = new ArrayList();
         this.distance = distance;
         predecessor = null;
     }
     
-    void addAdjacentNode(SampledPoint node) {
+    /*void addAdjacentNode(SampledPoint node) {
         adjacentNodes[adjacentNodeCount] = node;
         adjacentNodeCount++;
-    }
+    }*/
 }

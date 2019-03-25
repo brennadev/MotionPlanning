@@ -65,6 +65,12 @@ void setup() {
     connectSamplePoints();
     findShortestPath();
     
+    for(int i = 0; i < sampledPoints.size(); i++) {
+        println(sampledPoints.get(i).adjacentNodeCount);
+    }
+    
+    // adjacent node values look correct
+    
     println(shortestPathEdgeCount);
 }
 
@@ -177,13 +183,14 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 void findShortestPath() {
     ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
     
+    
     while (!qNewAgain.isEmpty()) { 
         float shortestDistance = Float.MAX_VALUE;
         SampledPoint u = null;
         
         for(int i = 0; i < qNewAgain.size(); i++) {
             // TODO: needs to be aware of the removed edges
-            if (qNewAgain.get(i).distance < shortestDistance) {
+            if (qNewAgain.get(i).distance < shortestDistance && ) {
                 u = qNewAgain.get(i);
                 qNewAgain.remove(i);
                 break;
