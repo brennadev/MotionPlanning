@@ -48,7 +48,6 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 //PVector[] sampledPoints = new PVector[samplePointsCount];
 Edge[] edges = new Edge[edgeCount];
-//Edge[] shortestPath = new Edge[edgeCount];
 ArrayList<SampledPoint> shortestPath = new ArrayList();
 int shortestPathEdgeCount = 0;    // will get incremented once the path is found
 
@@ -185,22 +184,11 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 
 void findShortestPath() {
-    LinkedList<SampledPoint> q = new LinkedList();
-    
-    //q.addLast(sampledPoints.get(0));
-    
-    
-    // need to make a copy of sampledPoints (defined earlier in program) so that draw works correctly as it uses that array
-   //SampledPoint[] qNew = new SampledPoint[samplePointsCount + 2];
-    
-    // the sorted list needs to go here
     
     ArrayList<SampledPoint> qNewAgain = new ArrayList(sampledPoints);
 
     
-    while (!qNewAgain.isEmpty()) {
-
-        
+    while (!qNewAgain.isEmpty()) { 
         float shortestDistance = Float.MAX_VALUE;
         SampledPoint u = null;
         
@@ -214,14 +202,6 @@ void findShortestPath() {
         }
         
         
-
-        
-        // sorted list goes above
-        // now need to know which nodes have been removed - so the list might need to be sorted first (and of course, Java should have something to do that)
-        // sort the list so the shortest distance nodes are last in the list so they're easy to remove
-        
-
-        
         // add to shortest path if necessary
         shortestPathEdgeCount++;    // needs to go in the if
         
@@ -230,11 +210,8 @@ void findShortestPath() {
         }
         
         for(int i = 0; i < u.adjacentNodeCount; i++) {
-            
             relax(u, u.adjacentNodes[i]);
         }
-        
-        u.nodeColor = NodeColor.black;
     }
     
 }
