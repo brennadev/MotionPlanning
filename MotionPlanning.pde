@@ -78,6 +78,16 @@ void draw() {
         float scalarDistanceToNextPoint = currentPoint.scalarDistanceToSuccessor - scalarDistanceFromCurrentPoint;
         
         if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
+            // get to the end of the current edge
+            characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, scalarDistanceToNextPoint));
+            
+            currentPoint = currentPoint.successor;
+            
+            // once at end point, nothing more needs to be done
+            if (currentPoint == sampledPoints.get(1)) {
+                isAtEnd = true;
+                return;
+            }
         } else {
         }
     }
