@@ -33,6 +33,7 @@ final PVector characterFinalPosition = new PVector(9, 9);
 // where character currently is located on map
 PVector characterCurrentPosition = new PVector(characterInitialPosition.x, characterInitialPosition.y);
 
+float characterRadius = 0.5;
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
@@ -139,7 +140,9 @@ void draw() {
         current = current.successor;
     }
     
-    
+    noStroke();
+    fill(0, 255, 0);
+    circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, characterRadius * 2 * scale);
 }
 
 
