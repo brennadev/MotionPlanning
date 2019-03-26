@@ -43,6 +43,7 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 float distanceToTravelPerFrame = 0.1;    // TODO: may need to adjust this
 SampledPoint currentPoint;               // immediate point the character is after (or at)
+float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
 
 
 void setup() {
