@@ -52,6 +52,10 @@ boolean isAtEnd = false;                // indicates when at the end of the path
 
 void setup() {
     size(600, 600, P2D);
+    
+    Obstacle first = new Obstacle(new PVector(0, 0), 2);
+    obstacles.add(first);
+    
     noStroke();
     
     sampledPoints.add(new SampledPoint(characterInitialPosition, 0));                   // start node
@@ -111,7 +115,14 @@ void draw() {
     background(0);
     fill(255);
     noStroke();
-    circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * 2 * scale);
+    
+    for(int i = 0; i < obstacles.size(); i++) {
+        circle(obstacles.get(i).position.x * scale + originToCenterTranslation, 
+               obstacles.get(i).position.y * scale * -1 + originToCenterTranslation, 
+               obstacles.get(i).radius * 2 * scale);
+    }
+    
+    //circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * 2 * scale);
     circle(characterInitialPosition.x * scale + originToCenterTranslation, characterInitialPosition.y * scale * -1 + originToCenterTranslation, 15);
     circle(characterFinalPosition.x * scale + originToCenterTranslation, characterFinalPosition.y * scale * -1 + originToCenterTranslation, 15);
     
