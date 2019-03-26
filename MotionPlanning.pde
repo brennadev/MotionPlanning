@@ -36,7 +36,7 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 float characterRadius = 0.5;
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 85;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 
 
 // points from random sampling to create potential paths
