@@ -36,7 +36,7 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 float characterRadius = 0.5;
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 85;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 
 
 // points from random sampling to create potential paths
@@ -155,7 +155,7 @@ void generateSamplePoints() {
         
         do {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
-        } while (newPoint.dist(obstaclePosition) <= obstacleRadius);
+        } while (newPoint.dist(obstaclePosition) <= obstacleRadius + characterRadius);
         
         sampledPoints.add(new SampledPoint(newPoint, Integer.MAX_VALUE));
     }
@@ -184,7 +184,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
     
     float a = 1;
     float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstaclePosition));
-    float c = pow(abs(PVector.sub(origin, obstaclePosition).mag()), 2) - pow(obstacleRadius, 2);
+    float c = pow(abs(PVector.sub(origin, obstaclePosition).mag()), 2) - pow(obstacleRadius + characterRadius, 2);
     
     float discriminant = pow(b, 2) - 4 * a * c;
     
