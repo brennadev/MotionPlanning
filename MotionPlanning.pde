@@ -42,7 +42,7 @@ final int samplePointsCount = 5;    // even though ArrayList is used, this is st
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 float distanceToTravelPerFrame = 0.1;    // TODO: may need to adjust this
-//SampledPoint currentPoint = sampledPoints.get(0);    // immediate point the character is after (or at)
+SampledPoint currentPoint;               // immediate point the character is after (or at)
 
 
 void setup() {
@@ -56,12 +56,15 @@ void setup() {
     connectSamplePoints();
     findShortestPathNew();
     
+    currentPoint = sampledPoints.get(0);    // of course, the simulation needs to start at the starting point
+    
     // set the successors once we know all predecessors
     SampledPoint current = sampledPoints.get(1);
     
     while (current.predecessor != null) {
         current.predecessor.successor = current;
         current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
+        current.predecessor.scalarDistanceToSuccessor = PVector.dist(current.predecessor.position, current.position);
         current = current.predecessor;
     }
 }
@@ -92,20 +95,9 @@ void draw() {
                 sampledPoints.get(i).adjacentNodes.get(j).position.y * scale * -1 + originToCenterTranslation);
         }
     }
-    
-    
-   /* SampledPoint current = sampledPoints.get(1);
-    
-    while (current.predecessor != null) {
-        current.predecessor.successor = current;
-        //current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
-        current = current.predecessor;
-    }
-    
-     */
      
      stroke(0, 255, 0);
-    SampledPoint current = sampledPoints.get(0);
+     SampledPoint current = sampledPoints.get(0);
     
     while (current.successor != null) {
         line(current.position.x * scale + originToCenterTranslation,
