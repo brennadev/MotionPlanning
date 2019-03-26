@@ -44,6 +44,7 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 float distanceToTravelPerFrame = 0.1;    // TODO: may need to adjust this
 SampledPoint currentPoint;               // immediate point the character is after (or at)
 float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
+boolean isAtEnd = false;                // indicates when at the end of the path
 
 
 void setup() {
@@ -72,6 +73,17 @@ void setup() {
 
 
 void draw() {
+    if (!isAtEnd) {
+        // how much distance remains until reaching the next point on the path
+        float scalarDistanceToNextPoint = currentPoint.scalarDistanceToSuccessor - scalarDistanceFromCurrentPoint;
+        
+        if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
+        } else {
+        }
+    }
+    
+    
+    
     background(0);
     fill(255);
     noStroke();
