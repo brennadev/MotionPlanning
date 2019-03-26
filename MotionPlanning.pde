@@ -62,7 +62,7 @@ void draw() {
     background(0);
     fill(255);
     noStroke();
-    circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * scale);
+    circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * 2 * scale);
     circle(characterInitialPosition.x * scale + originToCenterTranslation, characterInitialPosition.y * scale * -1 + originToCenterTranslation, 15);
     circle(characterFinalPosition.x * scale + originToCenterTranslation, characterFinalPosition.y * scale * -1 + originToCenterTranslation, 15);
     
@@ -94,14 +94,6 @@ void draw() {
             current.predecessor.position.y * scale * -1 + originToCenterTranslation);
         current = current.predecessor;
     }
-    
-    noStroke();
-    /*for(int i = 0; i < shortestPath.size(); i++) {
-        fill(i * 40);
-        circle(shortestPath.get(i).position.x * scale + originToCenterTranslation, shortestPath.get(i).position.y * scale * -1 + originToCenterTranslation, 9);
-    }*/
-    
-    fill(0, 255, 0);
 }
 
 
@@ -177,7 +169,7 @@ void findShortestPathNew() {
     boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
     
     // while the end node isn't fully processed
-    while(q.contains(sampledPoints.get(1)) || !endNodeHasBeenInQueue) {
+    while((q.contains(sampledPoints.get(1)) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
         SampledPoint u = getSmallestDistance(q);
         q.remove(u);
         
