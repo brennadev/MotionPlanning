@@ -14,7 +14,6 @@ final float roomSize = 20;
 
 // how many times bigger to make everything when rendering so it can be easily seen
 final float scale = 30;
-
 final float originToCenterTranslation = 300;
 
 /////////////// Obstacle ///////////////
@@ -42,7 +41,7 @@ final int samplePointsCount = 5;    // even though ArrayList is used, this is st
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
-float distanceToTravelPerFrame = 0.05;    // TODO: may need to adjust this
+float distanceToTravelPerFrame = 0.05;
 SampledPoint currentPoint;               // immediate point the character is after (or at)
 float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
 boolean isAtEnd = false;                // indicates when at the end of the path
