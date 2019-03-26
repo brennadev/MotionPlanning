@@ -35,7 +35,7 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 35;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 
 
 // points from random sampling to create potential paths
@@ -92,8 +92,23 @@ void draw() {
             current.position.y * scale * -1 + originToCenterTranslation,
             current.predecessor.position.x * scale + originToCenterTranslation,
             current.predecessor.position.y * scale * -1 + originToCenterTranslation);
+            current.predecessor.successor = current;
         current = current.predecessor;
+        
     }
+    
+    current = sampledPoints.get(0);
+    
+    stroke(255, 0, 0);
+    while (current.successor != null) {
+        line(current.position.x * scale + originToCenterTranslation,
+        current.position.y * scale * -1 + originToCenterTranslation,
+        current.successor.position.x * scale + originToCenterTranslation,
+        current.successor.position.y * scale * -1 + originToCenterTranslation);
+        current = current.successor;
+    }
+    
+    
 }
 
 
@@ -180,6 +195,7 @@ void findShortestPathNew() {
                 u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
                 q.add(u.adjacentNodes.get(i));
                 u.adjacentNodes.get(i).predecessor = u;
+                u.successor = u.adjacentNodes.get(i);
                 
                 // may need to update if the end node has been in the queue
                 if (u.adjacentNodes.get(i) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
