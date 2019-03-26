@@ -42,7 +42,7 @@ final int samplePointsCount = 5;    // even though ArrayList is used, this is st
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
-float distanceToTravelPerFrame = 0.1;    // TODO: may need to adjust this
+float distanceToTravelPerFrame = 0.05;    // TODO: may need to adjust this
 SampledPoint currentPoint;               // immediate point the character is after (or at)
 float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
 boolean isAtEnd = false;                // indicates when at the end of the path
@@ -95,10 +95,12 @@ void draw() {
             float scalarDistanceFromNewCurrentPoint = distanceToTravelPerFrame - scalarDistanceToNextPoint;
             
             characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, scalarDistanceFromNewCurrentPoint));
+            scalarDistanceFromCurrentPoint = scalarDistanceFromNewCurrentPoint;
             
         // normally...    
         } else {
             characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, distanceToTravelPerFrame));
+            scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
         }
     }
     
