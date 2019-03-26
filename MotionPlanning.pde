@@ -20,8 +20,11 @@ final float originToCenterTranslation = 300;
 final float obstacleRadius = 2;
 final PVector obstaclePosition = new PVector(0, 0);
 
+ArrayList<Obstacle> obstacles = new ArrayList();
 
 /////////////// Character ///////////////
+
+ArrayList<Agent> agents = new ArrayList();
 
 // character starts here
 final PVector characterInitialPosition = new PVector(-9, -9);
