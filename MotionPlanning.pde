@@ -35,14 +35,14 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 35;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
-ArrayList<SampledPoint> shortestPath = new ArrayList();
-int shortestPathEdgeCount = 0;    // will get incremented once the path is found
+float distanceToTravelPerFrame = 0.1;    // TODO: may need to adjust this
+//SampledPoint currentPoint = sampledPoints.get(0);    // immediate point the character is after (or at)
 
 
 void setup() {
@@ -55,6 +55,15 @@ void setup() {
     generateSamplePoints();
     connectSamplePoints();
     findShortestPathNew();
+    
+    // set the successors once we know all predecessors
+    SampledPoint current = sampledPoints.get(1);
+    
+    while (current.predecessor != null) {
+        current.predecessor.successor = current;
+        current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
+        current = current.predecessor;
+    }
 }
 
 
@@ -84,22 +93,20 @@ void draw() {
         }
     }
     
-    SampledPoint current = sampledPoints.get(1);
     
-    stroke(0, 255, 0);
+   /* SampledPoint current = sampledPoints.get(1);
+    
     while (current.predecessor != null) {
-        line(current.position.x * scale + originToCenterTranslation,
-            current.position.y * scale * -1 + originToCenterTranslation,
-            current.predecessor.position.x * scale + originToCenterTranslation,
-            current.predecessor.position.y * scale * -1 + originToCenterTranslation);
-            current.predecessor.successor = current;
+        current.predecessor.successor = current;
+        //current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
         current = current.predecessor;
-        
     }
     
-    current = sampledPoints.get(0);
+     */
+     
+     stroke(0, 255, 0);
+    SampledPoint current = sampledPoints.get(0);
     
-    stroke(255, 0, 0);
     while (current.successor != null) {
         line(current.position.x * scale + originToCenterTranslation,
         current.position.y * scale * -1 + originToCenterTranslation,
@@ -195,7 +202,7 @@ void findShortestPathNew() {
                 u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
                 q.add(u.adjacentNodes.get(i));
                 u.adjacentNodes.get(i).predecessor = u;
-                u.successor = u.adjacentNodes.get(i);
+                //u.successor = u.adjacentNodes.get(i);
                 
                 // may need to update if the end node has been in the queue
                 if (u.adjacentNodes.get(i) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {

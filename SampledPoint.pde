@@ -6,6 +6,8 @@ class SampledPoint {
     float distance;
     SampledPoint predecessor;    // for working backward through path
     SampledPoint successor;      // for working forward through path
+    float scalarDistanceToSuccessor;
+    PVector directionToSuccessor;
     
     SampledPoint(PVector position, float distance) {
         this.position = position;
@@ -13,5 +15,7 @@ class SampledPoint {
         this.distance = distance;
         predecessor = null;
         successor = null;
+        scalarDistanceToSuccessor = 0;
+        directionToSuccessor = null;
     }
 }
