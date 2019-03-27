@@ -20,8 +20,9 @@ class Agent {
     
     // shortest path from start to end; order of points in array is the order to traverse the path
     ArrayList<SampledPoint> shortestPath = new ArrayList();
+    color shortestPathColor;
     
-    Agent(float radius, PVector initialPosition, PVector finalPosition) {
+    Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
         this.radius = radius;
         currentPosition = new PVector(initialPosition.x, initialPosition.y);   // need a copy here since this will get modified as the program runs
         this.initialPosition = initialPosition;
@@ -30,7 +31,7 @@ class Agent {
         startPoint = new SampledPoint(initialPosition, 0);
         endPoint = new SampledPoint(finalPosition, Float.MAX_VALUE);
         
-
+        this.shortestPathColor = shortestPathColor;
     }
     
     void findShortestPath() {

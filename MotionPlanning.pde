@@ -79,7 +79,7 @@ void setup() {
     
     
     // add agents
-    Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9));
+    Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9), color(0, 255, 0));
     agents.add(agent1);
     
     
@@ -180,19 +180,10 @@ void draw() {
     }
      
     
-    // shortest path
-    stroke(0, 255, 0);
-    /*SampledPoint current = sampledPoints.get(0);
-    
-    while (current.successor != null) {
-        line(current.position.x * scale + originToCenterTranslation,
-        current.position.y * scale * -1 + originToCenterTranslation,
-        current.successor.position.x * scale + originToCenterTranslation,
-        current.successor.position.y * scale * -1 + originToCenterTranslation);
-        current = current.successor;
-    }*/
-    
+    // shortest path    
     for(int i = 0; i < agents.size(); i++) {
+        stroke(agents.get(i).shortestPathColor);
+        
         for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
             line(agents.get(i).shortestPath.get(j).position.x * scale + originToCenterTranslation,
                  agents.get(i).shortestPath.get(j).position.y * scale * -1 + originToCenterTranslation,
