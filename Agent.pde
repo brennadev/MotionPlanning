@@ -5,6 +5,12 @@ class Agent {
     PVector currentPosition;
     PVector initialPosition;
     PVector finalPosition;
+    // immediate point the character is after (or at)
+    SampledPoint currentPoint = null;
+    // how far along the edge after currentPoint the character currently is
+    float scalarDistanceFromCurrentPoint = 0;   
+    // indicates when at the end of the path
+    boolean isAtEnd = false;                
     
     Agent(float radius, PVector initialPosition, PVector finalPosition) {
         this.radius = radius;

@@ -51,6 +51,7 @@ boolean isAtEnd = false;                // indicates when at the end of the path
 void setup() {
     size(600, 600, P2D);
     
+    // add obstacles
     Obstacle first = new Obstacle(new PVector(0, 0), 2);
     obstacles.add(first);
     
@@ -69,7 +70,16 @@ void setup() {
     Obstacle sixth = new Obstacle(new PVector(8, -6), 2);
     obstacles.add(sixth);
     
-    noStroke();
+    Obstacle seventh = new Obstacle(new PVector(-6, 2), 1);
+    obstacles.add(seventh);
+    
+    Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
+    obstacles.add(eighth);
+    
+    // add agents
+    Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9));
+    agents.add(agent1);
+    
     
     sampledPoints.add(new SampledPoint(characterInitialPosition, 0));                   // start node
     sampledPoints.add(new SampledPoint(characterFinalPosition, Integer.MAX_VALUE));    // end node
