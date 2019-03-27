@@ -42,12 +42,9 @@ final int samplePointsCount = 55;    // even though ArrayList is used, this is s
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 float distanceToTravelPerFrame = 0.05;
-//SampledPoint currentPoint;               // immediate point the character is after (or at)
-float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
-boolean isAtEnd = false;                // indicates when at the end of the path
-
 
 float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
+
 
 void setup() {
     size(600, 600, P2D);
