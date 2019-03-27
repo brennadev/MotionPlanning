@@ -196,7 +196,12 @@ void draw() {
     
     // characters
     fill(0, 255, 0);
-    circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, agents.get(0).radius * 2 * scale);
+    
+    for(int i = 0; i < agents.size(); i++) {
+        circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
+               agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
+               agents.get(i).radius * 2 * scale);
+    }
 }
 
 
@@ -283,7 +288,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 // Uniform cost search
 void findShortestPathNew() {
-    ArrayList<SampledPoint> q = new ArrayList();
+    /*ArrayList<SampledPoint> q = new ArrayList();
     q.add(sampledPoints.get(0));    // add starting node
     boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
     
@@ -306,7 +311,7 @@ void findShortestPathNew() {
                 }
             }
         }
-    }
+    }*/
 }
 
 
