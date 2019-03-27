@@ -167,10 +167,20 @@ void generateSamplePoints() {
         
         do {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
-        } while (newPoint.dist(obstaclePosition) <= obstacleRadius + characterRadius);
+        } //while (newPoint.dist(obstaclePosition) <= obstacleRadius + characterRadius);
+        while(pointIsInsideObstacles(newPoint));
         
         sampledPoints.add(new SampledPoint(newPoint, Integer.MAX_VALUE));
     }
+}
+
+boolean pointIsInsideObstacles(PVector point) {
+    for(int i = 0; i < obstacles.size(); i++) {
+        if (point.dist(obstacles.get(i).position) <= obstacles.get(i).radius + characterRadius) {
+            return true;
+        }
+    }
+    return false;
 }
 
 
