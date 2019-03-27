@@ -36,7 +36,7 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 float characterRadius = 0.5;
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 
 
 // points from random sampling to create potential paths
@@ -53,6 +53,21 @@ void setup() {
     
     Obstacle first = new Obstacle(new PVector(0, 0), 2);
     obstacles.add(first);
+    
+    Obstacle second = new Obstacle(new PVector(6, 4), 1);
+    obstacles.add(second);
+    
+    Obstacle third = new Obstacle(new PVector(-4, -7), 2);
+    obstacles.add(third);
+    
+    Obstacle fourth = new Obstacle(new PVector(7, 7), 1);
+    obstacles.add(fourth);
+    
+    Obstacle fifth = new Obstacle(new PVector(-7, 7), 1);
+    obstacles.add(fifth);
+    
+    Obstacle sixth = new Obstacle(new PVector(8, -6), 2);
+    obstacles.add(sixth);
     
     noStroke();
     
