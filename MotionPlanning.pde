@@ -203,7 +203,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
         float discriminant = pow(b, 2) - 4 * a * c;
         
         if (discriminant < 0) {
-            return false;
+            continue;
         } else {
             float firstT = (-1 * b + sqrt(discriminant)) / (2 * a);
             float secondT = (-1 * b - sqrt(discriminant)) / (2 * a);
@@ -221,11 +221,11 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
                 return true;
                 
             } else {
-                return false;
+                continue;
             }
         }
     }
-    return false;    // if there aren't any obstacles, there obviously isn't any edge-obstacle intersection
+    return false;    // if there aren't any obstacles, there obviously isn't any edge-obstacle intersection (or it falls out of loop)
 }
 
 
