@@ -35,11 +35,11 @@ class Agent {
     
     void findShortestPath() {
         ArrayList<SampledPoint> q = new ArrayList();
-        q.add(sampledPoints.get(0));    // add starting node
+        q.add(startPoint);    // add starting node
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
         // while the end node isn't fully processed
-        while((q.contains(sampledPoints.get(1)) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
+        while((q.contains(endPoint) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
             
