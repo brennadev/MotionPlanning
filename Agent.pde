@@ -3,4 +3,8 @@
 class Agent {
     float radius;
     PVector currentPosition;
+    
+    Agent(float radius, PVector initialPosition) {
+        
+    }
 }

@@ -122,7 +122,6 @@ void draw() {
                obstacles.get(i).radius * 2 * scale);
     }
     
-    //circle(obstaclePosition.x * scale + originToCenterTranslation, obstaclePosition.y * scale * -1 + originToCenterTranslation, obstacleRadius * 2 * scale);
     circle(characterInitialPosition.x * scale + originToCenterTranslation, characterInitialPosition.y * scale * -1 + originToCenterTranslation, 15);
     circle(characterFinalPosition.x * scale + originToCenterTranslation, characterFinalPosition.y * scale * -1 + originToCenterTranslation, 15);
     
@@ -244,7 +243,6 @@ void findShortestPathNew() {
                 u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
                 q.add(u.adjacentNodes.get(i));
                 u.adjacentNodes.get(i).predecessor = u;
-                //u.successor = u.adjacentNodes.get(i);
                 
                 // may need to update if the end node has been in the queue
                 if (u.adjacentNodes.get(i) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
