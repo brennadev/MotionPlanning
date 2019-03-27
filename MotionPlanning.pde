@@ -182,7 +182,7 @@ void draw() {
     
     // shortest path
     stroke(0, 255, 0);
-    SampledPoint current = sampledPoints.get(0);
+    /*SampledPoint current = sampledPoints.get(0);
     
     while (current.successor != null) {
         line(current.position.x * scale + originToCenterTranslation,
@@ -190,6 +190,15 @@ void draw() {
         current.successor.position.x * scale + originToCenterTranslation,
         current.successor.position.y * scale * -1 + originToCenterTranslation);
         current = current.successor;
+    }*/
+    
+    for(int i = 0; i < agents.size(); i++) {
+        for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
+            line(agents.get(i).shortestPath.get(j).position.x * scale + originToCenterTranslation,
+                 agents.get(i).shortestPath.get(j).position.y * scale * -1 + originToCenterTranslation,
+                 agents.get(i).shortestPath.get(j + 1).position.x * scale + originToCenterTranslation,
+                 agents.get(i).shortestPath.get(j + 1).position.y * scale * -1 + originToCenterTranslation);
+        }
     }
     
     noStroke();
