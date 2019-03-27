@@ -192,36 +192,40 @@ void connectSamplePoints() {
 // ray-object intersection test to check for edges that intersect the obstacle; adapted from my 5607 ray tracer
 boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
     
-    PVector directionNormalized = direction.normalize(null);
+    for(int i = 0; i < obstacles.size(); i++) {
     
-    float a = 1;
-    float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstaclePosition));
-    float c = pow(abs(PVector.sub(origin, obstaclePosition).mag()), 2) - pow(obstacleRadius + characterRadius, 2);
-    
-    float discriminant = pow(b, 2) - 4 * a * c;
-    
-    if (discriminant < 0) {
-        return false;
-    } else {
-        float firstT = (-1 * b + sqrt(discriminant)) / (2 * a);
-        float secondT = (-1 * b - sqrt(discriminant)) / (2 * a);
+        PVector directionNormalized = direction.normalize(null);
         
-        if (firstT > 0.001) {
-            if (secondT > 0.001) {
-                t = min(min(firstT, secondT), t);
-            } else {
-                t = min(t, firstT);
-            }
-            return true;
-            
-        } else if (secondT > 0.001) {
-            t = min(t, secondT);
-            return true;
-            
-        } else {
+        float a = 1;
+        float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstaclePosition));
+        float c = pow(abs(PVector.sub(origin, obstaclePosition).mag()), 2) - pow(obstacleRadius + characterRadius, 2);
+        
+        float discriminant = pow(b, 2) - 4 * a * c;
+        
+        if (discriminant < 0) {
             return false;
+        } else {
+            float firstT = (-1 * b + sqrt(discriminant)) / (2 * a);
+            float secondT = (-1 * b - sqrt(discriminant)) / (2 * a);
+            
+            if (firstT > 0.001) {
+                if (secondT > 0.001) {
+                    t = min(min(firstT, secondT), t);
+                } else {
+                    t = min(t, firstT);
+                }
+                return true;
+                
+            } else if (secondT > 0.001) {
+                t = min(t, secondT);
+                return true;
+                
+            } else {
+                return false;
+            }
         }
     }
+    return false;    // if there aren't any obstacles, there obviously isn't any edge-obstacle intersection
 }
 
 
