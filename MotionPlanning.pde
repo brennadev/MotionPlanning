@@ -157,8 +157,8 @@ void draw() {
                obstacles.get(i).radius * 2 * scale);
     }
     
-    circle(characterInitialPosition.x * scale + originToCenterTranslation, characterInitialPosition.y * scale * -1 + originToCenterTranslation, 15);
-    circle(characterFinalPosition.x * scale + originToCenterTranslation, characterFinalPosition.y * scale * -1 + originToCenterTranslation, 15);
+    circle(agents.get(0).initialPosition.x * scale + originToCenterTranslation, agents.get(0).initialPosition.y * scale * -1 + originToCenterTranslation, 15);
+    circle(agents.get(0).finalPosition.x * scale + originToCenterTranslation, agents.get(0).finalPosition.y * scale * -1 + originToCenterTranslation, 15);
     
     
     fill(255, 0, 0);
