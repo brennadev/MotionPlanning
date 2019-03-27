@@ -16,9 +16,7 @@ final float roomSize = 20;
 final float scale = 30;
 final float originToCenterTranslation = 300;
 
-/////////////// Obstacle ///////////////
-final float obstacleRadius = 2;
-final PVector obstaclePosition = new PVector(0, 0);
+/////////////// Obstacles ///////////////
 
 ArrayList<Obstacle> obstacles = new ArrayList();
 
@@ -167,13 +165,14 @@ void generateSamplePoints() {
         
         do {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
-        } //while (newPoint.dist(obstaclePosition) <= obstacleRadius + characterRadius);
-        while(pointIsInsideObstacles(newPoint));
+        } while(pointIsInsideObstacles(newPoint));
         
         sampledPoints.add(new SampledPoint(newPoint, Integer.MAX_VALUE));
     }
 }
 
+
+// Helper for generateSamplePoints
 boolean pointIsInsideObstacles(PVector point) {
     for(int i = 0; i < obstacles.size(); i++) {
         if (point.dist(obstacles.get(i).position) <= obstacles.get(i).radius + characterRadius) {
