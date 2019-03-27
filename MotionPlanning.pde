@@ -197,8 +197,8 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
         PVector directionNormalized = direction.normalize(null);
         
         float a = 1;
-        float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstaclePosition));
-        float c = pow(abs(PVector.sub(origin, obstaclePosition).mag()), 2) - pow(obstacleRadius + characterRadius, 2);
+        float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstacles.get(i).position));
+        float c = pow(abs(PVector.sub(origin, obstacles.get(i).position).mag()), 2) - pow(obstacles.get(i).radius + characterRadius, 2);
         
         float discriminant = pow(b, 2) - 4 * a * c;
         
