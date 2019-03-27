@@ -119,21 +119,28 @@ void draw() {
     fill(255);
     noStroke();
     
+    // obstacles
     for(int i = 0; i < obstacles.size(); i++) {
         circle(obstacles.get(i).position.x * scale + originToCenterTranslation, 
                obstacles.get(i).position.y * scale * -1 + originToCenterTranslation, 
                obstacles.get(i).radius * 2 * scale);
     }
     
-    circle(agents.get(0).initialPosition.x * scale + originToCenterTranslation, agents.get(0).initialPosition.y * scale * -1 + originToCenterTranslation, 15);
-    circle(agents.get(0).finalPosition.x * scale + originToCenterTranslation, agents.get(0).finalPosition.y * scale * -1 + originToCenterTranslation, 15);
+    
+    // initial/final positions for agents
+    for(int i = 0; i < agents.size(); i++) {
+        circle(agents.get(i).initialPosition.x * scale + originToCenterTranslation, agents.get(i).initialPosition.y * scale * -1 + originToCenterTranslation, 15);
+        circle(agents.get(i).finalPosition.x * scale + originToCenterTranslation, agents.get(i).finalPosition.y * scale * -1 + originToCenterTranslation, 15);
+    }
     
     
+    // all sampled points
     fill(255, 0, 0);
     
     for(int i = 0; i < samplePointsCount; i++) {
-        circle(sampledPoints.get(i + 2).position.x * scale + originToCenterTranslation, sampledPoints.get(i + 2).position.y * scale * -1 + originToCenterTranslation, 15);
+        circle(sampledPoints.get(i).position.x * scale + originToCenterTranslation, sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation, 15);
     }
+    
     
     // all possible paths
     stroke(0, 200, 255);
