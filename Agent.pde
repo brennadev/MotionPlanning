@@ -34,7 +34,30 @@ class Agent {
     }
     
     void findShortestPath() {
-        // TODO: shortest path algorithm just like in main file here
+        ArrayList<SampledPoint> q = new ArrayList();
+        q.add(sampledPoints.get(0));    // add starting node
+        boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
+        
+        // while the end node isn't fully processed
+        while((q.contains(sampledPoints.get(1)) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
+            SampledPoint u = getSmallestDistance(q);
+            q.remove(u);
+            
+            for(int i = 0; i < u.adjacentNodes.size(); i++) {
+                float distanceToAdjacentNodeFromStart = PVector.dist(u.position, u.adjacentNodes.get(i).position) + u.distance;
+                
+                if (distanceToAdjacentNodeFromStart < u.adjacentNodes.get(i).distance) {
+                    u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
+                    q.add(u.adjacentNodes.get(i));
+                    u.adjacentNodes.get(i).predecessor = u;
+                    
+                    // may need to update if the end node has been in the queue
+                    if (u.adjacentNodes.get(i) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
+                        endNodeHasBeenInQueue = true;
+                    }
+                }
+            }
+        }
     }
     
     // per-frame character movement; call in draw
