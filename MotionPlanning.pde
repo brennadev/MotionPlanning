@@ -79,6 +79,12 @@ void setup() {
     Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9), color(0, 255, 0));
     agents.add(agent1);
     
+    Agent agent2 = new Agent(0.5, new PVector(0, -7), new PVector(9, 9), color(255, 0, 255));
+    agents.add(agent2);
+    
+    Agent agent3 = new Agent(0.5, new PVector(9, 0), new PVector(9, 8), color(255, 255, 0));
+    agents.add(agent3);
+    
     
     // largest agent radius - for determining the path so all agent radii are accounted for
     largestAgentRadius = agents.get(0).radius;
@@ -167,9 +173,8 @@ void draw() {
     noStroke();
     
     // agents
-    fill(0, 255, 0);
-    
     for(int i = 0; i < agents.size(); i++) {
+        fill(agents.get(i).shortestPathColor);
         circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
                agents.get(i).radius * 2 * scale);
