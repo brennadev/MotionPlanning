@@ -115,38 +115,6 @@ void setup() {
 
 
 void draw() {
-    /*if (!isAtEnd) {
-        // how much distance remains until reaching the next point on the path
-        float scalarDistanceToNextPoint = currentPoint.scalarDistanceToSuccessor - scalarDistanceFromCurrentPoint;
-        
-        // when close to the next point
-        if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
-            // get to the end of the current edge
-            characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, scalarDistanceToNextPoint));
-            
-            currentPoint = currentPoint.successor;
-            
-            // once at end point, nothing more needs to be done
-            if (currentPoint == sampledPoints.get(1)) {
-                isAtEnd = true;
-                return;
-            }
-            
-            // how much distance to move from the new point
-            float scalarDistanceFromNewCurrentPoint = distanceToTravelPerFrame - scalarDistanceToNextPoint;
-            
-            characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, scalarDistanceFromNewCurrentPoint));
-            scalarDistanceFromCurrentPoint = scalarDistanceFromNewCurrentPoint;
-            
-        // normally...    
-        } else {
-            characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, distanceToTravelPerFrame));
-            scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
-        }
-    }*/
-    
-    
-    
     background(0);
     fill(255);
     noStroke();
@@ -194,7 +162,7 @@ void draw() {
     
     noStroke();
     
-    // characters
+    // agents
     fill(0, 255, 0);
     
     for(int i = 0; i < agents.size(); i++) {
