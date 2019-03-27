@@ -33,7 +33,6 @@ final PVector characterFinalPosition = new PVector(9, 9);
 // where character currently is located on map
 PVector characterCurrentPosition = new PVector(characterInitialPosition.x, characterInitialPosition.y);
 
-float characterRadius = 0.5;
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
@@ -47,6 +46,8 @@ SampledPoint currentPoint;               // immediate point the character is aft
 float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
 boolean isAtEnd = false;                // indicates when at the end of the path
 
+
+float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
 
 void setup() {
     size(600, 600, P2D);
@@ -76,10 +77,20 @@ void setup() {
     Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
     obstacles.add(eighth);
     
+    
     // add agents
     Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9));
     agents.add(agent1);
     
+    
+    // largest agent radius - for determining the path so all agent radii are accounted for
+    largestAgentRadius = agents.get(0).radius;
+    
+    for(int i = 0; i < agents.size(); i++) {
+        if (agents.get(i).radius > largestAgentRadius) {
+            largestAgentRadius = agents.get(i).radius;
+        }
+    }
     
     sampledPoints.add(new SampledPoint(characterInitialPosition, 0));                   // start node
     sampledPoints.add(new SampledPoint(characterFinalPosition, Integer.MAX_VALUE));    // end node
@@ -90,7 +101,8 @@ void setup() {
     
     currentPoint = sampledPoints.get(0);    // of course, the simulation needs to start at the starting point
     
-    // set the successors once we know all predecessors
+    
+    // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
     SampledPoint current = sampledPoints.get(1);
     
     while (current.predecessor != null) {
@@ -155,6 +167,7 @@ void draw() {
         circle(sampledPoints.get(i + 2).position.x * scale + originToCenterTranslation, sampledPoints.get(i + 2).position.y * scale * -1 + originToCenterTranslation, 15);
     }
     
+    // all possible paths
     stroke(0, 200, 255);
     
     for(int i = 0; i < samplePointsCount; i++) {
@@ -166,8 +179,10 @@ void draw() {
         }
     }
      
-     stroke(0, 255, 0);
-     SampledPoint current = sampledPoints.get(0);
+    
+    // shortest path
+    stroke(0, 255, 0);
+    SampledPoint current = sampledPoints.get(0);
     
     while (current.successor != null) {
         line(current.position.x * scale + originToCenterTranslation,
@@ -178,8 +193,10 @@ void draw() {
     }
     
     noStroke();
+    
+    // characters
     fill(0, 255, 0);
-    circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, characterRadius * 2 * scale);
+    circle(characterCurrentPosition.x * scale + originToCenterTranslation, characterCurrentPosition.y * scale * -1 + originToCenterTranslation, agents.get(0).radius * 2 * scale);
 }
 
 
@@ -200,7 +217,8 @@ void generateSamplePoints() {
 // Helper for generateSamplePoints
 boolean pointIsInsideObstacles(PVector point) {
     for(int i = 0; i < obstacles.size(); i++) {
-        if (point.dist(obstacles.get(i).position) <= obstacles.get(i).radius + characterRadius) {
+        
+        if (point.dist(obstacles.get(i).position) <= obstacles.get(i).radius + largestAgentRadius) {
             return true;
         }
     }
@@ -232,7 +250,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
         
         float a = 1;
         float b = 2 * PVector.dot(directionNormalized, PVector.sub(origin, obstacles.get(i).position));
-        float c = pow(abs(PVector.sub(origin, obstacles.get(i).position).mag()), 2) - pow(obstacles.get(i).radius + characterRadius, 2);
+        float c = pow(abs(PVector.sub(origin, obstacles.get(i).position).mag()), 2) - pow(obstacles.get(i).radius + largestAgentRadius, 2);
         
         float discriminant = pow(b, 2) - 4 * a * c;
         
