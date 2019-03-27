@@ -42,7 +42,7 @@ final int samplePointsCount = 55;    // even though ArrayList is used, this is s
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 float distanceToTravelPerFrame = 0.05;
-SampledPoint currentPoint;               // immediate point the character is after (or at)
+//SampledPoint currentPoint;               // immediate point the character is after (or at)
 float scalarDistanceFromCurrentPoint = 0;    // how far along the edge after currentPoint the character currently is
 boolean isAtEnd = false;                // indicates when at the end of the path
 
@@ -92,14 +92,14 @@ void setup() {
         }
     }
     
-    sampledPoints.add(new SampledPoint(characterInitialPosition, 0));                   // start node
-    sampledPoints.add(new SampledPoint(characterFinalPosition, Integer.MAX_VALUE));    // end node
+    //sampledPoints.add(new SampledPoint(characterInitialPosition, 0));                   // start node
+    //sampledPoints.add(new SampledPoint(characterFinalPosition, Integer.MAX_VALUE));    // end node
     
     generateSamplePoints();
     connectSamplePoints();
     findShortestPathNew();
     
-    currentPoint = sampledPoints.get(0);    // of course, the simulation needs to start at the starting point
+    //currentPoint = sampledPoints.get(0);    // of course, the simulation needs to start at the starting point
     
     
     // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
@@ -115,7 +115,7 @@ void setup() {
 
 
 void draw() {
-    if (!isAtEnd) {
+    /*if (!isAtEnd) {
         // how much distance remains until reaching the next point on the path
         float scalarDistanceToNextPoint = currentPoint.scalarDistanceToSuccessor - scalarDistanceFromCurrentPoint;
         
@@ -143,7 +143,7 @@ void draw() {
             characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, distanceToTravelPerFrame));
             scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
         }
-    }
+    }*/
     
     
     
