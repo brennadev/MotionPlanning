@@ -88,6 +88,13 @@ void setup() {
     agents.add(agent3);
     
     
+    // want start/end points for all agents in the sampled points
+    for(int i = 0; i < agents.size(); i++) {
+        sampledPoints.add(agents.get(i).startPoint);
+        sampledPoints.add(agents.get(i).endPoint);
+    }
+    
+    
     // largest agent radius - for determining the path so all agent radii are accounted for
     largestAgentRadius = agents.get(0).radius;
     
