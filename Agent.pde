@@ -34,6 +34,7 @@ class Agent {
         this.shortestPathColor = shortestPathColor;
     }
     
+    
     void findShortestPath() {
         ArrayList<SampledPoint> q = new ArrayList();
         q.add(startPoint);    // add starting node
@@ -60,6 +61,7 @@ class Agent {
             }
         }
     }
+    
     
     // per-frame character movement; call in draw
     void handleMovingCharacter() {

@@ -19,8 +19,5 @@ class SampledPoint {
         
         scalarDistanceToSuccessor = 0;
         directionToSuccessor = null;
-    }
-    
-    
-    
+    } 
 }
