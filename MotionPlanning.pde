@@ -43,6 +43,8 @@ final int samplePointsCount = 55;    // even though ArrayList is used, this is s
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
+
+
 float distanceToTravelPerFrame = 0.05;
 
 float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
