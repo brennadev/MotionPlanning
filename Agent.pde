@@ -36,7 +36,7 @@ class Agent {
     
     
     void findShortestPath() {
-        ArrayList<SampledPoint> q = new ArrayList();
+        /*ArrayList<SampledPoint> q = new ArrayList();
         q.add(startPoint);    // add starting node
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
@@ -59,7 +59,7 @@ class Agent {
                     }
                 }
             }
-        }
+        }*/
     }
     
     

@@ -2,7 +2,7 @@
 
 class SampledPoint {
     PVector position;
-    ArrayList<SampledPoint> adjacentNodes;
+    ArrayList<Integer> adjacentNodes;
     float distance;
     SampledPoint predecessor;    // for working backward through path
     SampledPoint successor;      // for working forward through path

@@ -166,8 +166,8 @@ void draw() {
         for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
             line(sampledPoints.get(i).position.x * scale + originToCenterTranslation,
                 sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation,
-                sampledPoints.get(i).adjacentNodes.get(j).position.x * scale + originToCenterTranslation,
-                sampledPoints.get(i).adjacentNodes.get(j).position.y * scale * -1 + originToCenterTranslation);
+                sampledPoints.get(sampledPoints.get(i).adjacentNodes.get(j)).position.x * scale + originToCenterTranslation,
+                sampledPoints.get(sampledPoints.get(i).adjacentNodes.get(j)).position.y * scale * -1 + originToCenterTranslation);
         }
     }
      
@@ -229,8 +229,8 @@ void connectSamplePoints() {
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
-                sampledPoints.get(i).adjacentNodes.add(sampledPoints.get(j));
-                sampledPoints.get(j).adjacentNodes.add(sampledPoints.get(i));
+                sampledPoints.get(i).adjacentNodes.add(j);
+                sampledPoints.get(j).adjacentNodes.add(i);
                 
                 float distance = PVector.dist(sampledPoints.get(i).position, sampledPoints.get(j).position);
                 distanceMatrix.matrix[i][j] = distance;
