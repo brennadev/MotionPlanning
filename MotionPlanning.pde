@@ -16,9 +16,11 @@ final float roomSize = 20;
 final float scale = 30;
 final float originToCenterTranslation = 300;
 
+
 /////////////// Obstacles ///////////////
 
 ArrayList<Obstacle> obstacles = new ArrayList();
+
 
 /////////////// Character ///////////////
 
