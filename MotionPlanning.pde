@@ -111,7 +111,12 @@ void setup() {
     generateSamplePoints();
     connectSamplePoints();
     
-    
+    /*for(int j = 0; j < 75; j++) {
+        for(int i = 0; i < 75; i++) {
+            print(distanceMatrix.matrix[i][j] + " ");
+        }
+        println();
+    }*/
     
     
     // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
@@ -226,6 +231,10 @@ void connectSamplePoints() {
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
                 sampledPoints.get(i).adjacentNodes.add(sampledPoints.get(j));
                 sampledPoints.get(j).adjacentNodes.add(sampledPoints.get(i));
+                
+                float distance = PVector.dist(sampledPoints.get(i).position, sampledPoints.get(j).position);
+                distanceMatrix.matrix[i][j] = distance;
+                distanceMatrix.matrix[j][i] = distance;
             } 
         }
     }
