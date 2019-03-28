@@ -36,7 +36,7 @@ class Agent {
     
     
     void findShortestPath() {
-        /*ArrayList<SampledPoint> q = new ArrayList();
+        ArrayList<SampledPoint> q = new ArrayList();
         q.add(startPoint);    // add starting node
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
@@ -46,20 +46,20 @@ class Agent {
             q.remove(u);
             
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
-                float distanceToAdjacentNodeFromStart = PVector.dist(u.position, u.adjacentNodes.get(i).position) + u.distance;
+                float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + u.distance;
                 
-                if (distanceToAdjacentNodeFromStart < u.adjacentNodes.get(i).distance) {
-                    u.adjacentNodes.get(i).distance = distanceToAdjacentNodeFromStart;
-                    q.add(u.adjacentNodes.get(i));
-                    u.adjacentNodes.get(i).predecessor = u;
+                if (distanceToAdjacentNodeFromStart < sampledPoints.get(u.adjacentNodes.get(i)).distance) {
+                    sampledPoints.get(u.adjacentNodes.get(i)).distance = distanceToAdjacentNodeFromStart;
+                    q.add(sampledPoints.get(u.adjacentNodes.get(i)));
+                    sampledPoints.get(u.adjacentNodes.get(i)).predecessor = u;
                     
                     // may need to update if the end node has been in the queue
-                    if (u.adjacentNodes.get(i) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
+                    if (sampledPoints.get(u.adjacentNodes.get(i)) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
                         endNodeHasBeenInQueue = true;
                     }
                 }
             }
-        }*/
+        }
     }
     
     
