@@ -22,6 +22,12 @@ class Agent {
     ArrayList<SampledPoint> shortestPath = new ArrayList();
     color shortestPathColor;
     
+    float[] distancesFromStart;
+    int[] predecessors;
+    int[] successors;
+    float[] scalarDistancesToSuccessors;
+    PVector[] directionsToSuccessors;
+    
     Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
         this.radius = radius;
         currentPosition = new PVector(initialPosition.x, initialPosition.y);   // need a copy here since this will get modified as the program runs
@@ -32,6 +38,12 @@ class Agent {
         endPoint = new SampledPoint(finalPosition, Float.MAX_VALUE);
         
         this.shortestPathColor = shortestPathColor;
+        
+        distancesFromStart = new float[currentPointsCount];
+        predecessors = new int[currentPointsCount];
+        successors = new int[currentPointsCount];
+        scalarDistancesToSuccessors = new float[currentPointsCount];
+        directionsToSuccessors = new PVector[currentPointsCount];
     }
     
     
