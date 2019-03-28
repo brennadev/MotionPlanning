@@ -43,7 +43,7 @@ final int samplePointsCount = 55;    // even though ArrayList is used, this is s
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
-
+Matrix distanceMatrix;
 
 float distanceToTravelPerFrame = 0.05;
 
@@ -106,9 +106,12 @@ void setup() {
         }
     }
     
+    distanceMatrix = new Matrix(75);
 
     generateSamplePoints();
     connectSamplePoints();
+    
+    
     
     
     // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
