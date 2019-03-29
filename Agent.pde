@@ -18,6 +18,14 @@ class Agent {
     SampledPoint startPoint;
     SampledPoint endPoint;
     
+    int startPointIndex;
+    
+    // here so the distance from start can be properly set
+    void setStartPointIndex(int value) {
+        startPointIndex = value;
+        distancesFromStart[startPointIndex] = 0;
+    }
+    
     // shortest path from start to end; order of points in array is the order to traverse the path
     ArrayList<SampledPoint> shortestPath = new ArrayList();
     color shortestPathColor;
@@ -27,6 +35,7 @@ class Agent {
     int[] successors;
     float[] scalarDistancesToSuccessors;
     PVector[] directionsToSuccessors;    // direction of the edge after a given point
+    
     
     Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
         this.radius = radius;
@@ -39,11 +48,21 @@ class Agent {
         
         this.shortestPathColor = shortestPathColor;
         
+        
+        
         distancesFromStart = new float[currentPointsCount];
         predecessors = new int[currentPointsCount];
         successors = new int[currentPointsCount];
         scalarDistancesToSuccessors = new float[currentPointsCount];
         directionsToSuccessors = new PVector[currentPointsCount];
+        
+        // set up initial distances
+        // TODO: start point index isn't set until after initialization - so that needs to be set when startPointIndex is set (basically need to do the equivalent of a Swift didSet) 
+        for(int i = 0; i < currentPointsCount; i++) {
+            distancesFromStart[i] = Float.MAX_VALUE;
+            predecessors[i] = -1;
+            successors[i] = -1;
+        }
     }
     
     

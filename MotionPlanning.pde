@@ -93,6 +93,7 @@ void setup() {
     // want start/end points for all agents in the sampled points
     for(int i = 0; i < agents.size(); i++) {
         sampledPoints.add(agents.get(i).startPoint);
+        agents.get(i).startPointIndex = agents.size() - 1;
         sampledPoints.add(agents.get(i).endPoint);
     }
     
