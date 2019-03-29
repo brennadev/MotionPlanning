@@ -115,17 +115,18 @@ class Agent {
         
         if (!isAtEnd) {
             // how much distance remains until reaching the next point on the path
-            float scalarDistanceToNextPoint = currentPoint.scalarDistanceToSuccessor - scalarDistanceFromCurrentPoint;
+            float scalarDistanceToNextPoint = scalarDistancesToSuccessors[currentPoint] - scalarDistanceFromCurrentPoint;
             
             // when close to the next point
             if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
                 // get to the end of the current edge
-                characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, scalarDistanceToNextPoint));
+                characterCurrentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceToNextPoint));
                 
-                currentPoint = currentPoint.successor;
+                currentPoint = successors[currentPoint];
+                
                 
                 // once at end point, nothing more needs to be done
-                if (currentPoint == sampledPoints.get(1)) {
+                if (currentPoint == endPointIndex) {
                     isAtEnd = true;
                     return;
                 }
@@ -133,12 +134,12 @@ class Agent {
                 // how much distance to move from the new point
                 float scalarDistanceFromNewCurrentPoint = distanceToTravelPerFrame - scalarDistanceToNextPoint;
                 
-                characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, scalarDistanceFromNewCurrentPoint));
+                characterCurrentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceFromNewCurrentPoint));
                 scalarDistanceFromCurrentPoint = scalarDistanceFromNewCurrentPoint;
                 
             // normally...    
             } else {
-                characterCurrentPosition.add(PVector.mult(currentPoint.directionToSuccessor, distanceToTravelPerFrame));
+                characterCurrentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], distanceToTravelPerFrame));
                 scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
             }
         }
