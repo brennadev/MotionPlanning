@@ -117,7 +117,7 @@ class Agent {
             // when close to the next point
             if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
                 // get to the end of the current edge
-                characterCurrentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceToNextPoint));
+                currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceToNextPoint));
                 
                 currentPoint = successors[currentPoint];
                 
@@ -131,12 +131,12 @@ class Agent {
                 // how much distance to move from the new point
                 float scalarDistanceFromNewCurrentPoint = distanceToTravelPerFrame - scalarDistanceToNextPoint;
                 
-                characterCurrentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceFromNewCurrentPoint));
+                currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceFromNewCurrentPoint));
                 scalarDistanceFromCurrentPoint = scalarDistanceFromNewCurrentPoint;
                 
             // normally...    
             } else {
-                characterCurrentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], distanceToTravelPerFrame));
+                currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], distanceToTravelPerFrame));
                 scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
             }
         }

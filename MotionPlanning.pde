@@ -29,7 +29,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-int currentPointsCount = 75;
+int currentPointsCount = 55;    //
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
