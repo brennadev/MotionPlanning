@@ -120,16 +120,7 @@ void setup() {
         println();
     }*/
     
-    
-    // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
-    //SampledPoint current = sampledPoints.get(1);
-    
-    /*while (current.predecessor != null) {
-        current.predecessor.successor = current;
-        current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
-        current.predecessor.scalarDistanceToSuccessor = PVector.dist(current.predecessor.position, current.position);
-        current = current.predecessor;
-    }*/
+
 }
 
 
@@ -281,19 +272,3 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
     }
     return false;    // if there aren't any obstacles, there obviously isn't any edge-obstacle intersection (or it falls out of loop)
 }
-
-
-// Returns the SampledPoint with the smallest distance value in the queue; will return null if the queue is empty (helper for shortest path function)
-/*SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
-    float smallestDistance = Float.MAX_VALUE;
-    SampledPoint pointWithSmallestDistance = null;
-    
-    for(int i = 0; i < q.size(); i++) {
-        if (q.get(i).distance < smallestDistance) {
-            pointWithSmallestDistance = q.get(i);
-            smallestDistance = q.get(i).distance;
-        }
-    }
-    
-    return pointWithSmallestDistance;
-}*/
