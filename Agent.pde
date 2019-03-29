@@ -81,7 +81,7 @@ class Agent {
                 if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
                     distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
                     q.add(sampledPoints.get(u.adjacentNodes.get(i)));
-                    sampledPoints.get(u.adjacentNodes.get(i)).predecessor = u;
+                    predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
                     
                     // may need to update if the end node has been in the queue
                     if (sampledPoints.get(u.adjacentNodes.get(i)) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {

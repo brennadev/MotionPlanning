@@ -123,12 +123,12 @@ void setup() {
     // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
     SampledPoint current = sampledPoints.get(1);
     
-    while (current.predecessor != null) {
+    /*while (current.predecessor != null) {
         current.predecessor.successor = current;
         current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
         current.predecessor.scalarDistanceToSuccessor = PVector.dist(current.predecessor.position, current.position);
         current = current.predecessor;
-    }
+    }*/
 }
 
 

@@ -3,8 +3,7 @@
 class SampledPoint {
     PVector position;
     ArrayList<Integer> adjacentNodes;
-    //float distance;
-    SampledPoint predecessor;    // for working backward through path
+    //SampledPoint predecessor;    // for working backward through path
     SampledPoint successor;      // for working forward through path
     
     float scalarDistanceToSuccessor;
@@ -13,8 +12,7 @@ class SampledPoint {
     SampledPoint(PVector position) {
         this.position = position;
         adjacentNodes = new ArrayList();
-        //this.distance = distance;
-        predecessor = null;
+        //predecessor = null;
         successor = null;
         
         scalarDistanceToSuccessor = 0;
