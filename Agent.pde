@@ -49,11 +49,14 @@ class Agent {
         
         this.shortestPathColor = shortestPathColor;
         
-        distancesFromStart = new float[currentPointsCount];
-        predecessors = new int[currentPointsCount];
-        successors = new int[currentPointsCount];
-        scalarDistancesToSuccessors = new float[currentPointsCount];
-        directionsToSuccessors = new PVector[currentPointsCount];
+        // the problem is the start/end nodes aren't being taken into account - but because we don't know how many agents there'll be until they're added,
+        // we don't know how many agents are needed (unless I have a hardcoded value)
+        // there are 3 agents, therefore 6 start/end points (3 of each)
+        distancesFromStart = new float[currentPointsCount + 6];
+        predecessors = new int[currentPointsCount + 6];
+        successors = new int[currentPointsCount + 6];
+        scalarDistancesToSuccessors = new float[currentPointsCount + 6];
+        directionsToSuccessors = new PVector[currentPointsCount + 6];
         
         // set up initial distances and other initial values
         for(int i = 0; i < currentPointsCount; i++) {
@@ -77,14 +80,19 @@ class Agent {
             // crashes with null pointer on line below; looks like it never enters the loop
             // adjacent nodes are fine; could be from getSamllestDistance
             // appeared to be fixed but now is crashing again on this line
+            // another null pointer crash - still
+            // u must be null - but why would getSmallestDistance be returning null? Right now, it's just that the crashes are fixed (so really, I need to look at
+            // that method more closely)
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
                 println(i);
                 float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + distancesFromStart[sampledPoints.indexOf(u)];
                 
-                // crashes on line below with out of bounds (56)
+                // crashes on line below with out of bounds (56, 58)
                 if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
                     distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
-                    q.add(sampledPoints.get(u.adjacentNodes.get(i)));
+                    if (!q.contains(sampledPoints.get(u.adjacentNodes.get(i)))) {
+                        q.add(sampledPoints.get(u.adjacentNodes.get(i)));
+                    }
                     predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
                     
                     // may need to update if the end node has been in the queue
@@ -150,7 +158,10 @@ class Agent {
         for(int i = 0; i < q.size(); i++) {
             // crashing here - there's some off-by-one error somewhere
             // 76, 81, 86 for q size
-            if (distancesFromStart[i] < smallestDistance) {
+            // q's size is bigger than distancesFromStart's size - there must be some duplicates getting added to q
+            // I don't think I can necessarily use i to index into distancesFromStart since that indexes into q - need something that indexes into sampledPoints
+            
+            if (distancesFromStart[sampledPoints.indexOf(q.get(i))] < smallestDistance) {
                 pointWithSmallestDistance = q.get(i);
                 smallestDistance = distancesFromStart[i];
             }

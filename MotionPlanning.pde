@@ -107,9 +107,9 @@ void setup() {
         println(sampledPoints.get(i).adjacentNodes.size());
     }
     
-    /*for(int i = 0; i < agents.size(); i++) {
+    for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPath();
-    }*/
+    }
     
     /*for(int j = 0; j < 75; j++) {
         for(int i = 0; i < 75; i++) {
