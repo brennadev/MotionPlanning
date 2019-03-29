@@ -66,7 +66,7 @@ class Agent {
     
     void findShortestPath() {
         ArrayList<SampledPoint> q = new ArrayList();
-        q.add(startPoint);    // add starting node
+        q.add(sampledPoints.get(startPointIndex));    // add starting node
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
         // while the end node isn't fully processed
@@ -74,9 +74,14 @@ class Agent {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
             
+            // crashes with null pointer on line below; looks like it never enters the loop
+            // adjacent nodes are fine; could be from getSamllestDistance
+            // appeared to be fixed but now is crashing again on this line
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
+                println(i);
                 float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + distancesFromStart[sampledPoints.indexOf(u)];
                 
+                // crashes on line below with out of bounds (56)
                 if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
                     distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
                     q.add(sampledPoints.get(u.adjacentNodes.get(i)));
@@ -141,7 +146,10 @@ class Agent {
         float smallestDistance = Float.MAX_VALUE;
         SampledPoint pointWithSmallestDistance = null;
         
+        println("q size: " + q.size());
         for(int i = 0; i < q.size(); i++) {
+            // crashing here - there's some off-by-one error somewhere
+            // 76, 81, 86 for q size
             if (distancesFromStart[i] < smallestDistance) {
                 pointWithSmallestDistance = q.get(i);
                 smallestDistance = distancesFromStart[i];

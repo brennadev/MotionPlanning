@@ -38,7 +38,7 @@ PVector characterCurrentPosition = new PVector(characterInitialPosition.x, chara
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-int currentPointsCount = 55;
+int currentPointsCount = 75;
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -93,9 +93,9 @@ void setup() {
     // want start/end points for all agents in the sampled points
     for(int i = 0; i < agents.size(); i++) {
         sampledPoints.add(agents.get(i).startPoint);
-        agents.get(i).startPointIndex = agents.size() - 1;
+        agents.get(i).setStartPointIndex(sampledPoints.size() - 1);
         sampledPoints.add(agents.get(i).endPoint);
-        agents.get(i).endPointIndex = agents.size() - 1;
+        agents.get(i).endPointIndex = sampledPoints.size() - 1;
     }
     
     
@@ -112,6 +112,16 @@ void setup() {
 
     generateSamplePoints();
     connectSamplePoints();
+    
+    for(int i = 0; i < sampledPoints.size(); i++) {
+        println(sampledPoints.get(i).adjacentNodes.size());
+    }
+    
+    for(int i = 0; i < agents.size(); i++) {
+        
+        
+        agents.get(i).findShortestPath();
+    }
     
     /*for(int j = 0; j < 75; j++) {
         for(int i = 0; i < 75; i++) {
@@ -147,7 +157,7 @@ void draw() {
     // all sampled points
     fill(255, 0, 0);
     
-    for(int i = 0; i < samplePointsCount; i++) {
+    for(int i = 0; i < sampledPoints.size(); i++) {
         circle(sampledPoints.get(i).position.x * scale + originToCenterTranslation, sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation, 15);
     }
     
@@ -155,7 +165,7 @@ void draw() {
     // all possible paths
     stroke(0, 200, 255);
     
-    for(int i = 0; i < samplePointsCount; i++) {
+    for(int i = 0; i < sampledPoints.size(); i++) {
         for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
             line(sampledPoints.get(i).position.x * scale + originToCenterTranslation,
                 sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation,
