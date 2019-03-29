@@ -26,15 +26,6 @@ ArrayList<Obstacle> obstacles = new ArrayList();
 
 ArrayList<Agent> agents = new ArrayList();
 
-// character starts here
-final PVector characterInitialPosition = new PVector(-9, -9);
-
-// character's goal
-final PVector characterFinalPosition = new PVector(9, 9);
-
-// where character currently is located on map
-PVector characterCurrentPosition = new PVector(characterInitialPosition.x, characterInitialPosition.y);
-
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
