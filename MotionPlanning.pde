@@ -29,15 +29,13 @@ ArrayList<Agent> agents = new ArrayList();
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-int currentPointsCount = 55;    //
+int currentPointsCount = 55;    // TODO:   may or may not need this
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 Matrix distanceMatrix;
-
 float distanceToTravelPerFrame = 0.05;
-
 float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
 
 
@@ -99,7 +97,8 @@ void setup() {
         }
     }
     
-    distanceMatrix = new Matrix(75);
+    // the only way we know how many points are needed at the most is with the fixed initial amount of sampled points and the start/end points for the agents
+    distanceMatrix = new Matrix(samplePointsCount + agents.size() * 2);
 
     generateSamplePoints();
     connectSamplePoints();
@@ -108,11 +107,9 @@ void setup() {
         println(sampledPoints.get(i).adjacentNodes.size());
     }
     
-    for(int i = 0; i < agents.size(); i++) {
-        
-        
+    /*for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPath();
-    }
+    }*/
     
     /*for(int j = 0; j < 75; j++) {
         for(int i = 0; i < 75; i++) {
@@ -215,11 +212,14 @@ boolean pointIsInsideObstacles(PVector point) {
     return false;
 }
 
-
+// sampled points - for sure, nothing is getting added to 
 // find where the lines between the sample points should go
 void connectSamplePoints() {
-    for(int i = 0; i < sampledPoints.size(); i++) {
+    println("sampledPoints size: " + sampledPoints.size());
+    for(int i = 0; i < sampledPoints.size() - 1; i++) {
+        println("sampledPoints size: " + sampledPoints.size());
         for(int j = i + 1; j < sampledPoints.size(); j++) {
+            println("sampledPoints size: " + sampledPoints.size());
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
