@@ -8,7 +8,7 @@ class Agent {
     
     
     // immediate point the character is after (or at)
-    SampledPoint currentPoint = null;
+    int currentPoint;
     // how far along the edge after currentPoint the character currently is
     float scalarDistanceFromCurrentPoint = 0;   
     // indicates when at the end of the path
@@ -19,6 +19,7 @@ class Agent {
     SampledPoint endPoint;
     
     int startPointIndex;
+    int endPointIndex;
     
     // here so the distance from start can be properly set
     void setStartPointIndex(int value) {

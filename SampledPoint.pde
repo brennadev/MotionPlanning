@@ -4,7 +4,7 @@ class SampledPoint {
     PVector position;
     ArrayList<Integer> adjacentNodes;
     //SampledPoint predecessor;    // for working backward through path
-    SampledPoint successor;      // for working forward through path
+    //SampledPoint successor;      // for working forward through path
     
     float scalarDistanceToSuccessor;
     PVector directionToSuccessor;

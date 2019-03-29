@@ -95,6 +95,7 @@ void setup() {
         sampledPoints.add(agents.get(i).startPoint);
         agents.get(i).startPointIndex = agents.size() - 1;
         sampledPoints.add(agents.get(i).endPoint);
+        agents.get(i).endPointIndex = agents.size() - 1;
     }
     
     
@@ -121,7 +122,7 @@ void setup() {
     
     
     // set the successors once we know all predecessors - will make it possible to get through the path from start to end rather than from end to start
-    SampledPoint current = sampledPoints.get(1);
+    //SampledPoint current = sampledPoints.get(1);
     
     /*while (current.predecessor != null) {
         current.predecessor.successor = current;
