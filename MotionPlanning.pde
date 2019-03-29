@@ -110,6 +110,7 @@ void setup() {
     for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPath();
         agents.get(i).setUpSuccessors();
+        agents.get(i).currentPoint = agents.get(i).startPointIndex;
     }
     
     /*for(int j = 0; j < 75; j++) {
@@ -178,9 +179,12 @@ void draw() {
     
     noStroke();
     
+
+    
     // agents
     for(int i = 0; i < agents.size(); i++) {
         fill(agents.get(i).shortestPathColor);
+        agents.get(i).handleMovingCharacter();
         circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
                agents.get(i).radius * 2 * scale);

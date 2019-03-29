@@ -106,22 +106,19 @@ class Agent {
     
     
     void setUpSuccessors() {
+        // only hit 5 points on one run - obviously not all of them
         while (predecessors[currentPoint] != -1) {
+            println("setupsuccessors");
             successors[predecessors[currentPoint]] = currentPoint;
             directionsToSuccessors[predecessors[currentPoint]] = PVector.sub(sampledPoints.get(currentPoint).position, sampledPoints.get(predecessors[currentPoint]).position).normalize();
+            // this still seems like a mess
             scalarDistancesToSuccessors[predecessors[currentPoint]] = PVector.dist(sampledPoints.get(predecessors[currentPoint]).position, sampledPoints.get(currentPoint).position);
             currentPoint = predecessors[currentPoint];
         }
     }
     
     // per-frame character movement; call in draw
-    void handleMovingCharacter() {
-        currentPoint = endPointIndex;
-        
-        
-        
-        currentPoint = startPointIndex;
-        
+    void handleMovingCharacter() {        
         if (!isAtEnd) {
             // how much distance remains until reaching the next point on the path
             float scalarDistanceToNextPoint = scalarDistancesToSuccessors[currentPoint] - scalarDistanceFromCurrentPoint;
@@ -129,12 +126,17 @@ class Agent {
             // when close to the next point
             if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
                 // get to the end of the current edge
+                println(directionsToSuccessors[currentPoint]);
+                
+                // directionsToSuccessors has no values in it
+                // crashing on the first time in this
                 currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceToNextPoint));
                 
                 currentPoint = successors[currentPoint];
                 
                 
                 // once at end point, nothing more needs to be done
+                println("currentPoint: " + currentPoint);
                 if (currentPoint == endPointIndex) {
                     isAtEnd = true;
                     return;
@@ -160,11 +162,6 @@ class Agent {
         
         println("q size: " + q.size());
         for(int i = 0; i < q.size(); i++) {
-            // crashing here - there's some off-by-one error somewhere
-            // 76, 81, 86 for q size
-            // q's size is bigger than distancesFromStart's size - there must be some duplicates getting added to q
-            // I don't think I can necessarily use i to index into distancesFromStart since that indexes into q - need something that indexes into sampledPoints
-            
             if (distancesFromStart[sampledPoints.indexOf(q.get(i))] < smallestDistance) {
                 pointWithSmallestDistance = q.get(i);
                 smallestDistance = distancesFromStart[i];
