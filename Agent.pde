@@ -105,16 +105,20 @@ class Agent {
     }
     
     
-    // per-frame character movement; call in draw
-    void handleMovingCharacter() {
-        currentPoint = endPointIndex;
-        
+    void setUpSuccessors() {
         while (predecessors[currentPoint] != -1) {
             successors[predecessors[currentPoint]] = currentPoint;
             directionsToSuccessors[predecessors[currentPoint]] = PVector.sub(sampledPoints.get(currentPoint).position, sampledPoints.get(predecessors[currentPoint]).position).normalize();
             scalarDistancesToSuccessors[predecessors[currentPoint]] = PVector.dist(sampledPoints.get(predecessors[currentPoint]).position, sampledPoints.get(currentPoint).position);
             currentPoint = predecessors[currentPoint];
         }
+    }
+    
+    // per-frame character movement; call in draw
+    void handleMovingCharacter() {
+        currentPoint = endPointIndex;
+        
+        
         
         currentPoint = startPointIndex;
         

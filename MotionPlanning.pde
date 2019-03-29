@@ -109,6 +109,7 @@ void setup() {
     
     for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPath();
+        agents.get(i).setUpSuccessors();
     }
     
     /*for(int j = 0; j < 75; j++) {
