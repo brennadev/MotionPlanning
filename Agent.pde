@@ -96,6 +96,23 @@ class Agent {
     
     // per-frame character movement; call in draw
     void handleMovingCharacter() {
+        currentPoint = endPointIndex;
+        
+        while (predecessors[currentPoint] != -1) {
+            //current.predecessor.successor = current;
+            //successors[sampledPoints.get(predecessor
+            
+            successors[predecessors[currentPoint]] = currentPoint;
+            directionsToSuccessors[predecessors[currentPoint]] = PVector.sub(sampledPoints.get(currentPoint).position, sampledPoints.get(predecessors[currentPoint]).position).normalize();
+            //current.predecessor.directionToSuccessor = PVector.sub(current.position, current.predecessor.position).normalize();
+            scalarDistancesToSuccessors[predecessors[currentPoint]] = PVector.dist(sampledPoints.get(predecessors[currentPoint]).position, sampledPoints.get(currentPoint).position);
+            //current.predecessor.scalarDistanceToSuccessor = PVector.dist(current.predecessor.position, current.position);
+            currentPoint = predecessors[currentPoint];
+            //current = current.predecessor;
+        }
+        
+        currentPoint = startPointIndex;
+        
         if (!isAtEnd) {
             // how much distance remains until reaching the next point on the path
             float scalarDistanceToNextPoint = currentPoint.scalarDistanceToSuccessor - scalarDistanceFromCurrentPoint;

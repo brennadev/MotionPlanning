@@ -6,16 +6,16 @@ class SampledPoint {
     //SampledPoint predecessor;    // for working backward through path
     //SampledPoint successor;      // for working forward through path
     
-    float scalarDistanceToSuccessor;
-    PVector directionToSuccessor;
+    //float scalarDistanceToSuccessor;
+    //PVector directionToSuccessor;
     
     SampledPoint(PVector position) {
         this.position = position;
         adjacentNodes = new ArrayList();
         //predecessor = null;
-        successor = null;
+        //successor = null;
         
-        scalarDistanceToSuccessor = 0;
-        directionToSuccessor = null;
+        //scalarDistanceToSuccessor = 0;
+        //directionToSuccessor = null;
     } 
 }
