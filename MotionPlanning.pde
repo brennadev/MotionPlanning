@@ -206,7 +206,7 @@ void generateSamplePoints() {
             newPoint = new PVector(random(-roomSize / 2, roomSize / 2), random(-roomSize / 2, roomSize / 2));
         } while(pointIsInsideObstacles(newPoint));
         
-        sampledPoints.add(new SampledPoint(newPoint, Integer.MAX_VALUE));
+        sampledPoints.add(new SampledPoint(newPoint));
     }
 }
 

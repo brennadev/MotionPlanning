@@ -43,8 +43,8 @@ class Agent {
         this.initialPosition = initialPosition;
         this.finalPosition = finalPosition;
         
-        startPoint = new SampledPoint(initialPosition, 0);
-        endPoint = new SampledPoint(finalPosition, Float.MAX_VALUE);
+        startPoint = new SampledPoint(initialPosition);
+        endPoint = new SampledPoint(finalPosition);
         
         this.shortestPathColor = shortestPathColor;
         
@@ -56,8 +56,7 @@ class Agent {
         scalarDistancesToSuccessors = new float[currentPointsCount];
         directionsToSuccessors = new PVector[currentPointsCount];
         
-        // set up initial distances
-        // TODO: start point index isn't set until after initialization - so that needs to be set when startPointIndex is set (basically need to do the equivalent of a Swift didSet) 
+        // set up initial distances and other initial values
         for(int i = 0; i < currentPointsCount; i++) {
             distancesFromStart[i] = Float.MAX_VALUE;
             predecessors[i] = -1;

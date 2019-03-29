@@ -10,7 +10,7 @@ class SampledPoint {
     float scalarDistanceToSuccessor;
     PVector directionToSuccessor;
     
-    SampledPoint(PVector position, float distance) {
+    SampledPoint(PVector position) {
         this.position = position;
         adjacentNodes = new ArrayList();
         //this.distance = distance;
