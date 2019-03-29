@@ -215,11 +215,8 @@ boolean pointIsInsideObstacles(PVector point) {
 // sampled points - for sure, nothing is getting added to 
 // find where the lines between the sample points should go
 void connectSamplePoints() {
-    println("sampledPoints size: " + sampledPoints.size());
     for(int i = 0; i < sampledPoints.size() - 1; i++) {
-        println("sampledPoints size: " + sampledPoints.size());
         for(int j = i + 1; j < sampledPoints.size(); j++) {
-            println("sampledPoints size: " + sampledPoints.size());
             float t = 9e9;
             // only want to include the edge if it's not colliding with the obstacle
             if (!edgeHitsObstacle(sampledPoints.get(i).position, PVector.sub(sampledPoints.get(j).position, sampledPoints.get(i).position), t)) {
