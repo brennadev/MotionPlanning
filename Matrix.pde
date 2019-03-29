@@ -5,14 +5,6 @@ class Matrix {
     
      float[][] matrix;
      
-     float get(int x, int y) {
-         return matrix[x][y];
-     }
-     
-     void set(int x, int y, float value) {
-         matrix[x][y] = value;
-     }
-     
      Matrix(int nodeCount) {
          matrix = new float[nodeCount][nodeCount];
          this.nodeCount = nodeCount;

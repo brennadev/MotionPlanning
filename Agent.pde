@@ -112,6 +112,8 @@ class Agent {
             successors[predecessors[currentPoint]] = currentPoint;
             directionsToSuccessors[predecessors[currentPoint]] = PVector.sub(sampledPoints.get(currentPoint).position, sampledPoints.get(predecessors[currentPoint]).position).normalize();
             // this still seems like a mess
+            println(directionsToSuccessors[predecessors[currentPoint]]);
+            println(predecessors[currentPoint]);
             scalarDistancesToSuccessors[predecessors[currentPoint]] = PVector.dist(sampledPoints.get(predecessors[currentPoint]).position, sampledPoints.get(currentPoint).position);
             currentPoint = predecessors[currentPoint];
         }
@@ -160,7 +162,6 @@ class Agent {
         float smallestDistance = Float.MAX_VALUE;
         SampledPoint pointWithSmallestDistance = null;
         
-        println("q size: " + q.size());
         for(int i = 0; i < q.size(); i++) {
             if (distancesFromStart[sampledPoints.indexOf(q.get(i))] < smallestDistance) {
                 pointWithSmallestDistance = q.get(i);
