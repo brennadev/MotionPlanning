@@ -282,7 +282,7 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
 
 
 // Returns the SampledPoint with the smallest distance value in the queue; will return null if the queue is empty (helper for shortest path function)
-SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
+/*SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
     float smallestDistance = Float.MAX_VALUE;
     SampledPoint pointWithSmallestDistance = null;
     
@@ -294,4 +294,4 @@ SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
     }
     
     return pointWithSmallestDistance;
-}
+}*/

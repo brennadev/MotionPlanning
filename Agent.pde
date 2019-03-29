@@ -22,11 +22,11 @@ class Agent {
     ArrayList<SampledPoint> shortestPath = new ArrayList();
     color shortestPathColor;
     
-    float[] distancesFromStart;
+    float[] distancesFromStart;        // per-point distance from start along shortest path to that point
     int[] predecessors;
     int[] successors;
     float[] scalarDistancesToSuccessors;
-    PVector[] directionsToSuccessors;
+    PVector[] directionsToSuccessors;    // direction of the edge after a given point
     
     Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
         this.radius = radius;
@@ -58,10 +58,10 @@ class Agent {
             q.remove(u);
             
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
-                float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + u.distance;
+                float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + distancesFromStart[sampledPoints.indexOf(u)];
                 
-                if (distanceToAdjacentNodeFromStart < sampledPoints.get(u.adjacentNodes.get(i)).distance) {
-                    sampledPoints.get(u.adjacentNodes.get(i)).distance = distanceToAdjacentNodeFromStart;
+                if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
+                    distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
                     q.add(sampledPoints.get(u.adjacentNodes.get(i)));
                     sampledPoints.get(u.adjacentNodes.get(i)).predecessor = u;
                     
@@ -106,5 +106,19 @@ class Agent {
                 scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
             }
         }
+    }
+    
+    SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
+        float smallestDistance = Float.MAX_VALUE;
+        SampledPoint pointWithSmallestDistance = null;
+        
+        for(int i = 0; i < q.size(); i++) {
+            if (distancesFromStart[i] < smallestDistance) {
+                pointWithSmallestDistance = q.get(i);
+                smallestDistance = distancesFromStart[i];
+            }
+        }
+        
+        return pointWithSmallestDistance;
     }
 }
