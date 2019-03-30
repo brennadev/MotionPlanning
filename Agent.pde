@@ -4,7 +4,6 @@ class Agent {
     float radius;
     PVector currentPosition;
     
-    
     // immediate point the character is after (or at)
     int currentPoint;
     // how far along the edge after currentPoint the character currently is
@@ -13,36 +12,31 @@ class Agent {
     boolean isAtEnd = false;                
     
     
-    //SampledPoint startPoint;
-    //SampledPoint endPoint;
-    
     int startPointIndex;
     int endPointIndex;
     
-    // here so the distance from start can be properly set
-    /*void setStartPointIndex(int value) {
-        startPointIndex = value;
-        distancesFromStart[startPointIndex] = 0;
-    }*/
     
     // shortest path from start to end; order of points in array is the order to traverse the path
     ArrayList<Integer> shortestPath = new ArrayList();
     color shortestPathColor;
     
     float[] distancesFromStart;        // per-point distance from start along shortest path to that point
-    float[] scalarDistancesToSuccessors;
-    PVector[] directionsToSuccessors;    // direction of the edge after a given point
+    
+    ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
+    ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
     
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
         
+        // indices
         startPointIndex = initialPositionIndex;
         endPointIndex = finalPositionIndex;
         
         currentPosition = new PVector(sampledPoints.get(startPointIndex).position.x, sampledPoints.get(endPointIndex).position.y);
         currentPoint = startPointIndex;
         
+        // distancesFromStart
         distancesFromStart = new float[samplePointsCount + agentsCount * 2];
         
         distancesFromStart[startPointIndex] = 0;
@@ -51,18 +45,7 @@ class Agent {
             distancesFromStart[i] = Float.MAX_VALUE;
         }
         
-        
-        //startPoint = new SampledPoint(initialPosition);
-        //endPoint = new SampledPoint(finalPosition);
-        
         this.shortestPathColor = shortestPathColor;
-        
-        // the problem is the start/end nodes aren't being taken into account - but because we don't know how many agents there'll be until they're added,
-        // we don't know how many agents are needed (unless I have a hardcoded value)
-        // there are 3 agents, therefore 6 start/end points (3 of each)
-        
-        scalarDistancesToSuccessors = new float[currentPointsCount + 6];
-        directionsToSuccessors = new PVector[currentPointsCount + 6];
     }
     
     
