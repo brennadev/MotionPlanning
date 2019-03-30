@@ -36,8 +36,12 @@ class Agent {
     PVector[] directionsToSuccessors;    // direction of the edge after a given point
     
     
-    Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
+    Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
+        startPointIndex = initialPositionIndex;
+        endPointIndex = finalPositionIndex;
+        
+        distancesFromStart[startPointIndex] = 0;
         currentPosition = new PVector(initialPosition.x, initialPosition.y);   // need a copy here since this will get modified as the program runs
         
         //startPoint = new SampledPoint(initialPosition);
