@@ -102,29 +102,17 @@ void setup() {
     }
     
     // the only way we know how many points are needed at the most is with the fixed initial amount of sampled points and the start/end points for the agents
-    distanceMatrix = new Matrix(samplePointsCount + agents.size() * 2);
+    distanceMatrix = new Matrix(samplePointsCount + agentsCount * 2);
 
     generateSamplePoints();
     connectSamplePoints();
     
-    for(int i = 0; i < sampledPoints.size(); i++) {
-        println(sampledPoints.get(i).adjacentNodes.size());
-    }
     
     for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPath();
         agents.get(i).setUpSuccessors();
         agents.get(i).currentPoint = agents.get(i).startPointIndex;
     }
-    
-    /*for(int j = 0; j < 75; j++) {
-        for(int i = 0; i < 75; i++) {
-            print(distanceMatrix.matrix[i][j] + " ");
-        }
-        println();
-    }*/
-    
-
 }
 
 
