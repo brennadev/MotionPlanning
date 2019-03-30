@@ -20,18 +20,16 @@ class Agent {
     int endPointIndex;
     
     // here so the distance from start can be properly set
-    void setStartPointIndex(int value) {
+    /*void setStartPointIndex(int value) {
         startPointIndex = value;
         distancesFromStart[startPointIndex] = 0;
-    }
+    }*/
     
     // shortest path from start to end; order of points in array is the order to traverse the path
-    ArrayList<SampledPoint> shortestPath = new ArrayList();
+    ArrayList<Integer> shortestPath = new ArrayList();
     color shortestPathColor;
     
     float[] distancesFromStart;        // per-point distance from start along shortest path to that point
-    int[] predecessors;
-    int[] successors;
     float[] scalarDistancesToSuccessors;
     PVector[] directionsToSuccessors;    // direction of the edge after a given point
     
@@ -42,7 +40,8 @@ class Agent {
         endPointIndex = finalPositionIndex;
         
         distancesFromStart[startPointIndex] = 0;
-        currentPosition = new PVector(initialPosition.x, initialPosition.y);   // need a copy here since this will get modified as the program runs
+        currentPosition = new PVector(sampledPoints.get(startPointIndex).position.x, sampledPoints.get(endPointIndex).position.y);
+        currentPoint = startPointIndex;
         
         //startPoint = new SampledPoint(initialPosition);
         endPoint = new SampledPoint(finalPosition);
