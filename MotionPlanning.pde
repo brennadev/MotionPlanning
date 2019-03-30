@@ -139,7 +139,7 @@ void draw() {
     
     // initial/final positions for agents
     for(int i = 0; i < agents.size(); i++) {
-        circle(agents.get(i).initialPosition.x * scale + originToCenterTranslation, agents.get(i).initialPosition.y * scale * -1 + originToCenterTranslation, 15);
+        circle(sampledPoints.get(agents.get(i).startPointIndex).position.x * scale + originToCenterTranslation, sampledPoints.get(agents.get(i).startPointIndex).position.y * scale * -1 + originToCenterTranslation, 15);
         circle(agents.get(i).finalPosition.x * scale + originToCenterTranslation, agents.get(i).finalPosition.y * scale * -1 + originToCenterTranslation, 15);
     }
     

@@ -3,7 +3,7 @@
 class Agent {
     float radius;
     PVector currentPosition;
-    PVector initialPosition;
+    //PVector initialPosition;
     PVector finalPosition;
     
     
@@ -41,7 +41,7 @@ class Agent {
     Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
         this.radius = radius;
         currentPosition = new PVector(initialPosition.x, initialPosition.y);   // need a copy here since this will get modified as the program runs
-        this.initialPosition = initialPosition;
+        //this.initialPosition = initialPosition;
         this.finalPosition = finalPosition;
         
         startPoint = new SampledPoint(initialPosition);
