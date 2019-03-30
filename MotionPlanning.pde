@@ -68,9 +68,12 @@ void setup() {
     Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
     obstacles.add(eighth);
     
+    // add agents
+    
     // agent start and end positions - used later for initializing the Agent instances
     PVector[] start = new PVector[agentsCount];
     PVector[] end = new PVector[agentsCount];
+    color[] agentColors = new color[agentsCount];
     
     start[0] = new PVector(-9, 9);
     start[1] = new PVector(0, -7);
@@ -78,27 +81,34 @@ void setup() {
     end[0] = new PVector(9, 9);
     end[1] = new PVector(9, 9);
     end[2] = new PVector(9, 8);
+    agentColors[0] = color(0, 255, 0);
+    agentColors[1] = color(255, 0, 255);
+    agentColors[2] = color(255, 255, 0);
     
-    
+    for(int i = 0; i < agentsCount; i++) {
+        sampledPoints.add(new SampledPoint(start[i]));
+        sampledPoints.add(new SampledPoint(end[i]));
+        agents.add(new Agent(0.5, sampledPoints.size() - 2, sampledPoints.size() - 1, agentColors[i]));
+    }
     
     // add agents
-    Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9), color(0, 255, 0));
+    /*Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9), color(0, 255, 0));
     agents.add(agent1);
     
     Agent agent2 = new Agent(0.5, new PVector(0, -7), new PVector(9, 9), color(255, 0, 255));
     agents.add(agent2);
     
     Agent agent3 = new Agent(0.5, new PVector(9, 0), new PVector(9, 8), color(255, 255, 0));
-    agents.add(agent3);
+    agents.add(agent3);*/
     
     
     // want start/end points for all agents in the sampled points
-    for(int i = 0; i < agents.size(); i++) {
+    /*for(int i = 0; i < agents.size(); i++) {
         sampledPoints.add(agents.get(i).startPoint);
         agents.get(i).setStartPointIndex(sampledPoints.size() - 1);
         sampledPoints.add(agents.get(i).endPoint);
         agents.get(i).endPointIndex = sampledPoints.size() - 1;
-    }
+    }*/
     
     
     // largest agent radius - for determining the path so all agent radii are accounted for
