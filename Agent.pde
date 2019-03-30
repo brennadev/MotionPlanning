@@ -3,7 +3,6 @@
 class Agent {
     float radius;
     PVector currentPosition;
-    //PVector finalPosition;
     
     
     // immediate point the character is after (or at)
@@ -14,7 +13,7 @@ class Agent {
     boolean isAtEnd = false;                
     
     
-    SampledPoint startPoint;
+    //SampledPoint startPoint;
     SampledPoint endPoint;
     
     int startPointIndex;
@@ -40,9 +39,8 @@ class Agent {
     Agent(float radius, PVector initialPosition, PVector finalPosition, color shortestPathColor) {
         this.radius = radius;
         currentPosition = new PVector(initialPosition.x, initialPosition.y);   // need a copy here since this will get modified as the program runs
-        //this.finalPosition = finalPosition;
         
-        startPoint = new SampledPoint(initialPosition);
+        //startPoint = new SampledPoint(initialPosition);
         endPoint = new SampledPoint(finalPosition);
         
         this.shortestPathColor = shortestPathColor;
