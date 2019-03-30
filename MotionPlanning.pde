@@ -91,25 +91,6 @@ void setup() {
         agents.add(new Agent(0.5, sampledPoints.size() - 2, sampledPoints.size() - 1, agentColors[i]));
     }
     
-    // add agents
-    /*Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9), color(0, 255, 0));
-    agents.add(agent1);
-    
-    Agent agent2 = new Agent(0.5, new PVector(0, -7), new PVector(9, 9), color(255, 0, 255));
-    agents.add(agent2);
-    
-    Agent agent3 = new Agent(0.5, new PVector(9, 0), new PVector(9, 8), color(255, 255, 0));
-    agents.add(agent3);*/
-    
-    
-    // want start/end points for all agents in the sampled points
-    /*for(int i = 0; i < agents.size(); i++) {
-        sampledPoints.add(agents.get(i).startPoint);
-        agents.get(i).setStartPointIndex(sampledPoints.size() - 1);
-        sampledPoints.add(agents.get(i).endPoint);
-        agents.get(i).endPointIndex = sampledPoints.size() - 1;
-    }*/
-    
     
     // largest agent radius - for determining the path so all agent radii are accounted for
     largestAgentRadius = agents.get(0).radius;
