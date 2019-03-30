@@ -14,7 +14,7 @@ class Agent {
     
     
     //SampledPoint startPoint;
-    SampledPoint endPoint;
+    //SampledPoint endPoint;
     
     int startPointIndex;
     int endPointIndex;
@@ -36,33 +36,33 @@ class Agent {
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
+        
         startPointIndex = initialPositionIndex;
         endPointIndex = finalPositionIndex;
         
-        distancesFromStart[startPointIndex] = 0;
         currentPosition = new PVector(sampledPoints.get(startPointIndex).position.x, sampledPoints.get(endPointIndex).position.y);
         currentPoint = startPointIndex;
         
+        distancesFromStart = new float[samplePointsCount + agentsCount * 2];
+        
+        distancesFromStart[startPointIndex] = 0;
+        
+        for(int i = 1; i < currentPointsCount; i++) {
+            distancesFromStart[i] = Float.MAX_VALUE;
+        }
+        
+        
         //startPoint = new SampledPoint(initialPosition);
-        endPoint = new SampledPoint(finalPosition);
+        //endPoint = new SampledPoint(finalPosition);
         
         this.shortestPathColor = shortestPathColor;
         
         // the problem is the start/end nodes aren't being taken into account - but because we don't know how many agents there'll be until they're added,
         // we don't know how many agents are needed (unless I have a hardcoded value)
         // there are 3 agents, therefore 6 start/end points (3 of each)
-        distancesFromStart = new float[currentPointsCount + 6];
-        predecessors = new int[currentPointsCount + 6];
-        successors = new int[currentPointsCount + 6];
+        
         scalarDistancesToSuccessors = new float[currentPointsCount + 6];
         directionsToSuccessors = new PVector[currentPointsCount + 6];
-        
-        // set up initial distances and other initial values
-        for(int i = 0; i < currentPointsCount; i++) {
-            distancesFromStart[i] = Float.MAX_VALUE;
-            predecessors[i] = -1;
-            successors[i] = -1;
-        }
     }
     
     
