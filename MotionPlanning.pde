@@ -68,6 +68,18 @@ void setup() {
     Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
     obstacles.add(eighth);
     
+    // agent start and end positions - used later for initializing the Agent instances
+    PVector[] start = new PVector[agentsCount];
+    PVector[] end = new PVector[agentsCount];
+    
+    start[0] = new PVector(-9, 9);
+    start[1] = new PVector(0, -7);
+    start[2] = new PVector(9, 0);
+    end[0] = new PVector(9, 9);
+    end[1] = new PVector(9, 9);
+    end[2] = new PVector(9, 8);
+    
+    
     
     // add agents
     Agent agent1 = new Agent(0.5, new PVector(-9, -9), new PVector(9, 9), color(0, 255, 0));
