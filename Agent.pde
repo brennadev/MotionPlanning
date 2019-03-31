@@ -54,10 +54,16 @@ class Agent {
         q.add(startPointIndex);    // add starting node
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
+        // something is causing the loop below to get stuck in an infinite loop
+        
         // while the end node isn't fully processed
         while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
+            
+            // forcing the left half of the loop condition to be true gets the loop to exit - so something must be incorrect in the handling of
+            // the end point or endNodeHasBeenInQueue being set
+            //endNodeHasBeenInQueue = true;
             
             shortestPath.add(u.adjacentNodes.get(0));    // have to start with something for the adjacent node to travel through
             
@@ -84,7 +90,7 @@ class Agent {
                     }
                     
                     // may need to update if the end node has been in the queue
-                    if (sampledPoints.get(u.adjacentNodes.get(i)) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
+                    if (u.adjacentNodes.get(i) == endPointIndex && !endNodeHasBeenInQueue) {
                         endNodeHasBeenInQueue = true;
                     }
                 }
@@ -149,7 +155,9 @@ class Agent {
     
     SampledPoint getSmallestDistance(ArrayList<Integer> q) {
         float smallestDistance = Float.MAX_VALUE;
+        
         SampledPoint pointWithSmallestDistance = null;
+        //SampledPoint pointWithSmallestDistance = sampledPoints.get(q.get(0));
         
         for(int i = 0; i < q.size(); i++) {
             //println(q.get(i));
