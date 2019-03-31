@@ -50,14 +50,16 @@ class Agent {
     
     
     void findShortestPath() {
-        ArrayList<SampledPoint> q = new ArrayList();
-        q.add(sampledPoints.get(startPointIndex));    // add starting node
+        ArrayList<Integer> q = new ArrayList();
+        q.add(startPointIndex);    // add starting node
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
         // while the end node isn't fully processed
-        while((q.contains(endPoint) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
+        while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
+            
+            shortestPath.add(u.adjacentNodes.get(0));    // have to start with something for the adjacent node to travel through
             
             // crashes with null pointer on line below; looks like it never enters the loop
             // adjacent nodes are fine; could be from getSamllestDistance
@@ -73,9 +75,13 @@ class Agent {
                 if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
                     distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
                     if (!q.contains(sampledPoints.get(u.adjacentNodes.get(i)))) {
-                        q.add(sampledPoints.get(u.adjacentNodes.get(i)));
+                        q.add(u.adjacentNodes.get(i));
                     }
-                    predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
+                    //predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
+                    
+                    if (distancesFromStart[u.adjacentNodes.get(i)] < distancesFromStart[shortestPath.get(shortestPath.size() - 1)]) {
+                        shortestPath.set(shortestPath.size() - 1, u.adjacentNodes.get(i));
+                    }
                     
                     // may need to update if the end node has been in the queue
                     if (sampledPoints.get(u.adjacentNodes.get(i)) == sampledPoints.get(1) && !endNodeHasBeenInQueue) {
@@ -87,7 +93,7 @@ class Agent {
     }
     
     
-    void setUpSuccessors() {
+    /*void setUpSuccessors() {
         // only hit 5 points on one run - obviously not all of them
         while (predecessors[currentPoint] != -1) {
             println("setupsuccessors");
@@ -99,7 +105,7 @@ class Agent {
             scalarDistancesToSuccessors[predecessors[currentPoint]] = PVector.dist(sampledPoints.get(predecessors[currentPoint]).position, sampledPoints.get(currentPoint).position);
             currentPoint = predecessors[currentPoint];
         }
-    }
+    }*/
     
     // per-frame character movement; call in draw
     void handleMovingCharacter() {        

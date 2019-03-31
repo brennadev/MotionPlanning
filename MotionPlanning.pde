@@ -111,7 +111,6 @@ void setup() {
     for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPath();
         agents.get(i).setUpSuccessors();
-        agents.get(i).currentPoint = agents.get(i).startPointIndex;
     }
 }
 
@@ -162,10 +161,10 @@ void draw() {
         stroke(agents.get(i).shortestPathColor);
         
         for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
-            line(agents.get(i).shortestPath.get(j).position.x * scale + originToCenterTranslation,
-                 agents.get(i).shortestPath.get(j).position.y * scale * -1 + originToCenterTranslation,
-                 agents.get(i).shortestPath.get(j + 1).position.x * scale + originToCenterTranslation,
-                 agents.get(i).shortestPath.get(j + 1).position.y * scale * -1 + originToCenterTranslation);
+            line(sampledPoints.get(agents.get(i).shortestPath.get(j)).position.x * scale + originToCenterTranslation,
+                 sampledPoints.get(agents.get(i).shortestPath.get(j)).position.y * scale * -1 + originToCenterTranslation,
+                 sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.x * scale + originToCenterTranslation,
+                 sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.y * scale * -1 + originToCenterTranslation);
         }
     }
     
