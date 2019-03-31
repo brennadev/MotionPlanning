@@ -33,7 +33,7 @@ class Agent {
         startPointIndex = initialPositionIndex;
         endPointIndex = finalPositionIndex;
         
-        currentPosition = new PVector(sampledPoints.get(startPointIndex).position.x, sampledPoints.get(endPointIndex).position.y);
+        currentPosition = new PVector(sampledPoints.get(startPointIndex).position.x, sampledPoints.get(startPointIndex).position.y);
         currentPoint = startPointIndex;
         
         // distancesFromStart
@@ -41,7 +41,7 @@ class Agent {
         
         distancesFromStart[startPointIndex] = 0;
         
-        for(int i = 1; i < currentPointsCount; i++) {
+        for(int i = 1; i < samplePointsCount; i++) {
             distancesFromStart[i] = Float.MAX_VALUE;
         }
         
@@ -55,9 +55,9 @@ class Agent {
         boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
         // something is causing the loop below to get stuck in an infinite loop
-        
+        shortestPath.add(startPointIndex);
         // while the end node isn't fully processed
-        while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
+        /*while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
             
@@ -95,7 +95,7 @@ class Agent {
                     }
                 }
             }
-        }
+        }*/
     }
     
     

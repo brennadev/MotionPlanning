@@ -28,9 +28,8 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 55;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 45;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 final int agentsCount = 3;
-int currentPointsCount = 55;    // TODO:   may or may not need this
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -51,22 +50,22 @@ void setup() {
     obstacles.add(second);
     
     Obstacle third = new Obstacle(new PVector(-4, -7), 2);
-    obstacles.add(third);
+    //obstacles.add(third);
     
     Obstacle fourth = new Obstacle(new PVector(7, 7), 1);
-    obstacles.add(fourth);
+    //obstacles.add(fourth);
     
     Obstacle fifth = new Obstacle(new PVector(-7, 7), 1);
-    obstacles.add(fifth);
+    //obstacles.add(fifth);
     
     Obstacle sixth = new Obstacle(new PVector(8, -6), 2);
-    obstacles.add(sixth);
+    //obstacles.add(sixth);
     
     Obstacle seventh = new Obstacle(new PVector(-6, 2), 1);
-    obstacles.add(seventh);
+    //obstacles.add(seventh);
     
     Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
-    obstacles.add(eighth);
+    //obstacles.add(eighth);
     
     // add agents
     
@@ -75,7 +74,7 @@ void setup() {
     PVector[] end = new PVector[agentsCount];
     color[] agentColors = new color[agentsCount];
     
-    start[0] = new PVector(-9, 9);
+    start[0] = new PVector(-9, -9);
     start[1] = new PVector(0, -7);
     start[2] = new PVector(9, 0);
     end[0] = new PVector(9, 9);
@@ -108,10 +107,18 @@ void setup() {
     connectSamplePoints();
     
     
-    for(int i = 0; i < agents.size(); i++) {
-        agents.get(i).findShortestPath();
+    /*for(int i = 0; i < sampledPoints.size(); i++) {
+        println();
+        for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
+            println(sampledPoints.get(i).adjacentNodes.get(j));
+        }
+    }*/
+    
+    
+    //for(int i = 0; i < agents.size(); i++) {
+        //agents.get(i).findShortestPath();
         //agents.get(i).setUpSuccessors();
-    }
+    //}
 }
 
 
@@ -129,10 +136,10 @@ void draw() {
     
     
     // initial/final positions for agents
-    for(int i = 0; i < agents.size(); i++) {
+    /*for(int i = 0; i < agents.size(); i++) {
         circle(sampledPoints.get(agents.get(i).startPointIndex).position.x * scale + originToCenterTranslation, sampledPoints.get(agents.get(i).startPointIndex).position.y * scale * -1 + originToCenterTranslation, 15);
         circle(sampledPoints.get(agents.get(i).endPointIndex).position.x * scale + originToCenterTranslation, sampledPoints.get(agents.get(i).endPointIndex).position.y * scale * -1 + originToCenterTranslation, 15);
-    }
+    }*/
     
     
     // all sampled points
@@ -157,7 +164,7 @@ void draw() {
      
     
     // shortest path    
-    for(int i = 0; i < agents.size(); i++) {
+    /*for(int i = 0; i < agents.size(); i++) {
         stroke(agents.get(i).shortestPathColor);
         
         for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
@@ -166,7 +173,7 @@ void draw() {
                  sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.x * scale + originToCenterTranslation,
                  sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.y * scale * -1 + originToCenterTranslation);
         }
-    }
+    }*/
     
     noStroke();
     
