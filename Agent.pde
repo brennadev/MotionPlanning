@@ -68,7 +68,7 @@ class Agent {
             // u must be null - but why would getSmallestDistance be returning null? Right now, it's just that the crashes are fixed (so really, I need to look at
             // that method more closely)
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
-                println(i);
+                //println(i);
                 float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + distancesFromStart[sampledPoints.indexOf(u)];
                 
                 // crashes on line below with out of bounds (56, 58)
@@ -108,7 +108,7 @@ class Agent {
     }*/
     
     // per-frame character movement; call in draw
-    void handleMovingCharacter() {        
+    /*void handleMovingCharacter() {        
         if (!isAtEnd) {
             // how much distance remains until reaching the next point on the path
             float scalarDistanceToNextPoint = scalarDistancesToSuccessors[currentPoint] - scalarDistanceFromCurrentPoint;
@@ -144,14 +144,17 @@ class Agent {
                 scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
             }
         }
-    }
+    }*/
     
-    SampledPoint getSmallestDistance(ArrayList<int> q) {
+    
+    SampledPoint getSmallestDistance(ArrayList<Integer> q) {
         float smallestDistance = Float.MAX_VALUE;
         SampledPoint pointWithSmallestDistance = null;
         
         for(int i = 0; i < q.size(); i++) {
-            if (distancesFromStart[sampledPoints.indexOf(q.get(i))] < smallestDistance) {
+            //println(q.get(i));
+            //println(sampledPoints.indexOf(q.get(i)));
+            if (distancesFromStart[q.get(i)] < smallestDistance) {
                 pointWithSmallestDistance = sampledPoints.get(q.get(i));
                 smallestDistance = distancesFromStart[i];
             }
