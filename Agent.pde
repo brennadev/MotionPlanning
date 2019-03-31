@@ -146,13 +146,13 @@ class Agent {
         }
     }
     
-    SampledPoint getSmallestDistance(ArrayList<SampledPoint> q) {
+    SampledPoint getSmallestDistance(ArrayList<int> q) {
         float smallestDistance = Float.MAX_VALUE;
         SampledPoint pointWithSmallestDistance = null;
         
         for(int i = 0; i < q.size(); i++) {
             if (distancesFromStart[sampledPoints.indexOf(q.get(i))] < smallestDistance) {
-                pointWithSmallestDistance = q.get(i);
+                pointWithSmallestDistance = sampledPoints.get(q.get(i));
                 smallestDistance = distancesFromStart[i];
             }
         }
