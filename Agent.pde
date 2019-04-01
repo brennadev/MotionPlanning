@@ -57,12 +57,18 @@ class Agent {
         // something is causing the loop below to get stuck in an infinite loop
         shortestPath.add(startPointIndex);
         // while the end node isn't fully processed
-        /*while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
+        
+        // the loop condition seems way complex
+        
+        // while q not empty; once you take end point out, you can break (simplifying
+        
+       while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
             
             // forcing the left half of the loop condition to be true gets the loop to exit - so something must be incorrect in the handling of
             // the end point or endNodeHasBeenInQueue being set
+            // for some reason, putting this in makes it crash on the next line (the shortestPath add thing)
             //endNodeHasBeenInQueue = true;
             
             shortestPath.add(u.adjacentNodes.get(0));    // have to start with something for the adjacent node to travel through
@@ -80,6 +86,8 @@ class Agent {
                 // crashes on line below with out of bounds (56, 58)
                 if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
                     distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
+                    // not sure if having the statement below in an if statement makes any difference (as it's not in an if statement in the checkin - but then,
+                    // the if statement above is what seems to be never true
                     if (!q.contains(sampledPoints.get(u.adjacentNodes.get(i)))) {
                         q.add(u.adjacentNodes.get(i));
                     }
@@ -95,7 +103,7 @@ class Agent {
                     }
                 }
             }
-        }*/
+        }
     }
     
     
@@ -114,7 +122,7 @@ class Agent {
     }*/
     
     // per-frame character movement; call in draw
-    /*void handleMovingCharacter() {        
+    void handleMovingCharacter() {        
         if (!isAtEnd) {
             // how much distance remains until reaching the next point on the path
             float scalarDistanceToNextPoint = scalarDistancesToSuccessors[currentPoint] - scalarDistanceFromCurrentPoint;
@@ -150,7 +158,7 @@ class Agent {
                 scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
             }
         }
-    }*/
+    }
     
     
     SampledPoint getSmallestDistance(ArrayList<Integer> q) {

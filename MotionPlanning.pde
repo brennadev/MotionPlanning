@@ -28,8 +28,8 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 45;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-final int agentsCount = 3;
+final int samplePointsCount = 10;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int agentsCount = 1;
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -44,10 +44,10 @@ void setup() {
     
     // add obstacles
     Obstacle first = new Obstacle(new PVector(0, 0), 2);
-    obstacles.add(first);
+    //obstacles.add(first);
     
     Obstacle second = new Obstacle(new PVector(6, 4), 1);
-    obstacles.add(second);
+    //obstacles.add(second);
     
     Obstacle third = new Obstacle(new PVector(-4, -7), 2);
     //obstacles.add(third);
@@ -75,14 +75,14 @@ void setup() {
     color[] agentColors = new color[agentsCount];
     
     start[0] = new PVector(-9, -9);
-    start[1] = new PVector(0, -7);
-    start[2] = new PVector(9, 0);
+    //start[1] = new PVector(0, -7);
+    //start[2] = new PVector(9, 0);
     end[0] = new PVector(9, 9);
-    end[1] = new PVector(9, 9);
-    end[2] = new PVector(9, 8);
+    //end[1] = new PVector(9, 9);
+    //end[2] = new PVector(9, 8);
     agentColors[0] = color(0, 255, 0);
-    agentColors[1] = color(255, 0, 255);
-    agentColors[2] = color(255, 255, 0);
+    //agentColors[1] = color(255, 0, 255);
+    //agentColors[2] = color(255, 255, 0);
     
     for(int i = 0; i < agentsCount; i++) {
         sampledPoints.add(new SampledPoint(start[i]));
@@ -115,10 +115,18 @@ void setup() {
     }*/
     
     
-    //for(int i = 0; i < agents.size(); i++) {
-        //agents.get(i).findShortestPath();
+    for(int i = 0; i < agents.size(); i++) {
+        agents.get(i).findShortestPath();
+        
+        for(int j = 0; j < agents.get(i).shortestPath.size(); j++) {
+            println("shortest path");
+            println(agents.get(i).shortestPath.get(j));
+        }
+        println(agents.get(i).startPointIndex);
+        println(agents.get(i).endPointIndex);
+        println();
         //agents.get(i).setUpSuccessors();
-    //}
+    }
 }
 
 
