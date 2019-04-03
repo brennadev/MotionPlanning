@@ -42,11 +42,15 @@ class Agent {
         
         distancesFromStart[startPointIndex] = 0;
         
-        for(int i = 1; i < samplePointsCount; i++) {
+        for(int i = 1; i < samplePointsCount + agentsCount * 2; i++) {
             distancesFromStart[i] = Float.MAX_VALUE;
         }
         
         predecessors = new int[samplePointsCount + agentsCount * 2];
+        
+        for(int i = 0; i < samplePointsCount + agentsCount * 2; i++) {
+            predecessors[i] = -1;    // -1 indicates that a predecessor hasn't been set/there isn't a predecessor
+        }
         
         this.shortestPathColor = shortestPathColor;
     }
@@ -73,10 +77,10 @@ class Agent {
                 if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
                     distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
                     // set the predecessor
-                    //u.adjacentNodes.get(i)
+                    predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
                 }
             }
-            
+            // should this check be inside the for loop above?
             if (sampledPoints.indexOf(u) == endPointIndex) {
                 break;
             }
