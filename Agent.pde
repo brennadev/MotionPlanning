@@ -100,6 +100,31 @@ class Agent {
         }
     }
     
+    int currentGoal = shortestPath.size() - 1;
+    float velocity = 0.05;
+    
+    void handleMovingCharacter() {
+        // the start point will be at the last index in shortestPath
+        if (!isAtEnd) {
+            PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
+            println(goalPosition);
+            
+            if (PVector.dist(currentPosition, PVector.add(currentPosition, goalPosition)) < velocity) {
+                currentGoal--;
+            }
+            
+            // we're at the end
+            if (currentGoal == -1) {
+                isAtEnd = true;
+                return;
+            }
+            
+            
+            currentPosition.add(PVector.sub(goalPosition, currentPosition).normalize().mult(velocity));
+        
+        }
+    }
+    
     
     void findShortestPath() {
         ArrayList<Integer> q = new ArrayList();
