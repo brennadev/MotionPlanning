@@ -107,14 +107,6 @@ void setup() {
     connectSamplePoints();
     
     
-    /*for(int i = 0; i < sampledPoints.size(); i++) {
-        println();
-        for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
-            println(sampledPoints.get(i).adjacentNodes.get(j));
-        }
-    }*/
-    
-    
     for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPathNew();
         
@@ -122,11 +114,6 @@ void setup() {
             println("shortest path");
             println(agents.get(i).shortestPath.get(j));
         }
-        println(agents.get(i).startPointIndex);
-        println(agents.get(i).endPointIndex);
-        println();
-        
-        //agents.get(i).setUpSuccessors();
     }
 }
 
@@ -142,14 +129,6 @@ void draw() {
                obstacles.get(i).position.y * scale * -1 + originToCenterTranslation, 
                obstacles.get(i).radius * 2 * scale);
     }
-    
-    
-    // initial/final positions for agents
-    /*for(int i = 0; i < agents.size(); i++) {
-        circle(sampledPoints.get(agents.get(i).startPointIndex).position.x * scale + originToCenterTranslation, sampledPoints.get(agents.get(i).startPointIndex).position.y * scale * -1 + originToCenterTranslation, 15);
-        circle(sampledPoints.get(agents.get(i).endPointIndex).position.x * scale + originToCenterTranslation, sampledPoints.get(agents.get(i).endPointIndex).position.y * scale * -1 + originToCenterTranslation, 15);
-    }*/
-    
     
     // all sampled points
     fill(255, 0, 0);
@@ -173,7 +152,7 @@ void draw() {
      
     
     // shortest path    
-    /*for(int i = 0; i < agents.size(); i++) {
+    for(int i = 0; i < agents.size(); i++) {
         stroke(agents.get(i).shortestPathColor);
         
         for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
@@ -182,11 +161,10 @@ void draw() {
                  sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.x * scale + originToCenterTranslation,
                  sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.y * scale * -1 + originToCenterTranslation);
         }
-    }*/
+    }
     
     noStroke();
     
-
     
     // agents
     for(int i = 0; i < agents.size(); i++) {
