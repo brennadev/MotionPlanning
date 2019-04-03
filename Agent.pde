@@ -25,6 +25,7 @@ class Agent {
     
     ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
     ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
+
     
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
@@ -39,24 +40,25 @@ class Agent {
         
         // distancesFromStart
         distancesFromStart = new float[samplePointsCount + agentsCount * 2];
-        
-        distancesFromStart[startPointIndex] = 0;
-        
-        for(int i = 1; i < samplePointsCount + agentsCount * 2; i++) {
-            distancesFromStart[i] = Float.MAX_VALUE;
-        }
-        
         predecessors = new int[samplePointsCount + agentsCount * 2];
-        
-        for(int i = 0; i < samplePointsCount + agentsCount * 2; i++) {
-            predecessors[i] = -1;    // -1 indicates that a predecessor hasn't been set/there isn't a predecessor
-        }
+
         
         this.shortestPathColor = shortestPathColor;
     }
     
     
     void findShortestPathNew() {
+        
+        for(int i = 0; i < samplePointsCount + agentsCount * 2; i++) {
+            distancesFromStart[i] = Float.MAX_VALUE;
+        }
+        
+        distancesFromStart[startPointIndex] = 0;
+        
+        for(int i = 0; i < samplePointsCount + agentsCount * 2; i++) {
+            predecessors[i] = -1;    // -1 indicates that a predecessor hasn't been set/there isn't a predecessor
+        }
+        
         ArrayList<Integer> q = new ArrayList();
         
         for(int i = 0; i < sampledPoints.size(); i++) {
@@ -71,6 +73,11 @@ class Agent {
             // don't know if there's an issue in getSmallestDistance
             // in q - what about points that can't be reached; does getSmallestDistance then need info about the adjacent nodes?
             
+            // should this check be inside the for loop above?
+            if (sampledPoints.indexOf(u) == endPointIndex) {
+                break;
+            }
+            
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
                 float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + distancesFromStart[sampledPoints.indexOf(u)];
                 
@@ -80,12 +87,11 @@ class Agent {
                     predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
                 }
             }
-            // should this check be inside the for loop above?
-            if (sampledPoints.indexOf(u) == endPointIndex) {
-                break;
-            }
+            
             
         }
+        
+        
     }
     
     
@@ -202,12 +208,12 @@ class Agent {
     
     
     SampledPoint getSmallestDistance(ArrayList<Integer> q) {
-        float smallestDistance = Float.MAX_VALUE;
+        float smallestDistance = distancesFromStart[q.get(0)];
         
-        SampledPoint pointWithSmallestDistance = null;
+        SampledPoint pointWithSmallestDistance = sampledPoints.get(q.get(0));
         //SampledPoint pointWithSmallestDistance = sampledPoints.get(q.get(0));
         
-        for(int i = 0; i < q.size(); i++) {
+        for(int i = 1; i < q.size(); i++) {
             //println(q.get(i));
             //println(sampledPoints.indexOf(q.get(i)));
             if (distancesFromStart[q.get(i)] < smallestDistance) {
