@@ -26,7 +26,6 @@ class Agent {
     
     ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
     ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
-
     
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
@@ -109,15 +108,7 @@ class Agent {
     void handleMovingCharacter() {
         // the start point will be at the last index in shortestPath
         if (!isAtEnd) {
-            // array index is -1 on first attempt
-            println("handleMovingCharacter");
-            println(currentGoal);
-            // currentGoal is -1
-            println(shortestPath.size());
-            println(shortestPath.get(currentGoal));
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
-            
-            println(goalPosition);
             
             if (PVector.dist(currentPosition, goalPosition) < velocity) {
                 currentGoal--;
@@ -128,53 +119,13 @@ class Agent {
                 isAtEnd = true;
                 return;
             }
-            
-            
+
             currentPosition.add(PVector.sub(goalPosition, currentPosition).normalize().mult(velocity));
         }
     }
     
-
-    // per-frame character movement; call in draw
-    /*void handleMovingCharacter() {        
-        if (!isAtEnd) {
-            // how much distance remains until reaching the next point on the path
-            float scalarDistanceToNextPoint = scalarDistancesToSuccessors[currentPoint] - scalarDistanceFromCurrentPoint;
-            
-            // when close to the next point
-            if (scalarDistanceToNextPoint < distanceToTravelPerFrame) {
-                // get to the end of the current edge
-                println(directionsToSuccessors[currentPoint]);
-                
-                // directionsToSuccessors has no values in it
-                // crashing on the first time in this
-                currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceToNextPoint));
-                
-                currentPoint = successors[currentPoint];
-                
-                
-                // once at end point, nothing more needs to be done
-                println("currentPoint: " + currentPoint);
-                if (currentPoint == endPointIndex) {
-                    isAtEnd = true;
-                    return;
-                }
-                
-                // how much distance to move from the new point
-                float scalarDistanceFromNewCurrentPoint = distanceToTravelPerFrame - scalarDistanceToNextPoint;
-                
-                currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], scalarDistanceFromNewCurrentPoint));
-                scalarDistanceFromCurrentPoint = scalarDistanceFromNewCurrentPoint;
-                
-            // normally...    
-            } else {
-                currentPosition.add(PVector.mult(directionsToSuccessors[currentPoint], distanceToTravelPerFrame));
-                scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
-            }
-        }
-    }*/
     
-    
+    // helper for shortest path generation
     SampledPoint getSmallestDistance(ArrayList<Integer> q) {
         float smallestDistance = distancesFromStart[q.get(0)];
         
