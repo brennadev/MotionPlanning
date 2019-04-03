@@ -65,6 +65,8 @@ class Agent {
             q.add(i);
         }
         
+        int endIndex = -1;
+        
         while (!q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(new Integer(sampledPoints.indexOf(u)));
@@ -74,7 +76,13 @@ class Agent {
             // in q - what about points that can't be reached; does getSmallestDistance then need info about the adjacent nodes?
             
             // should this check be inside the for loop above?
-            if (sampledPoints.indexOf(u) == endPointIndex) {
+            
+            // sampledPoints index for u
+            int uIndex = sampledPoints.indexOf(u);
+            
+            // see if we've made it to the goal
+            if (uIndex == endPointIndex) {
+                endIndex = uIndex;
                 break;
             }
             
@@ -86,12 +94,15 @@ class Agent {
                     // set the predecessor
                     predecessors[u.adjacentNodes.get(i)] = sampledPoints.indexOf(u);
                 }
-            }
-            
-            
+            }  
         }
         
+        // set up the shortest path, which goes from the end node to the beginning node
+        int currentIndex = endIndex;
         
+        while(predecessors[currentIndex] != -1) {
+            shortestPath.add(currentIndex);
+        }
     }
     
     
