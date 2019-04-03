@@ -49,6 +49,25 @@ class Agent {
     }
     
     
+    void findShortestPathNew() {
+        ArrayList<Integer> q = new ArrayList();
+        
+        for(int i = 0; i < sampledPoints.size(); i++) {
+            q.add(i);
+        }
+        
+        while (!q.isEmpty()) {
+            SampledPoint u = getSmallestDistance(q);
+            q.remove(sampledPoints.indexOf(u));
+            
+            for(int i = 0; i < u.adjacentNodes.size(); i++) {
+                
+            }
+            
+        }
+    }
+    
+    
     void findShortestPath() {
         ArrayList<Integer> q = new ArrayList();
         q.add(startPointIndex);    // add starting node
