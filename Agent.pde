@@ -70,12 +70,6 @@ class Agent {
         while (!q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(new Integer(sampledPoints.indexOf(u)));
-            println(u);
-            // looks like it stays non-null, and then eventually, u is null (could be hitting end?)
-            // don't know if there's an issue in getSmallestDistance
-            // in q - what about points that can't be reached; does getSmallestDistance then need info about the adjacent nodes?
-            
-            // should this check be inside the for loop above?
             
             // sampledPoints index for u
             int uIndex = sampledPoints.indexOf(u);
@@ -102,6 +96,7 @@ class Agent {
         
         while(predecessors[currentIndex] != -1) {
             shortestPath.add(currentIndex);
+            currentIndex = predecessors[currentIndex];
         }
     }
     
