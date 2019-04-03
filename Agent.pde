@@ -52,17 +52,17 @@ class Agent {
     void findShortestPath() {
         ArrayList<Integer> q = new ArrayList();
         q.add(startPointIndex);    // add starting node
-        boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
+        //boolean endNodeHasBeenInQueue = false;    // the end node needs to end up in the queue at least once to know that it's been processed
         
         // something is causing the loop below to get stuck in an infinite loop
-        shortestPath.add(startPointIndex);
+        //shortestPath.add(startPointIndex);
         // while the end node isn't fully processed
         
         // the loop condition seems way complex
         
         // while q not empty; once you take end point out, you can break (simplifying
         
-       while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
+       /*while((q.contains(endPointIndex) || !endNodeHasBeenInQueue) && !q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
             q.remove(u);
             
@@ -103,7 +103,7 @@ class Agent {
                     }
                 }
             }
-        }
+        }*/
     }
     
     
@@ -122,7 +122,7 @@ class Agent {
     }*/
     
     // per-frame character movement; call in draw
-    void handleMovingCharacter() {        
+    /*void handleMovingCharacter() {        
         if (!isAtEnd) {
             // how much distance remains until reaching the next point on the path
             float scalarDistanceToNextPoint = scalarDistancesToSuccessors[currentPoint] - scalarDistanceFromCurrentPoint;
@@ -158,7 +158,7 @@ class Agent {
                 scalarDistanceFromCurrentPoint += distanceToTravelPerFrame;
             }
         }
-    }
+    }*/
     
     
     SampledPoint getSmallestDistance(ArrayList<Integer> q) {
