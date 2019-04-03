@@ -130,17 +130,13 @@ class Agent {
         float smallestDistance = distancesFromStart[q.get(0)];
         
         SampledPoint pointWithSmallestDistance = sampledPoints.get(q.get(0));
-        //SampledPoint pointWithSmallestDistance = sampledPoints.get(q.get(0));
-        
+
         for(int i = 1; i < q.size(); i++) {
-            //println(q.get(i));
-            //println(sampledPoints.indexOf(q.get(i)));
             if (distancesFromStart[q.get(i)] < smallestDistance) {
                 pointWithSmallestDistance = sampledPoints.get(q.get(i));
                 smallestDistance = distancesFromStart[i];
             }
         }
-        
         return pointWithSmallestDistance;
     }
 }
