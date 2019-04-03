@@ -15,6 +15,7 @@ class Agent {
     int startPointIndex;
     int endPointIndex;
     
+    int currentGoal;
     
     // shortest path from start to end; order of points in array is the order to traverse the path
     ArrayList<Integer> shortestPath = new ArrayList();
@@ -98,18 +99,27 @@ class Agent {
             shortestPath.add(currentIndex);
             currentIndex = predecessors[currentIndex];
         }
+        
+        currentGoal = shortestPath.size() - 1;
     }
     
-    int currentGoal = shortestPath.size() - 1;
-    float velocity = 0.05;
+    
+    float velocity = 0.1;
     
     void handleMovingCharacter() {
         // the start point will be at the last index in shortestPath
         if (!isAtEnd) {
+            // array index is -1 on first attempt
+            println("handleMovingCharacter");
+            println(currentGoal);
+            // currentGoal is -1
+            println(shortestPath.size());
+            println(shortestPath.get(currentGoal));
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
+            
             println(goalPosition);
             
-            if (PVector.dist(currentPosition, PVector.add(currentPosition, goalPosition)) < velocity) {
+            if (PVector.dist(currentPosition, goalPosition) < velocity) {
                 currentGoal--;
             }
             
@@ -121,7 +131,6 @@ class Agent {
             
             
             currentPosition.add(PVector.sub(goalPosition, currentPosition).normalize().mult(velocity));
-        
         }
     }
     
