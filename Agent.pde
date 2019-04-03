@@ -21,6 +21,7 @@ class Agent {
     color shortestPathColor;
     
     float[] distancesFromStart;        // per-point distance from start along shortest path to that point
+    int[] predecessors;                // index of a given node in sampledPoints
     
     ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
     ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
@@ -45,6 +46,8 @@ class Agent {
             distancesFromStart[i] = Float.MAX_VALUE;
         }
         
+        predecessors = new int[samplePointsCount + agentsCount * 2];
+        
         this.shortestPathColor = shortestPathColor;
     }
     
@@ -58,10 +61,24 @@ class Agent {
         
         while (!q.isEmpty()) {
             SampledPoint u = getSmallestDistance(q);
-            q.remove(sampledPoints.indexOf(u));
+            q.remove(new Integer(sampledPoints.indexOf(u)));
+            println(u);
+            // looks like it stays non-null, and then eventually, u is null (could be hitting end?)
+            // don't know if there's an issue in getSmallestDistance
+            // in q - what about points that can't be reached; does getSmallestDistance then need info about the adjacent nodes?
             
             for(int i = 0; i < u.adjacentNodes.size(); i++) {
+                float distanceToAdjacentNodeFromStart = PVector.dist(u.position, sampledPoints.get(u.adjacentNodes.get(i)).position) + distancesFromStart[sampledPoints.indexOf(u)];
                 
+                if (distanceToAdjacentNodeFromStart < distancesFromStart[u.adjacentNodes.get(i)]) {
+                    distancesFromStart[u.adjacentNodes.get(i)] = distanceToAdjacentNodeFromStart;
+                    // set the predecessor
+                    //u.adjacentNodes.get(i)
+                }
+            }
+            
+            if (sampledPoints.indexOf(u) == endPointIndex) {
+                break;
             }
             
         }

@@ -116,7 +116,7 @@ void setup() {
     
     
     for(int i = 0; i < agents.size(); i++) {
-        agents.get(i).findShortestPath();
+        agents.get(i).findShortestPathNew();
         
         for(int j = 0; j < agents.get(i).shortestPath.size(); j++) {
             println("shortest path");
