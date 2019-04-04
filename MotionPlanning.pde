@@ -119,6 +119,8 @@ void setup() {
 
 
 void draw() {
+    
+    
     background(0);
     fill(255);
     noStroke();
@@ -165,6 +167,9 @@ void draw() {
     
     noStroke();
     
+    for(int i = 0; i < agents.size(); i++) {
+        agents.get(i).findNeighbors();
+    }
     
     // agents
     for(int i = 0; i < agents.size(); i++) {
