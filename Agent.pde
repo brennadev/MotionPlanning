@@ -170,6 +170,15 @@ class Agent {
     void handleCollisions() {
         goalForce = k * (goalVelocity - velocity);
         
-        
+        for(int i = 0; i < neighbors.size(); i++) {
+            float timeToCollision = ttc(neighbors.get(i));
+            
+            
+        }
+    }
+    
+    // TODO: fill in
+    float ttc(Agent neighbor) {
+        return 0;
     }
 }
