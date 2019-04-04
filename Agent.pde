@@ -31,6 +31,12 @@ class Agent {
     float sensingRadius = 5;
     ArrayList<Agent> neighbors = new ArrayList();
     
+    /////////////// Goal and velocity ///////////////
+    float velocity = 0.1;
+    float goalVelocity = 0.1;
+    float goalForce = 0;    // will be set in 
+    float k = 2;            // coefficient for goal force
+    
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
@@ -107,7 +113,7 @@ class Agent {
     }
     
     
-    float velocity = 0.1;
+    
     
     void handleMovingCharacter() {
         // the start point will be at the last index in shortestPath
@@ -145,7 +151,7 @@ class Agent {
     }
     
     
-    /////////////// Neighbors ///////////////
+    /////////////// Neighbors and Collision Handling ///////////////
     void findNeighbors() {
         neighbors.clear();
         
@@ -158,5 +164,12 @@ class Agent {
                 }
             }
         }
+    }
+    
+    
+    void handleCollisions() {
+        goalForce = k * (goalVelocity - velocity);
+        
+        
     }
 }
