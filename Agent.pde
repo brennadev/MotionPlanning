@@ -179,7 +179,7 @@ class Agent {
         }
     }
     
-    // TODO: fill in
+    
     float ttc(Agent neighbor) {
         float totalRadius = radius + neighbor.radius;
         PVector w = PVector.sub(neighbor.currentPosition, currentPosition);
@@ -191,8 +191,23 @@ class Agent {
             return 0;
         }
         
+        PVector velocityDifference = PVector.sub(currentVelocity, neighbor.currentVelocity);
+        float a = PVector.dot(velocityDifference, velocityDifference);
+        float b = PVector.dot(w, velocityDifference);
         
+        float discriminant = b * b - a * c;
         
-        return 0;
+        // make sure we don't take a sqrt of a negative value
+        if (discriminant <= 0) {
+            return Float.MAX_VALUE;
+        }
+        
+        float tau = (b - sqrt(discriminant)) / a;
+        
+        if (tau < 0) {
+            return Float.MAX_VALUE;
+        }
+        
+        return tau;
     }
 }
