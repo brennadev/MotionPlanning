@@ -33,8 +33,10 @@ class Agent {
     
     /////////////// Goal and velocity ///////////////
     float velocity = 0.1;
-    // TODO: need to actually use currentVelocity
+    // TODO: need to actually use currentVelocity, currentDirection
+    // TODO: rename velocity to speed, scalar velocity, something like that so it's more clear what's what
     PVector currentVelocity = new PVector();
+    PVector currentDirection = new PVector();    // so this value only needs to be calculated once per frame (maximum) - multiply by velocity to get currentVelocity
     float goalVelocity = 0.1;
     float goalForce = 0;    // will be set in 
     float k = 2;            // coefficient for goal force
@@ -174,6 +176,13 @@ class Agent {
         
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
+            
+            PVector avoidanceForce = PVector.sub(PVector.add(currentPosition, PVector.mult(currentVelocity, timeToCollision)), 
+                                                 PVector.add(neighbors.get(i).currentPosition, PVector.mult(neighbors.get(i).currentVelocity, timeToCollision)));
+                                                 
+            if (avoidanceForce.x != 0 && avoidanceForce.y != 0) {
+                avoidanceForce.normalize();
+            }
             
             
         }
