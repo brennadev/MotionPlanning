@@ -27,6 +27,10 @@ class Agent {
     ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
     ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
     
+    /////////////// Neighbors ///////////////
+    float sensingRadius = 5;
+    ArrayList<Agent> neighbors = new ArrayList();
+    
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
@@ -138,5 +142,21 @@ class Agent {
             }
         }
         return pointWithSmallestDistance;
+    }
+    
+    
+    /////////////// Neighbors ///////////////
+    void findNeighbors() {
+        neighbors.clear();
+        
+        for(int i = 0; i < agents.size(); i++) {
+            // don't want to do anything to yourself
+            if (agents.get(i) != this) {
+                // an agent is a neighbor if it's close enough to the current agent
+                if (PVector.dist(currentPosition, agents.get(i).currentPosition) < sensingRadius) {
+                    neighbors.add(agents.get(i));
+                }
+            }
+        }
     }
 }
