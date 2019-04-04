@@ -38,8 +38,12 @@ class Agent {
     PVector currentVelocity = new PVector();
     PVector currentDirection = new PVector();    // so this value only needs to be calculated once per frame (maximum) - multiply by velocity to get currentVelocity
     float goalVelocity = 0.1;
-    float goalForce = 0;    // will be set in 
+    float totalForce = 0;    // will be set in 
+    // TODO: may need to tweak k
     float k = 2;            // coefficient for goal force
+    
+    float timeHorizon = 3;    // in seconds
+    float maxAvoidanceForce = 20;    // TODO: may need to tweak
     
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
@@ -172,7 +176,7 @@ class Agent {
     
     
     void handleCollisions() {
-        goalForce = k * (goalVelocity - velocity);
+        totalForce = k * (goalVelocity - velocity);    // calculate goal force
         
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
@@ -184,7 +188,20 @@ class Agent {
                 avoidanceForce.normalize();
             }
             
+            // force magnitude
+            float magnitude = 0;
             
+            if (timeToCollision >= 0 && timeToCollision <= timeHorizon) {
+                magnitude = (timeHorizon - timeToCollision) / (timeToCollision + 0.001);
+            }
+            
+            if (magnitude > maxAvoidanceForce) {
+                magnitude = maxAvoidanceForce;
+            }
+            
+            avoidanceForce.mult(magnitude);
+            //totalForce.add(avoidanceForce);
+            // TODO: need to modify totalForce (and fix goal force calculation) to be a vector rather than scalar
         }
     }
     
