@@ -33,6 +33,8 @@ class Agent {
     
     /////////////// Goal and velocity ///////////////
     float velocity = 0.1;
+    // TODO: need to actually use currentVelocity
+    PVector currentVelocity = new PVector();
     float goalVelocity = 0.1;
     float goalForce = 0;    // will be set in 
     float k = 2;            // coefficient for goal force
@@ -179,6 +181,18 @@ class Agent {
     
     // TODO: fill in
     float ttc(Agent neighbor) {
+        float totalRadius = radius + neighbor.radius;
+        PVector w = PVector.sub(neighbor.currentPosition, currentPosition);
+        
+        // quadradic equation
+        float c = PVector.dot(w, w) - totalRadius * totalRadius;
+        
+        if (c < 0) {
+            return 0;
+        }
+        
+        
+        
         return 0;
     }
 }
