@@ -146,6 +146,10 @@ void draw() {
         
         generateSamplePoints();
         connectSamplePoints();
+        
+        for(int i = 0; i < agents.size(); i++) {
+            agents.get(i).findShortestPathNew();
+        }
         mode = SimulationState.runSimulation;
     }
     
@@ -202,7 +206,9 @@ void draw() {
     // agents
     for(int i = 0; i < agents.size(); i++) {
         fill(agents.get(i).shortestPathColor);
-        //agents.get(i).handleMovingCharacter();
+        if (mode == SimulationState.runSimulation) {
+            agents.get(i).handleMovingCharacter();
+        }
         circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
                agents.get(i).radius * 2 * scale);
