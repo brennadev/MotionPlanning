@@ -287,12 +287,29 @@ void keyPressed() {
     }
 }
 
+// hold the position between mouse clicks - after the start point is added but before the end point is added
+PVector nextStartPoint;
 
 void mouseClicked() {
     if (mode == SimulationState.addAgentStartEnds) {
         PVector position = new PVector(mouseX, mouseY);
         
-        
+        // it's a start node
+        if (sampledPoints.size() % 2 == 0) {
+            nextStartPoint = position;
+            sampledPoints.add(new SampledPoint(nextStartPoint));
+            
+        // it's an end node    
+        } else {
+            sampledPoints.add(new SampledPoint(position));
+            agents.add(new Agent(0.5, sampledPoints.size() - 2, sampledPoints.size() - 1, color(random(256), random(256), random(256))));
+            
+            
+            // last agent added - so move to the add obstacles state
+            if (sampledPoints.size() == agentsCount * 2) {
+                mode = SimulationState.addObstacles;
+            }
+        }
         
     } else if (mode == SimulationState.addObstacles) {
         PVector position = new PVector(mouseX, mouseY);
