@@ -204,16 +204,15 @@ void draw() {
     }
     
     // agents
-    for(int i = 0; i < agents.size(); i++) {
-        fill(agents.get(i).shortestPathColor);
-        
-        if (mode == SimulationState.runSimulation) {
+    if (mode == SimulationState.runSimulation) {
+        for(int i = 0; i < agents.size(); i++) {
+            fill(agents.get(i).shortestPathColor);
             agents.get(i).handleMovingCharacter();
+            
+            circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
+                   agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
+                   agents.get(i).radius * 2 * scale);
         }
-        
-        circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
-               agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
-               agents.get(i).radius * 2 * scale);
     }
 }
 
@@ -341,9 +340,6 @@ void mouseClicked() {
                 mode = SimulationState.addObstacles;
             }
         }
-        
-    } else if (mode == SimulationState.addObstacles) {
-        obstacles.add(new Obstacle(mousePosition(), 1));
     }
 }
 
@@ -360,15 +356,18 @@ void mousePressed() {
             if (PVector.dist(obstacles.get(i).position, mouse) < obstacles.get(i).radius) {
                 mouseDownPosition = mousePosition();
                 currentlyMovedObstacle = obstacles.get(i);
-                break;
+                return;
             }
         }
+        
+        obstacles.add(new Obstacle(mouse, 1));
     }
 }
 
 void mouseDragged() {
     if (mode == SimulationState.addObstacles && currentlyMovedObstacle != null) {
         PVector positionDifference = PVector.sub(mousePosition(), currentlyMovedObstacle.position);
+        currentlyMovedObstacle.position.add(positionDifference);
     }
 }
 
