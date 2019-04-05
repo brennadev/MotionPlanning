@@ -349,7 +349,7 @@ void mouseClicked() {
 
 
 PVector mouseDownPosition;
-Obstacle currentlyMovedObstacle;
+Obstacle currentlyMovedObstacle = null;
 
 void mousePressed() {
     if (mode == SimulationState.addObstacles) {
@@ -363,10 +363,18 @@ void mousePressed() {
                 break;
             }
         }
-        
-        
     }
 }
 
 void mouseDragged() {
+    if (mode == SimulationState.addObstacles && currentlyMovedObstacle != null) {
+        PVector positionDifference = PVector.sub(mousePosition(), currentlyMovedObstacle.position);
+    }
+}
+
+
+void mouseReleased() {
+    if (mode == SimulationState.addObstacles && currentlyMovedObstacle != null) {
+        currentlyMovedObstacle = null;
+    }
 }
