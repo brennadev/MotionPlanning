@@ -56,7 +56,7 @@ void setup() {
     size(600, 600, P2D);
     
     // add obstacles
-    Obstacle first = new Obstacle(new PVector(0, 0), 2);
+    /*Obstacle first = new Obstacle(new PVector(0, 0), 2);
     obstacles.add(first);
     
     Obstacle second = new Obstacle(new PVector(6, 4), 1);
@@ -79,11 +79,11 @@ void setup() {
     
     Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
     obstacles.add(eighth);
-    
+    */
     // add agents
     
     // agent start and end positions - used later for initializing the Agent instances
-    PVector[] start = new PVector[agentsCount];
+   /* PVector[] start = new PVector[agentsCount];
     PVector[] end = new PVector[agentsCount];
     color[] agentColors = new color[agentsCount];
     
@@ -103,23 +103,25 @@ void setup() {
         agents.add(new Agent(0.5, sampledPoints.size() - 2, sampledPoints.size() - 1, agentColors[i]));
     }
     
-    
+    */
     // largest agent radius - for determining the path so all agent radii are accounted for
-    largestAgentRadius = agents.get(0).radius;
+    /*largestAgentRadius = agents.get(0).radius;
     
     for(int i = 0; i < agents.size(); i++) {
         if (agents.get(i).radius > largestAgentRadius) {
             largestAgentRadius = agents.get(i).radius;
         }
-    }
+    }*/
     
     // the only way we know how many points are needed at the most is with the fixed initial amount of sampled points and the start/end points for the agents
     distanceMatrix = new Matrix(samplePointsCount + agentsCount * 2);
 
-    generateSamplePoints();
+    /*generateSamplePoints();
     connectSamplePoints();
     
+    */
     
+    /*
     for(int i = 0; i < agents.size(); i++) {
         agents.get(i).findShortestPathNew();
         
@@ -127,7 +129,7 @@ void setup() {
             println("shortest path");
             println(agents.get(i).shortestPath.get(j));
         }
-    }
+    }*/
 }
 
 
@@ -187,7 +189,7 @@ void draw() {
     // agents
     for(int i = 0; i < agents.size(); i++) {
         fill(agents.get(i).shortestPathColor);
-        agents.get(i).handleMovingCharacter();
+        //agents.get(i).handleMovingCharacter();
         circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
                agents.get(i).radius * 2 * scale);
@@ -292,7 +294,8 @@ PVector nextStartPoint;
 
 void mouseClicked() {
     if (mode == SimulationState.addAgentStartEnds) {
-        PVector position = new PVector(mouseX, mouseY);
+        PVector position = new PVector((mouseX - originToCenterTranslation) / scale, (mouseY - originToCenterTranslation) / scale * -1);
+        println(position);
         
         // it's a start node
         if (sampledPoints.size() % 2 == 0) {
@@ -312,6 +315,6 @@ void mouseClicked() {
         }
         
     } else if (mode == SimulationState.addObstacles) {
-        obstacles.add(new Obstacle(new PVector(mouseX, mouseY), 1));
+        obstacles.add(new Obstacle(new PVector((mouseX - originToCenterTranslation) / scale, (mouseY - originToCenterTranslation) / scale * -1), 1));
     }
 }
