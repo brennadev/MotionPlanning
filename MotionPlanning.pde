@@ -39,6 +39,19 @@ float distanceToTravelPerFrame = 0.05;
 float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
 
 
+/////////////// User Interaction ///////////////
+// with the user interaction in there, there's more state to keep track of
+enum SimulationState { 
+    addAgentStartEnds, 
+    addObstacles, 
+    setUpMap, 
+    runSimulation
+}
+
+// current mode for the simulation
+SimulationState mode = SimulationState.addAgentStartEnds;
+
+
 void setup() {
     size(600, 600, P2D);
     
@@ -264,4 +277,24 @@ boolean edgeHitsObstacle(PVector origin, PVector direction, Float t) {
         }
     }
     return false;    // if there aren't any obstacles, there obviously isn't any edge-obstacle intersection (or it falls out of loop)
+}
+
+
+void keyPressed() {
+    // when the simulation is ready to start - after agent start/end points are in and (optionally) obstacles are in
+    if (mode == SimulationState.addObstacles && key == ' ') {
+        mode = SimulationState.setUpMap;
+    }
+}
+
+
+void mouseClicked() {
+    if (mode == SimulationState.addAgentStartEnds) {
+        PVector position = new PVector(mouseX, mouseY);
+        
+        
+        
+    } else if (mode == SimulationState.addObstacles) {
+        PVector position = new PVector(mouseX, mouseY);
+    }
 }
