@@ -312,6 +312,6 @@ void mouseClicked() {
         }
         
     } else if (mode == SimulationState.addObstacles) {
-        PVector position = new PVector(mouseX, mouseY);
+        obstacles.add(new Obstacle(new PVector(mouseX, mouseY), 1));
     }
 }
