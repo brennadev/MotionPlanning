@@ -346,3 +346,27 @@ void mouseClicked() {
         obstacles.add(new Obstacle(mousePosition(), 1));
     }
 }
+
+
+PVector mouseDownPosition;
+Obstacle currentlyMovedObstacle;
+
+void mousePressed() {
+    if (mode == SimulationState.addObstacles) {
+        
+        PVector mouse = mousePosition();
+        
+        for(int i = 0; i < obstacles.size(); i++) {
+            if (PVector.dist(obstacles.get(i).position, mouse) < obstacles.get(i).radius) {
+                mouseDownPosition = mousePosition();
+                currentlyMovedObstacle = obstacles.get(i);
+                break;
+            }
+        }
+        
+        
+    }
+}
+
+void mouseDragged() {
+}
