@@ -206,9 +206,11 @@ void draw() {
     // agents
     for(int i = 0; i < agents.size(); i++) {
         fill(agents.get(i).shortestPathColor);
+        
         if (mode == SimulationState.runSimulation) {
             agents.get(i).handleMovingCharacter();
         }
+        
         circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
                agents.get(i).radius * 2 * scale);
@@ -310,22 +312,27 @@ void keyPressed() {
 }
 
 
+
+// mouse position adjusted for coordinates being used in this program
+PVector mousePosition() {
+    return new PVector((mouseX - originToCenterTranslation) / scale, (mouseY - originToCenterTranslation) / scale * -1);
+}
+
+
 // hold the position between mouse clicks - after the start point is added but before the end point is added
 PVector nextStartPoint;
 
 void mouseClicked() {
     if (mode == SimulationState.addAgentStartEnds) {
-        PVector position = new PVector((mouseX - originToCenterTranslation) / scale, (mouseY - originToCenterTranslation) / scale * -1);
-        println(position);
         
         // it's a start node
         if (sampledPoints.size() % 2 == 0) {
-            nextStartPoint = position;
+            nextStartPoint = mousePosition();
             sampledPoints.add(new SampledPoint(nextStartPoint));
             
         // it's an end node    
         } else {
-            sampledPoints.add(new SampledPoint(position));
+            sampledPoints.add(new SampledPoint(mousePosition()));
             agents.add(new Agent(0.5, sampledPoints.size() - 2, sampledPoints.size() - 1, color(random(256), random(256), random(256))));
             
             
@@ -336,6 +343,6 @@ void mouseClicked() {
         }
         
     } else if (mode == SimulationState.addObstacles) {
-        obstacles.add(new Obstacle(new PVector((mouseX - originToCenterTranslation) / scale, (mouseY - originToCenterTranslation) / scale * -1), 1));
+        obstacles.add(new Obstacle(mousePosition(), 1));
     }
 }
