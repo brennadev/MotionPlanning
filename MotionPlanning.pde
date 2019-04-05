@@ -134,7 +134,20 @@ void setup() {
 
 
 void draw() {
+    if (mode == SimulationState.setUpMap) {
+        
+        largestAgentRadius = agents.get(0).radius;
     
+        for(int i = 0; i < agents.size(); i++) {
+            if (agents.get(i).radius > largestAgentRadius) {
+                largestAgentRadius = agents.get(i).radius;
+            }
+        }
+        
+        generateSamplePoints();
+        connectSamplePoints();
+        mode = SimulationState.runSimulation;
+    }
     
     background(0);
     fill(255);
@@ -222,6 +235,7 @@ boolean pointIsInsideObstacles(PVector point) {
     return false;
 }
 
+
 // sampled points - for sure, nothing is getting added to 
 // find where the lines between the sample points should go
 void connectSamplePoints() {
@@ -288,6 +302,7 @@ void keyPressed() {
         mode = SimulationState.setUpMap;
     }
 }
+
 
 // hold the position between mouse clicks - after the start point is added but before the end point is added
 PVector nextStartPoint;
