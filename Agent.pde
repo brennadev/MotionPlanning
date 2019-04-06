@@ -36,11 +36,12 @@ class Agent {
     // TODO: need to actually use currentVelocity, currentDirection
     // TODO: rename velocity to speed, scalar velocity, something like that so it's more clear what's what
     PVector currentVelocity = new PVector();
+    // TODO: not sure if I need this - I've got the method that handles the direction calculation
     PVector currentDirection = new PVector();    // so this value only needs to be calculated once per frame (maximum) - multiply by velocity to get currentVelocity
     
     final float goalSpeed = 0.1;
-    float goalVelocity = 0.1;
-    float totalForce = 0;    // will be set in 
+    PVector goalVelocity = new PVector();
+    PVector totalForce = new PVector();    // will be set in 
     // TODO: may need to tweak k
     float k = 2;            // coefficient for goal force
     
@@ -52,6 +53,7 @@ class Agent {
     PVector currentDirection() {
         return PVector.sub(sampledPoints.get(currentGoal).position, currentPosition).normalize();
     }
+    
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
@@ -183,7 +185,8 @@ class Agent {
     
     
     void handleCollisions() {
-        totalForce = k * (goalVelocity - velocity);    // calculate goal force
+        //totalForce = k * (goalVelocity - velocity);    // calculate goal force
+        totalForce = PVector.sub(goalVelocity, currentVelocity).mult(k);
         
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
