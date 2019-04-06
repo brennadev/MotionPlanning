@@ -28,7 +28,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 50;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 120;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 final int agentsCount = 3;
 
 // points from random sampling to create potential paths
@@ -67,18 +67,6 @@ void setup() {
     
     Obstacle fourth = new Obstacle(new PVector(7, 7), 1);
     obstacles.add(fourth);
-    
-    Obstacle fifth = new Obstacle(new PVector(-7, 7), 1);
-    obstacles.add(fifth);
-    
-    Obstacle sixth = new Obstacle(new PVector(8, -6), 2);
-    obstacles.add(sixth);
-    
-    Obstacle seventh = new Obstacle(new PVector(-6, 2), 1);
-    obstacles.add(seventh);
-    
-    Obstacle eighth = new Obstacle(new PVector(0, 4), 2);
-    obstacles.add(eighth);
     */
     // add agents
     
@@ -115,25 +103,31 @@ void setup() {
     
     // the only way we know how many points are needed at the most is with the fixed initial amount of sampled points and the start/end points for the agents
     distanceMatrix = new Matrix(samplePointsCount + agentsCount * 2);
-
-    /*generateSamplePoints();
-    connectSamplePoints();
-    
-    */
-    
-    /*
-    for(int i = 0; i < agents.size(); i++) {
-        agents.get(i).findShortestPathNew();
-        
-        for(int j = 0; j < agents.get(i).shortestPath.size(); j++) {
-            println("shortest path");
-            println(agents.get(i).shortestPath.get(j));
-        }
-    }*/
 }
 
 
+float transformPositionX(float positionX) {
+    return positionX * scale + originToCenterTranslation;
+}
+
+float transformPositionY(float positionY) {
+    return positionY * scale * -1 + originToCenterTranslation;
+}
+
 void draw() {
+    switch (mode) {
+        case addAgentStartEnds:
+        fill(255);
+        textSize(100);
+        println(transformPositionY(7));
+        text("Click to add agent start and end points", transformPositionX(-5), transformPositionY(7));
+        break;
+        
+        case addObstacles:
+        break;
+    }
+    
+    
     if (mode == SimulationState.setUpMap) {
         
         largestAgentRadius = agents.get(0).radius;
@@ -168,11 +162,11 @@ void draw() {
     fill(255, 0, 0);
     
     for(int i = 0; i < sampledPoints.size(); i++) {
-        circle(sampledPoints.get(i).position.x * scale + originToCenterTranslation, sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation, 15);
+        circle(transformPositionX(sampledPoints.get(i).position.x)/* * scale + originToCenterTranslation*/, transformPositionY(sampledPoints.get(i).position.y)/* * scale * -1 + originToCenterTranslation*/, 15);
     }
     
     
-    // all possible paths
+    // all possible paths - comment out if better performance is needed
     stroke(0, 200, 255);
     
     for(int i = 0; i < sampledPoints.size(); i++) {
