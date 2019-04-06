@@ -185,7 +185,6 @@ class Agent {
     
     
     void handleCollisions() {
-        //totalForce = k * (goalVelocity - velocity);    // calculate goal force
         totalForce = PVector.sub(goalVelocity, currentVelocity).mult(k);
         
         for(int i = 0; i < neighbors.size(); i++) {
@@ -210,8 +209,7 @@ class Agent {
             }
             
             avoidanceForce.mult(magnitude);
-            //totalForce.add(avoidanceForce);
-            // TODO: need to modify totalForce (and fix goal force calculation) to be a vector rather than scalar
+            totalForce.add(avoidanceForce);
         }
     }
     
