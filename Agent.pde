@@ -37,6 +37,8 @@ class Agent {
     // TODO: rename velocity to speed, scalar velocity, something like that so it's more clear what's what
     PVector currentVelocity = new PVector();
     PVector currentDirection = new PVector();    // so this value only needs to be calculated once per frame (maximum) - multiply by velocity to get currentVelocity
+    
+    final float goalSpeed = 0.1;
     float goalVelocity = 0.1;
     float totalForce = 0;    // will be set in 
     // TODO: may need to tweak k
@@ -45,6 +47,11 @@ class Agent {
     float timeHorizon = 3;    // in seconds
     float maxAvoidanceForce = 20;    // TODO: may need to tweak
     
+    
+    // normalized direction vector of the agent's movement
+    PVector currentDirection() {
+        return PVector.sub(sampledPoints.get(currentGoal).position, currentPosition).normalize();
+    }
     
     Agent(float radius, int initialPositionIndex, int finalPositionIndex, color shortestPathColor) {
         this.radius = radius;
