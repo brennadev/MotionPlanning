@@ -20,12 +20,9 @@ class Agent {
     float[] distancesFromStart;        // per-point distance from start along shortest path to that point
     int[] predecessors;                // index of a given node in sampledPoints
     
-    ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
-    ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
-    
     
     /////////////// Neighbors ///////////////
-    float sensingRadius = 5;
+    float sensingRadius = 3;
     ArrayList<Agent> neighbors = new ArrayList();
     
     
@@ -129,7 +126,6 @@ class Agent {
         if (!isAtEnd) {
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
             
-            // TODO: note that the scalar velocity is used here - but we should be getting the length of the velocity vector as we may not have the goal velocity  in practice
             if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
                 currentGoal--;
             }

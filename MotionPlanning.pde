@@ -28,7 +28,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 70;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 15;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 final int agentsCount = 3;
 
 // points from random sampling to create potential paths
@@ -36,7 +36,7 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 Matrix distanceMatrix;
 float distanceToTravelPerFrame = 0.05;
-float dt = 0.1;
+float dt = 0.001;
 float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
 
 
@@ -55,53 +55,7 @@ SimulationState mode = SimulationState.addAgentStartEnds;
 
 void setup() {
     size(600, 600, P2D);
-    
-    // add obstacles
-    /*Obstacle first = new Obstacle(new PVector(0, 0), 2);
-    obstacles.add(first);
-    
-    Obstacle second = new Obstacle(new PVector(6, 4), 1);
-    obstacles.add(second);
-    
-    Obstacle third = new Obstacle(new PVector(-4, -7), 2);
-    obstacles.add(third);
-    
-    Obstacle fourth = new Obstacle(new PVector(7, 7), 1);
-    obstacles.add(fourth);
-    */
-    // add agents
-    
-    // agent start and end positions - used later for initializing the Agent instances
-   /* PVector[] start = new PVector[agentsCount];
-    PVector[] end = new PVector[agentsCount];
-    color[] agentColors = new color[agentsCount];
-    
-    start[0] = new PVector(-9, -9);
-    start[1] = new PVector(0, -7);
-    start[2] = new PVector(9, 0);
-    end[0] = new PVector(9, 9);
-    end[1] = new PVector(9, 9);
-    end[2] = new PVector(9, 8);
-    agentColors[0] = color(0, 255, 0);
-    agentColors[1] = color(255, 0, 255);
-    agentColors[2] = color(255, 255, 0);
-    
-    for(int i = 0; i < agentsCount; i++) {
-        sampledPoints.add(new SampledPoint(start[i]));
-        sampledPoints.add(new SampledPoint(end[i]));
-        agents.add(new Agent(0.5, sampledPoints.size() - 2, sampledPoints.size() - 1, agentColors[i]));
-    }
-    
-    */
-    // largest agent radius - for determining the path so all agent radii are accounted for
-    /*largestAgentRadius = agents.get(0).radius;
-    
-    for(int i = 0; i < agents.size(); i++) {
-        if (agents.get(i).radius > largestAgentRadius) {
-            largestAgentRadius = agents.get(i).radius;
-        }
-    }*/
-    
+
     // the only way we know how many points are needed at the most is with the fixed initial amount of sampled points and the start/end points for the agents
     distanceMatrix = new Matrix(samplePointsCount + agentsCount * 2);
 }
@@ -145,6 +99,7 @@ void draw() {
         for(int i = 0; i < agents.size(); i++) {
             agents.get(i).findShortestPathNew();
         }
+        
         mode = SimulationState.runSimulation;
     }
     
@@ -206,7 +161,7 @@ void draw() {
         
         for(int i = 0; i < agents.size(); i++) {
             agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
-           // agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
+            agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
         }
     // agents
 
@@ -215,7 +170,7 @@ void draw() {
         
         for(int i = 0; i < agents.size(); i++) {
             fill(agents.get(i).shortestPathColor);
-            agents.get(i).handleMovingCharacter();
+            //agents.get(i).handleMovingCharacter();
             
             circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                    agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
