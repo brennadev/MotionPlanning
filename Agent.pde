@@ -30,19 +30,13 @@ class Agent {
     
     
     /////////////// Goal and velocity ///////////////
-    //float velocity = 0.1;
-    // TODO: need to actually use currentVelocity, currentDirection
-    // TODO: rename velocity to speed, scalar velocity, something like that so it's more clear what's what
     PVector currentVelocity = new PVector();
-    // TODO: not sure if I need this - I've got the method that handles the direction calculation
-    PVector currentDirection = new PVector();    // so this value only needs to be calculated once per frame (maximum) - multiply by velocity to get currentVelocity
-    
-    final float goalSpeed = 0.1;
-    PVector totalForce = new PVector();    // will be set in 
+    final float goalSpeed = 0.1;                // speed the agent should move at if there aren't any impending collisions
+    PVector totalForce = new PVector();         // will be set per-frame in handleCollisions
     // TODO: may need to tweak k
-    float k = 2;            // coefficient for goal force
+    float k = 2;                                // coefficient for goal force
     
-    float timeHorizon = 3;    // in seconds
+    float timeHorizon = 3;        // in seconds
     float maxAvoidanceForce = 20;    // TODO: may need to tweak
     
     
@@ -145,8 +139,7 @@ class Agent {
                 isAtEnd = true;
                 return;
             }
-            // TODO: this is the velocity vector - can be replaced with that
-            //currentPosition.add(PVector.sub(goalPosition, currentPosition).normalize().mult(velocity));
+
             currentPosition.add(currentVelocity);
         }
     }

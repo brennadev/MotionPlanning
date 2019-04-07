@@ -28,7 +28,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 120;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 70;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 final int agentsCount = 3;
 
 // points from random sampling to create potential paths
@@ -36,6 +36,7 @@ ArrayList<SampledPoint> sampledPoints = new ArrayList();
 
 Matrix distanceMatrix;
 float distanceToTravelPerFrame = 0.05;
+float dt = 0.1;
 float largestAgentRadius;    // make sure the largest agent can safely move along the path; this means the other agents will also be able to move along the path fine
 
 
@@ -193,12 +194,25 @@ void draw() {
     
     noStroke();
     
-    for(int i = 0; i < agents.size(); i++) {
-        agents.get(i).findNeighbors();
-    }
     
-    // agents
     if (mode == SimulationState.runSimulation) {
+        for(int i = 0; i < agents.size(); i++) {
+            agents.get(i).findNeighbors();
+        }
+    
+        for(int i = 0; i < agents.size(); i++) {
+            agents.get(i).handleCollisions();
+        }
+        
+        for(int i = 0; i < agents.size(); i++) {
+            agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
+           // agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
+        }
+    // agents
+
+        
+        
+        
         for(int i = 0; i < agents.size(); i++) {
             fill(agents.get(i).shortestPathColor);
             agents.get(i).handleMovingCharacter();
