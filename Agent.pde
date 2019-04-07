@@ -4,11 +4,7 @@ class Agent {
     float radius;
     PVector currentPosition;
     
-    // immediate point the character is after (or at)
-    int currentPoint;
-    // how far along the edge after currentPoint the character currently is
-    float scalarDistanceFromCurrentPoint = 0;   
-    // indicates when at the end of the path
+    // indicates when at the end of the path - helps to make sure the right code is called/not called
     boolean isAtEnd = false;                
     
     
@@ -27,9 +23,11 @@ class Agent {
     ArrayList<Float> scalarDistancesToSuccessors = new ArrayList();    // how far you have to travel to get to the next point
     ArrayList<PVector> directionsToSuccessors = new ArrayList();    // direction of the edge after a given point
     
+    
     /////////////// Neighbors ///////////////
     float sensingRadius = 5;
     ArrayList<Agent> neighbors = new ArrayList();
+    
     
     /////////////// Goal and velocity ///////////////
     float velocity = 0.1;
@@ -63,7 +61,6 @@ class Agent {
         endPointIndex = finalPositionIndex;
         
         currentPosition = new PVector(sampledPoints.get(startPointIndex).position.x, sampledPoints.get(startPointIndex).position.y);
-        currentPoint = startPointIndex;
         
         // distancesFromStart
         distancesFromStart = new float[samplePointsCount + agentsCount * 2];
