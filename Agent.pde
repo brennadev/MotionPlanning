@@ -30,7 +30,7 @@ class Agent {
     
     
     /////////////// Goal and velocity ///////////////
-    float velocity = 0.1;
+    //float velocity = 0.1;
     // TODO: need to actually use currentVelocity, currentDirection
     // TODO: rename velocity to speed, scalar velocity, something like that so it's more clear what's what
     PVector currentVelocity = new PVector();
@@ -38,7 +38,6 @@ class Agent {
     PVector currentDirection = new PVector();    // so this value only needs to be calculated once per frame (maximum) - multiply by velocity to get currentVelocity
     
     final float goalSpeed = 0.1;
-    PVector goalVelocity = new PVector();
     PVector totalForce = new PVector();    // will be set in 
     // TODO: may need to tweak k
     float k = 2;            // coefficient for goal force
@@ -50,6 +49,10 @@ class Agent {
     // normalized direction vector of the agent's movement
     PVector currentDirection() {
         return PVector.sub(sampledPoints.get(currentGoal).position, currentPosition).normalize();
+    }
+    
+    PVector goalVelocity() {
+        return PVector.mult(currentDirection(), goalSpeed);
     }
     
     
@@ -127,14 +130,13 @@ class Agent {
     }
     
     
-    
-    
     void handleMovingCharacter() {
         // the start point will be at the last index in shortestPath
         if (!isAtEnd) {
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
             
-            if (PVector.dist(currentPosition, goalPosition) < velocity) {
+            // TODO: note that the scalar velocity is used here - but we should be getting the length of the velocity vector as we may not have the goal velocity  in practice
+            if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
                 currentGoal--;
             }
             
@@ -143,8 +145,9 @@ class Agent {
                 isAtEnd = true;
                 return;
             }
-
-            currentPosition.add(PVector.sub(goalPosition, currentPosition).normalize().mult(velocity));
+            // TODO: this is the velocity vector - can be replaced with that
+            //currentPosition.add(PVector.sub(goalPosition, currentPosition).normalize().mult(velocity));
+            currentPosition.add(currentVelocity);
         }
     }
     
@@ -182,7 +185,7 @@ class Agent {
     
     
     void handleCollisions() {
-        totalForce = PVector.sub(goalVelocity, currentVelocity).mult(k);
+        totalForce = PVector.sub(goalVelocity(), currentVelocity).mult(k);
         
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
@@ -211,6 +214,7 @@ class Agent {
     }
     
     
+    // time to collision algorithm
     float ttc(Agent neighbor) {
         float totalRadius = radius + neighbor.radius;
         PVector w = PVector.sub(neighbor.currentPosition, currentPosition);
