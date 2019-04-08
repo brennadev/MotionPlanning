@@ -39,7 +39,7 @@ class Agent {
     
     // normalized direction vector of the agent's movement
     PVector currentDirection() {
-        return PVector.sub(sampledPoints.get(currentGoal).position, currentPosition).normalize();
+        return PVector.sub(sampledPoints.get(shortestPath.get(currentGoal)).position, currentPosition).normalize();
     }
     
     PVector goalVelocity() {
