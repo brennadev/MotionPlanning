@@ -155,12 +155,12 @@ void draw() {
             agents.get(i).findNeighbors();
         }
     
-        /*for(int i = 0; i < agents.size(); i++) {
+        for(int i = 0; i < agents.size(); i++) {
             agents.get(i).handleCollisions();
-        }*/
+        }
         
         for(int i = 0; i < agents.size(); i++) {
-            //agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
+            agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
             //agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
         }
     // agents
