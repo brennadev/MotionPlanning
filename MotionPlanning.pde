@@ -155,13 +155,13 @@ void draw() {
             agents.get(i).findNeighbors();
         }
     
-        for(int i = 0; i < agents.size(); i++) {
+        /*for(int i = 0; i < agents.size(); i++) {
             agents.get(i).handleCollisions();
-        }
+        }*/
         
         for(int i = 0; i < agents.size(); i++) {
-            agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
-            agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
+            //agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
+            //agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
         }
     // agents
 
@@ -170,7 +170,7 @@ void draw() {
         
         for(int i = 0; i < agents.size(); i++) {
             fill(agents.get(i).shortestPathColor);
-            //agents.get(i).handleMovingCharacter();
+            agents.get(i).handleMovingCharacter();
             
             circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                    agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
