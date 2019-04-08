@@ -126,7 +126,8 @@ class Agent {
         if (!isAtEnd) {
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
             
-            if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
+            //if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
+            if (PVector.dist(currentPosition, goalPosition) < goalSpeed) {
                 currentGoal--;
             }
             
@@ -136,7 +137,8 @@ class Agent {
                 return;
             }
 
-            currentPosition.add(currentVelocity);
+            //currentPosition.add(currentVelocity);
+            currentPosition.add(goalVelocity());
         }
     }
     
