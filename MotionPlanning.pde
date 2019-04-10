@@ -263,33 +263,21 @@ void keyPressed() {
     if (mode == SimulationState.addObstacles && key == ' ') {
         mode = SimulationState.setUpMap;
     } else if (mode == SimulationState.runSimulation) {
-        println("run simulation");
-        
-        if (key == UP) {
-            println("up key if");
-        }
         switch (keyCode) {
             case UP:
-            println("up key");
             agents.get(0).currentPosition.y += 0.5;
             break;
             
             case DOWN:
-            println("down key");
             agents.get(0).currentPosition.y -= 0.5;
-            
             break;
             
             case LEFT:
-            println("left key");
             agents.get(0).currentPosition.x -= 0.5;
-            
             break;
             
             case RIGHT:
             agents.get(0).currentPosition.x += 0.5;
-            println("right key");
-            
             break;
         }
     }
