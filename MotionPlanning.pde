@@ -29,7 +29,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-final int agentsCount = 2;
+final int agentsCount = 5;
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -58,6 +58,10 @@ void setup() {
 
     // the only way we know how many points are needed at the most is with the fixed initial amount of sampled points and the start/end points for the agents
     distanceMatrix = new Matrix(samplePointsCount + agentsCount * 2);
+    
+    sampledPoints.add(new SampledPoint(new PVector(0, 0)));
+    sampledPoints.add(new SampledPoint(new PVector(0, 0)));
+    agents.add(new Agent(0.5, 0, 1, color(255)));
 }
 
 
@@ -138,16 +142,17 @@ void draw() {
     
     
     if (mode == SimulationState.runSimulation) {
-        for(int i = 0; i < agents.size(); i++) {
+        for(int i = 1; i < agents.size(); i++) {
             agents.get(i).findNeighbors();
         }
     
-        for(int i = 0; i < agents.size(); i++) {
+        for(int i = 1; i < agents.size(); i++) {
             agents.get(i).handleCollisions();
         }
         
-        for(int i = 0; i < agents.size(); i++) {
+        for(int i = 1; i < agents.size(); i++) {
             agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
+            agents.get(i).handleMovingCharacter();
             //agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
         }
     // agents
@@ -157,7 +162,7 @@ void draw() {
         
         for(int i = 0; i < agents.size(); i++) {
             fill(agents.get(i).shortestPathColor);
-            agents.get(i).handleMovingCharacter();
+            
             
             circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                    agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
@@ -258,19 +263,32 @@ void keyPressed() {
     if (mode == SimulationState.addObstacles && key == ' ') {
         mode = SimulationState.setUpMap;
     } else if (mode == SimulationState.runSimulation) {
-        switch (key) {
+        println("run simulation");
+        
+        if (key == UP) {
+            println("up key if");
+        }
+        switch (keyCode) {
             case UP:
+            println("up key");
+            agents.get(0).currentPosition.y += 0.5;
             break;
             
             case DOWN:
+            println("down key");
+            agents.get(0).currentPosition.y -= 0.5;
             
             break;
             
             case LEFT:
+            println("left key");
+            agents.get(0).currentPosition.x -= 0.5;
             
             break;
             
             case RIGHT:
+            agents.get(0).currentPosition.x += 0.5;
+            println("right key");
             
             break;
         }
