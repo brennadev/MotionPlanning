@@ -29,7 +29,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 15;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-final int agentsCount = 3;
+final int agentsCount = 2;
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -74,7 +74,7 @@ void draw() {
         case addAgentStartEnds:
         fill(255);
         textSize(100);
-        println(transformPositionY(7));
+        //println(transformPositionY(7));
         text("Click to add agent start and end points", transformPositionX(-5), transformPositionY(7));
         break;
         
@@ -311,7 +311,7 @@ PVector mouseDownPosition;
 Obstacle currentlyMovedObstacle = null;
 
 void mousePressed() {
-    if (mode == SimulationState.addObstacles) {
+    if (mode == SimulationState.addObstacles || mode == SimulationState.runSimulation) {
         
         PVector mouse = mousePosition();
         
@@ -328,9 +328,31 @@ void mousePressed() {
 }
 
 void mouseDragged() {
-    if (mode == SimulationState.addObstacles && currentlyMovedObstacle != null) {
+    if ((mode == SimulationState.addObstacles || mode == SimulationState.runSimulation) && currentlyMovedObstacle != null) {
         PVector positionDifference = PVector.sub(mousePosition(), currentlyMovedObstacle.position);
         currentlyMovedObstacle.position.add(positionDifference);
+    }
+    
+    // additional stuff to do when the simulation is running to properly handle the PRM
+    if (mode == SimulationState.runSimulation) {
+        
+        // remove the non-start/end points
+        while(sampledPoints.size() > agentsCount * 2) {
+            sampledPoints.remove(sampledPoints.size() - 1);
+        }
+        
+        // update the start points to the current positions of the agents
+        for(int i = 0; i < agentsCount; i++) {
+            sampledPoints.get(i * 2).position = new PVector(agents.get(i).currentPosition.x, agents.get(i).currentPosition.y);
+        }
+        
+        // regenerate the PRM
+        generateSamplePoints();
+        connectSamplePoints();
+        
+        for(int i = 0; i < agents.size(); i++) {
+            agents.get(i).findShortestPathNew();
+        }
     }
 }
 
