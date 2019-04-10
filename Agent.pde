@@ -32,7 +32,7 @@ class Agent {
     PVector totalForce = new PVector();         // will be set per-frame in handleCollisions
     float k = 5;                                // coefficient for goal force
     
-    float timeHorizon = 6;        // in seconds
+    float timeHorizon = 3000;        // in seconds
     float maxAvoidanceForce = 20;
     
     
@@ -144,6 +144,7 @@ class Agent {
                 return;
             }
 
+            //currentPosition.add(PVector.mult(currentVelocity, dt));
             currentPosition.add(currentVelocity);
             //currentPosition.add(goalVelocity());
         }
@@ -183,7 +184,7 @@ class Agent {
     
     
     void handleCollisions() {
-        totalForce = PVector.sub(goalVelocity(), currentVelocity).mult(k);
+        totalForce = PVector.sub(goalVelocity(), currentVelocity).mult(k);    // goal force
         if (this == agents.get(0)) {
             println("totalForce with goal only: " + totalForce);
         }
@@ -191,6 +192,7 @@ class Agent {
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
             
+            // don't want to do anything with collisions that are very far out
             if (timeToCollision > timeHorizon) {
                 continue;
             }
@@ -198,34 +200,35 @@ class Agent {
             // ttc value is huge - way more than it should be
             // there are some cases where the value seems reasonable
             
-            if (this == agents.get(0)) {
+            /*if (this == agents.get(0)) {
                 println("timeToCollision: " + timeToCollision);
-            }
+            }*/
             
             // if ttc is greater than time horizon, don't compute avoidance force; just continue to next agent
             
+            // looks ok
             PVector avoidanceForce = PVector.sub(PVector.add(currentPosition, PVector.mult(currentVelocity, timeToCollision)), 
                                                  PVector.add(neighbors.get(i).currentPosition, PVector.mult(neighbors.get(i).currentVelocity, timeToCollision)));
                                                  
-            if (this == agents.get(0)) {
+            /*if (this == agents.get(0)) {
                 println("avoidanceForce: " + avoidanceForce);
-            }
+            }*/
             // avoidance force is nonzero
             
             if (avoidanceForce.x != 0 && avoidanceForce.y != 0) {
-                avoidanceForce = avoidanceForce.normalize(null);
-                float avoidanceForceDot = PVector.dot(avoidanceForce, avoidanceForce);
+                avoidanceForce.normalize();
+                /*float avoidanceForceDot = PVector.dot(avoidanceForce, avoidanceForce);
                 
                 if (this == agents.get(0)) {
                     println("avoidance dot: " + avoidanceForceDot);
-                }
+                }*/
             }
             
             // so somehow the normalizing is making the avoidance force 0
             
-            if (this == agents.get(0)) {
+            /*if (this == agents.get(0)) {
                 println("avoidanceForce right after normalize: " + avoidanceForce);
-            }
+            }*/
             
             // force magnitude
             float magnitude = 0;
@@ -240,16 +243,16 @@ class Agent {
             
             // avoidance force is 0 here
             
-            if (this == agents.get(0)) {
+            /*if (this == agents.get(0)) {
                 println("avoidanceForce before magnitude multiply: " + avoidanceForce);
-            }
+            }*/
             //avoidanceForce.mult(magnitude);
             
             avoidanceForce = PVector.mult(avoidanceForce, magnitude);
             
             if (this == agents.get(0)) {
                 println("avoidanceForce: " + avoidanceForce);
-                println("totalForce before add: " + totalForce);
+                //println("totalForce before add: " + totalForce);
             }
             //totalForce.add(avoidanceForce);
             totalForce = PVector.add(totalForce, avoidanceForce);
