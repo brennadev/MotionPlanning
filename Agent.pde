@@ -185,9 +185,6 @@ class Agent {
     
     void handleCollisions() {
         totalForce = PVector.sub(goalVelocity(), currentVelocity).mult(k);    // goal force
-        /*if (this == agents.get(0)) {
-            println("totalForce with goal only: " + totalForce);
-        }*/
         
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
@@ -197,12 +194,6 @@ class Agent {
                 continue;
             }
             
-            // ttc value is huge - way more than it should be
-            // there are some cases where the value seems reasonable
-            
-            /*if (this == agents.get(0)) {
-                println("timeToCollision: " + timeToCollision);
-            }*/
             
             // if ttc is greater than time horizon, don't compute avoidance force; just continue to next agent
             
@@ -210,25 +201,10 @@ class Agent {
             PVector avoidanceForce = PVector.sub(PVector.add(currentPosition, PVector.mult(currentVelocity, timeToCollision)), 
                                                  PVector.add(neighbors.get(i).currentPosition, PVector.mult(neighbors.get(i).currentVelocity, timeToCollision)));
                                                  
-            /*if (this == agents.get(0)) {
-                println("avoidanceForce: " + avoidanceForce);
-            }*/
-            // avoidance force is nonzero
-            
             if (avoidanceForce.x != 0 && avoidanceForce.y != 0) {
                 avoidanceForce.normalize();
-                /*float avoidanceForceDot = PVector.dot(avoidanceForce, avoidanceForce);
-                
-                if (this == agents.get(0)) {
-                    println("avoidance dot: " + avoidanceForceDot);
-                }*/
             }
             
-            // so somehow the normalizing is making the avoidance force 0
-            
-            /*if (this == agents.get(0)) {
-                println("avoidanceForce right after normalize: " + avoidanceForce);
-            }*/
             
             // force magnitude
             float magnitude = 0;
@@ -241,33 +217,9 @@ class Agent {
                 magnitude = maxAvoidanceForce;
             }
             
-            // avoidance force is 0 here
-            
-            /*if (this == agents.get(0)) {
-                println("avoidanceForce before magnitude multiply: " + avoidanceForce);
-            }*/
-            //avoidanceForce.mult(magnitude);
-            
             avoidanceForce = PVector.mult(avoidanceForce, magnitude);
-            
-            /*if (this == agents.get(0)) {
-                println("avoidanceForce: " + avoidanceForce);
-                //println("totalForce before add: " + totalForce);
-            }*/
-            //totalForce.add(avoidanceForce);
             totalForce = PVector.add(totalForce, avoidanceForce);
-            
-            /*if (this == agents.get(0)) {
-                println("totalForce after add: " + totalForce);
-            }*/
         }
-        
-        //println("position: " + currentPosition);
-        /*if (this == agents.get(0)) {
-            println("totalForce: " + totalForce);
-        }*/
-        //println("goalVelocity: " + goalVelocity());
-        //println("currentVelocity: " + currentVelocity);
     }
     
     

@@ -70,19 +70,6 @@ float transformPositionY(float positionY) {
 }
 
 void draw() {
-    switch (mode) {
-        case addAgentStartEnds:
-        fill(255);
-        textSize(100);
-        //println(transformPositionY(7));
-        text("Click to add agent start and end points", transformPositionX(-5), transformPositionY(7));
-        break;
-        
-        case addObstacles:
-        break;
-    }
-    
-    
     if (mode == SimulationState.setUpMap) {
         
         largestAgentRadius = agents.get(0).radius;
@@ -118,7 +105,7 @@ void draw() {
     fill(255, 0, 0);
     
     for(int i = 0; i < sampledPoints.size(); i++) {
-        circle(transformPositionX(sampledPoints.get(i).position.x)/* * scale + originToCenterTranslation*/, transformPositionY(sampledPoints.get(i).position.y)/* * scale * -1 + originToCenterTranslation*/, 15);
+        circle(transformPositionX(sampledPoints.get(i).position.x), transformPositionY(sampledPoints.get(i).position.y), 15);
     }
     
     
