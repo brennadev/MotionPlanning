@@ -32,7 +32,7 @@ class Agent {
     PVector totalForce = new PVector();         // will be set per-frame in handleCollisions
     float k = 5;                                // coefficient for goal force
     
-    float timeHorizon = 5000;        // in seconds
+    float timeHorizon = 7000;        // in seconds
     float maxAvoidanceForce = 20;
     
     
@@ -132,9 +132,6 @@ class Agent {
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
             
             if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
-            //if (PVector.dist(currentPosition, goalPosition) < goalSpeed) {
-                //println("currentGoal");
-                //println(currentGoal);
                 currentGoal--;
             }
             
@@ -149,9 +146,7 @@ class Agent {
                 return;
             }
 
-            //currentPosition.add(PVector.mult(currentVelocity, dt));
             currentPosition.add(currentVelocity);
-            //currentPosition.add(goalVelocity());
         }
     }
     
