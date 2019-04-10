@@ -185,9 +185,9 @@ class Agent {
     
     void handleCollisions() {
         totalForce = PVector.sub(goalVelocity(), currentVelocity).mult(k);    // goal force
-        if (this == agents.get(0)) {
+        /*if (this == agents.get(0)) {
             println("totalForce with goal only: " + totalForce);
-        }
+        }*/
         
         for(int i = 0; i < neighbors.size(); i++) {
             float timeToCollision = ttc(neighbors.get(i));
@@ -250,22 +250,22 @@ class Agent {
             
             avoidanceForce = PVector.mult(avoidanceForce, magnitude);
             
-            if (this == agents.get(0)) {
+            /*if (this == agents.get(0)) {
                 println("avoidanceForce: " + avoidanceForce);
                 //println("totalForce before add: " + totalForce);
-            }
+            }*/
             //totalForce.add(avoidanceForce);
             totalForce = PVector.add(totalForce, avoidanceForce);
             
-            if (this == agents.get(0)) {
+            /*if (this == agents.get(0)) {
                 println("totalForce after add: " + totalForce);
-            }
+            }*/
         }
         
         //println("position: " + currentPosition);
-        if (this == agents.get(0)) {
+        /*if (this == agents.get(0)) {
             println("totalForce: " + totalForce);
-        }
+        }*/
         //println("goalVelocity: " + goalVelocity());
         //println("currentVelocity: " + currentVelocity);
     }

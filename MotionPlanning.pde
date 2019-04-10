@@ -28,7 +28,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 25;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 final int agentsCount = 2;
 
 // points from random sampling to create potential paths
@@ -365,6 +365,11 @@ void mouseDragged() {
         
         // number of sampled points after removing non-start/end points is correct
         println(sampledPoints.size());
+        println("obstacles size: " + obstacles.size());
+        
+        for(int i = 0; i < obstacles.size(); i++) {
+            println("obstacle position: " + obstacles.get(i).position);
+        }
         
         // regenerate the PRM
         generateSamplePoints();
