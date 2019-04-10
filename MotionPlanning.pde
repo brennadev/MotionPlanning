@@ -28,7 +28,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 15;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int samplePointsCount = 25;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
 final int agentsCount = 2;
 
 // points from random sampling to create potential paths
@@ -270,6 +270,23 @@ void keyPressed() {
     // when the simulation is ready to start - after agent start/end points are in and (optionally) obstacles are in
     if (mode == SimulationState.addObstacles && key == ' ') {
         mode = SimulationState.setUpMap;
+    } else if (mode == SimulationState.runSimulation) {
+        switch (key) {
+            case UP:
+            break;
+            
+            case DOWN:
+            
+            break;
+            
+            case LEFT:
+            
+            break;
+            
+            case RIGHT:
+            
+            break;
+        }
     }
 }
 
@@ -346,11 +363,15 @@ void mouseDragged() {
             sampledPoints.get(i * 2).position = new PVector(agents.get(i).currentPosition.x, agents.get(i).currentPosition.y);
         }
         
+        // number of sampled points after removing non-start/end points is correct
+        println(sampledPoints.size());
+        
         // regenerate the PRM
         generateSamplePoints();
         connectSamplePoints();
         
         for(int i = 0; i < agents.size(); i++) {
+            agents.get(i).shortestPath.clear();
             agents.get(i).findShortestPathNew();
         }
     }
