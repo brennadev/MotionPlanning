@@ -28,8 +28,8 @@ ArrayList<Agent> agents = new ArrayList();
 
 
 /////////////// Motion Planning ///////////////
-final int samplePointsCount = 5;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-final int agentsCount = 5;
+final int samplePointsCount = 25;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
+final int agentsCount = 2;
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -108,14 +108,17 @@ void draw() {
     // all sampled points
     fill(255, 0, 0);
     
-    for(int i = 0; i < sampledPoints.size(); i++) {
-        circle(transformPositionX(sampledPoints.get(i).position.x), transformPositionY(sampledPoints.get(i).position.y), 15);
+    if (mode == SimulationState.addAgentStartEnds || mode == SimulationState.addObstacles) {
+        for(int i = 0; i < sampledPoints.size(); i++) {
+            circle(transformPositionX(sampledPoints.get(i).position.x), transformPositionY(sampledPoints.get(i).position.y), 15);
+        }
     }
     
     
     // all possible paths - comment out if better performance is needed
     stroke(0, 200, 255);
     
+    // uncomment to show all possible paths
     for(int i = 0; i < sampledPoints.size(); i++) {
         for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
             line(sampledPoints.get(i).position.x * scale + originToCenterTranslation,
@@ -125,9 +128,9 @@ void draw() {
         }
     }
      
-    
+    // uncomment to show shortest paths
     // shortest path    
-    for(int i = 0; i < agents.size(); i++) {
+    /*for(int i = 0; i < agents.size(); i++) {
         stroke(agents.get(i).shortestPathColor);
         
         for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
@@ -136,7 +139,7 @@ void draw() {
                  sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.x * scale + originToCenterTranslation,
                  sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.y * scale * -1 + originToCenterTranslation);
         }
-    }
+    }*/
     
     noStroke();
     

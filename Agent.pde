@@ -39,10 +39,8 @@ class Agent {
     // normalized direction vector of the agent's movement
     PVector currentDirection() {
         if (currentGoal >= 0) {
-            //println("if");
             return PVector.sub(sampledPoints.get(shortestPath.get(currentGoal)).position, currentPosition).normalize();
         } else {
-            //println("else");
             return new PVector(0, 0);
         }
     }
@@ -131,12 +129,16 @@ class Agent {
         if (!isAtEnd) {
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
             
-            if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
-                currentGoal--;
-            }
+            
             
             // when close to the final goal, you don't need to get exactly to that point
-            if (currentGoal == 0 && PVector.dist(currentPosition, goalPosition) < 0.5) {
+            /*if (currentGoal == 0 && PVector.dist(currentPosition, goalPosition) < 0.5) {
+                currentGoal--;
+                isAtEnd = true;
+                return;
+            }*/
+            
+            if (PVector.dist(currentPosition, goalPosition) < currentVelocity.mag()) {
                 currentGoal--;
             }
             
