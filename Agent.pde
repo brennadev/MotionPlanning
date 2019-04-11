@@ -130,7 +130,7 @@ class Agent {
             PVector goalPosition = sampledPoints.get(shortestPath.get(currentGoal)).position;
             
             
-            
+            // commented out block below may be the cause of some weird agent positioning issues, thus why it's commented out
             // when close to the final goal, you don't need to get exactly to that point
             /*if (currentGoal == 0 && PVector.dist(currentPosition, goalPosition) < 0.5) {
                 currentGoal--;

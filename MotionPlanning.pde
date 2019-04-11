@@ -29,7 +29,7 @@ ArrayList<Agent> agents = new ArrayList();
 
 /////////////// Motion Planning ///////////////
 final int samplePointsCount = 25;    // even though ArrayList is used, this is still needed so it's known how many points need to be initially generated
-final int agentsCount = 2;
+final int agentsCount = 10;
 
 // points from random sampling to create potential paths
 ArrayList<SampledPoint> sampledPoints = new ArrayList();
@@ -115,31 +115,19 @@ void draw() {
     }
     
     
-    // all possible paths - comment out if better performance is needed
+    // all possible paths
     stroke(0, 200, 255);
     
     // uncomment to show all possible paths
-    for(int i = 0; i < sampledPoints.size(); i++) {
+    /*for(int i = 0; i < sampledPoints.size(); i++) {
         for(int j = 0; j < sampledPoints.get(i).adjacentNodes.size(); j++) {
             line(sampledPoints.get(i).position.x * scale + originToCenterTranslation,
                 sampledPoints.get(i).position.y * scale * -1 + originToCenterTranslation,
                 sampledPoints.get(sampledPoints.get(i).adjacentNodes.get(j)).position.x * scale + originToCenterTranslation,
                 sampledPoints.get(sampledPoints.get(i).adjacentNodes.get(j)).position.y * scale * -1 + originToCenterTranslation);
         }
-    }
-     
-    // uncomment to show shortest paths
-    // shortest path    
-    /*for(int i = 0; i < agents.size(); i++) {
-        stroke(agents.get(i).shortestPathColor);
-        
-        for(int j = 0; j < agents.get(i).shortestPath.size() - 1; j++) {
-            line(sampledPoints.get(agents.get(i).shortestPath.get(j)).position.x * scale + originToCenterTranslation,
-                 sampledPoints.get(agents.get(i).shortestPath.get(j)).position.y * scale * -1 + originToCenterTranslation,
-                 sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.x * scale + originToCenterTranslation,
-                 sampledPoints.get(agents.get(i).shortestPath.get(j + 1)).position.y * scale * -1 + originToCenterTranslation);
-        }
     }*/
+     
     
     noStroke();
     
@@ -156,16 +144,10 @@ void draw() {
         for(int i = 1; i < agents.size(); i++) {
             agents.get(i).currentVelocity.add(PVector.mult(agents.get(i).totalForce, dt));
             agents.get(i).handleMovingCharacter();
-            //agents.get(i).currentPosition.add(PVector.mult(agents.get(i).currentVelocity, dt));
         }
-    // agents
 
-        
-        
-        
         for(int i = 0; i < agents.size(); i++) {
             fill(agents.get(i).shortestPathColor);
-            
             
             circle(agents.get(i).currentPosition.x * scale + originToCenterTranslation,
                    agents.get(i).currentPosition.y * scale * -1 + originToCenterTranslation,
